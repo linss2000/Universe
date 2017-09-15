@@ -94,17 +94,17 @@ function* login(userData) {
     debugger;
     try {
         //yield call(delay, 5000)
-        console.log(userData.user)
-        console.log(userData.password)
-        yield put({ type: "ITEMS_IS_LOADING", isLoading: false })
-        const resultObj = yield call(authApi.login, userData)
+        console.log(userData.payload.user)
+        console.log(userData.payload.password)
+        //yield put({ type: authTypes.LOGIN_REQUEST, isLoading: false })
+        const resultObj = yield call(authApi.login, userData.payload)
         sessionStorage.setItem('token', JSON.parse(resultObj).token);
-        yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).message })
+        yield put({ type: authTypes.MESSAGE, message: JSON.parse(resultObj).message })
         //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
     } finally {
         debugger;
         if (yield cancelled())
-            yield put({ type: "LOGIN_STATUS", message: 'Task Cancelled' })
+            yield put({ type:authTypes.MESSAGE, message: 'Task Cancelled' })
     }
 }
 
@@ -148,8 +148,7 @@ export function* handleRequest(action) {
             }
             case authTypes.LOGIN_REQUEST: {
 
-                yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-               
+                //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
                 debugger;
                 const fetchTask = yield fork(login, action.payload)
                 debugger;
@@ -163,7 +162,7 @@ export function* handleRequest(action) {
             }
         }
     } catch (e) {
-        yield put({ type: 'ITEMS_HAS_ERRORED', hasErrored: true })
+        yield put({ type: authTypes.LOGIN_FAILURE, error: e })
     }
 }
 

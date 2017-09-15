@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { itemsFetchData, itemUpdateData, itemDeleteData } from '../actions/items';
+//import { itemsFetchData, itemUpdateData, itemDeleteData } from '../actions/items';
 import {
     Table,
     TableBody,

@@ -43,11 +43,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 1,
-      items: [],
-      hasErrored: false,
+      user: null,
       isLoading: false,
-      message: null
+      error: null,
+      items:[],
+      message:""
     };
   }
 
@@ -69,6 +69,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    debugger;
     if (this.props.message == "ok") {
       //this.context.router.history.push('/grid', ...this.state);
       alert("token: " + sessionStorage.getItem('token'))
@@ -112,7 +113,7 @@ class App extends Component {
       return <p>Sorry! There was an error loading the items</p>;
     }
 
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return <p>Loading…</p>;
     }
 
@@ -148,7 +149,7 @@ class App extends Component {
                   <td>
                     <SelectField
                       //floatingLabelText="Application"
-                      value={this.state.value}
+                      value={1}
                       onChange={this.handleChange}
                       style={{ textAlign: 'left' }}
                     >
@@ -194,10 +195,11 @@ App.defaultProps = {};
 
 const mapStateToProps = (state) => {
   return {
-    items: state.items,
-    message: state.message,
-    hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading
+    authState: state.authState,
+    //items: state.items,
+    //message: state.message,
+    //hasErrored: state.itemsHasErrored,
+    //isLoading: state.itemsIsLoading
   };
 };
 

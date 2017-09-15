@@ -1,13 +1,13 @@
 import { createStore, applyMiddleware, compose  } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+//import thunk from 'redux-thunk';
+import rootReducer from 'reducers';
 
 //import { composeWithDevTools } from 'redux-devtools-extension';
 
 
 export default function configureStore(initialState,sagaMiddleware) {
-
+debugger;
     return createStore(
         rootReducer,
         initialState,

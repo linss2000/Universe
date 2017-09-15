@@ -19,19 +19,18 @@ import ItemList from './components/ItemList';
 import GridList from './components/grid';
 //import mySaga from './actions/sagas'
 import rootSaga from './sagas/index'
-import {initialState} from 'reducers/auth';
+//import {initialState} from 'reducers/auth';
 
 
 injectTapEventPlugin();
 
 const extraProps = {'color' : 'red' }; 
 
-
 // create the saga middleware 
 const sagaMiddleware = createSagaMiddleware()
 
 //const font = "tahoma";
-const store = configureStore(initialState,sagaMiddleware);
+const store = configureStore({},sagaMiddleware);
 
 const AppComp = () => (
     

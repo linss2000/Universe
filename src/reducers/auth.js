@@ -7,7 +7,9 @@ export const types = {
     LOGIN_REQUEST: 'AUTH/LOGIN_REQUEST',
     LOGIN_SUCCESS: 'AUTH/LOGIN_SUCCESS',
     LOGIN_FAILURE: 'AUTH/LOGIN_FAILURE',
-    LOGOUT: 'AUTH/LOGOUT'
+    LOGOUT: 'AUTH/LOGOUT',
+    ITEMS: 'AUTH/ITEMS',
+    MESSAGE: 'AUTH/MESSAGE'
   }
   
   export const initialState = {
@@ -15,18 +17,20 @@ export const types = {
     isLoading: false,
     error: null,
     items:[],
-    hasErrored:false,
-    message:null,
-    itemsHasErrored:false,
-    itemsIsLoading:false,
-    ping:null,
     message:""
   }
   
   //export function authState (state = initialState, action) {
   export default (state = initialState, action) => {
-
+    debugger;
     switch (action.type) {
+
+    case types.ITEMS:
+        return {...state,items: action.items}
+
+        case types.MESSAGE:
+        return {...state, message:action.message}
+
       case types.SIGNUP_REQUEST:
       case types.LOGIN_REQUEST:
         return { ...state, isLoading: true, error: null }
@@ -45,8 +49,23 @@ export const types = {
       default:
         return state
     }
+    
   };
 
+  export const actions = {
+    signup: (email, password) => ({ type: types.SIGNUP_REQUEST, email, password }),
+    login: (payload) => ({ type: types.LOGIN_REQUEST, payload }),
+    logout: () => ({ type: types.LOGOUT })
+  }
+
+  /*
+  export const getProduct = (state) => state.product.products
+  export const getProductById = (state, id) => find(state.product.products, id)
+  export const getProductSortedByName = (state) => sortBy(state.product.products, 'name')
+  export const getExpiredProducts = (state) => filter(state.product.products, { isExpired: true })
+  */
+
+    /*
   export function itemsHasErrored(state = false, action) {
     switch (action.type) {
         case 'ITEMS_HAS_ERRORED':
@@ -98,16 +117,5 @@ export function message(state = [], action) {
             return state;
     }
 }
-  
-  export const actions = {
-    signup: (email, password) => ({ type: types.SIGNUP_REQUEST, email, password }),
-    login: (payload) => ({ type: types.LOGIN_REQUEST, payload }),
-    logout: () => ({ type: types.LOGOUT })
-  }
-
-  /*
-  export const getProduct = (state) => state.product.products
-  export const getProductById = (state, id) => find(state.product.products, id)
-  export const getProductSortedByName = (state) => sortBy(state.product.products, 'name')
-  export const getExpiredProducts = (state) => filter(state.product.products, { isExpired: true })
   */
+  
