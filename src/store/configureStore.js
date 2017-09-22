@@ -4,15 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from 'reducers';
 
 //import { composeWithDevTools } from 'redux-devtools-extension';
-
-
-export default function configureStore(initialState,sagaMiddleware) {
+export default function configureStore(initialState,sagaMiddleware, routerMiddleware) {
 debugger;
     return createStore(
         rootReducer,
         initialState,
         composeWithDevTools(
-        applyMiddleware(sagaMiddleware))        
-        //applyMiddleware(thunk)
+        applyMiddleware(sagaMiddleware,routerMiddleware))        
     );
 }

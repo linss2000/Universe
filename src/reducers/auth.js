@@ -1,71 +1,77 @@
-
 export const types = {
-    AUTO_LOGIN: 'AUTH/AUTH_AUTO_LOGIN',
-    SIGNUP_REQUEST: 'AUTH/SIGNUP_REQUEST',
-    SIGNUP_SUCCESS: 'AUTH/SIGNUP_SUCCESS',
-    SIGNUP_FAILURE: 'AUTH/SIGNUP_FAILURE',
-    LOGIN_REQUEST: 'AUTH/LOGIN_REQUEST',
-    LOGIN_SUCCESS: 'AUTH/LOGIN_SUCCESS',
-    LOGIN_FAILURE: 'AUTH/LOGIN_FAILURE',
-    LOGOUT: 'AUTH/LOGOUT',
-    ITEMS: 'AUTH/ITEMS',
-    MESSAGE: 'AUTH/MESSAGE'
-  }
-  
-  export const initialState = {
-    user: null,
-    isLoading: false,
-    error: null,
-    items:[],
-    message:""
-  }
-  
-  //export function authState (state = initialState, action) {
-  export default (state = initialState, action) => {
-    debugger;
-    switch (action.type) {
+  AUTO_LOGIN: "AUTH/AUTO_LOGIN",
+  SIGNUP_REQUEST: "AUTH/SIGNUP_REQUEST",
+  SIGNUP_SUCCESS: "AUTH/SIGNUP_SUCCESS",
+  SIGNUP_FAILURE: "AUTH/SIGNUP_FAILURE",
+  LOGIN_REQUEST: "AUTH/LOGIN_REQUEST",
+  LOGIN_SUCCESS: "AUTH/LOGIN_SUCCESS",
+  LOGIN_FAILURE: "AUTH/LOGIN_FAILURE",
+  LOGOUT: "AUTH/LOGOUT",
+  ITEMS: "AUTH/ITEMS",
+  MESSAGE: "AUTH/MESSAGE",
+  TOKEN: "AUTH/TOKEN"
+};
 
+export const initialState = {
+  user: null,
+  isLoading: false,
+  error: null,
+  items: [],
+  message: "",
+  token: ""
+};
+
+//export function authState (state = initialState, action) {
+export default (state = initialState, action) => {
+  debugger;
+  switch (action.type) {
     case types.ITEMS:
-        return {...state,items: action.items}
+      return { ...state, items: action.items };
 
-        case types.MESSAGE:
-        return {...state, message:action.message}
+    case types.MESSAGE:
+      return { ...state, message: action.message };
 
-      case types.SIGNUP_REQUEST:
-      case types.LOGIN_REQUEST:
-        return { ...state, isLoading: true, error: null }
-  
-      case types.SIGNUP_SUCCESS:
-      case types.LOGIN_SUCCESS:
-        return { ...state, isLoading: false, user: action.user }
-  
-      case types.SIGNUP_FAILURE:
-      case types.LOGIN_FAILURE:
-        return { ...state, isLoading: false, error: action.error }
-  
-      case types.LOGOUT:
-        return { ...state, user: null }
-  
-      default:
-        return state
-    }
-    
-  };
+    case types.TOKEN:
+      return { ...state, message: action.token };
 
-  export const actions = {
-    signup: (email, password) => ({ type: types.SIGNUP_REQUEST, email, password }),
-    login: (payload) => ({ type: types.LOGIN_REQUEST, payload }),
-    logout: () => ({ type: types.LOGOUT })
+    case types.SIGNUP_REQUEST:
+    case types.LOGIN_REQUEST:
+      return { ...state, isLoading: true, error: null };
+
+    case types.SIGNUP_SUCCESS:
+    case types.LOGIN_SUCCESS:
+      return { ...state, isLoading: false, user: action.user };
+
+    case types.SIGNUP_FAILURE:
+    case types.LOGIN_FAILURE:
+      return { ...state, isLoading: false, error: action.error };
+
+    case types.LOGOUT:
+      return { ...state, user: null };
+
+    default:
+      return state;
   }
+};
 
-  /*
+export const actions = {
+  signup: (email, password) => ({
+    type: types.SIGNUP_REQUEST,
+    email,
+    password
+  }),
+  login: payload => ({ type: types.LOGIN_REQUEST, payload }),
+  logout: () => ({ type: types.LOGOUT })
+};
+
+/*
   export const getProduct = (state) => state.product.products
   export const getProductById = (state, id) => find(state.product.products, id)
   export const getProductSortedByName = (state) => sortBy(state.product.products, 'name')
   export const getExpiredProducts = (state) => filter(state.product.products, { isExpired: true })
   */
 
-    /*
+/*
   export function itemsHasErrored(state = false, action) {
     switch (action.type) {
         case 'ITEMS_HAS_ERRORED':
@@ -118,4 +124,3 @@ export function message(state = [], action) {
     }
 }
   */
-  

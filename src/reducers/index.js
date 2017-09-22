@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import authState from './auth';
-//import { reducer as routerReducer } from 'redux-tower';
+import attribState from './attrib';
+import attribTableState from './attribtable';
 
 export default combineReducers({
-   // routerReducer,
-   authState
+   authState,
+   attribState,
+   attribTableState
 });
 
