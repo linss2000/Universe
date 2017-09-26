@@ -131,7 +131,7 @@ import {
 
   function* insertAttribTable(userData){
     try{
-      /*
+      
       yield put({
         type: attribTabTypes.ITEMS,
         items: []
@@ -141,11 +141,9 @@ import {
         type: attribTabTypes.SELECTED_ROWID,
         rowID: -1
       });
-      */
-
+      
       const resultObj = yield call(attribApi.insAttribTable, userData.payload);
-  
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
         debugger;
         yield put({
@@ -153,11 +151,15 @@ import {
           message: resultObj.response.statusText
         });
       } else {
-        debugger;
+        //debugger;
         console.log(JSON.parse(resultObj).result)
         const state = yield select();
+        //debugger;
+        const fetchTask = yield call(getAttribTable, {payload : {hv_table_i: userData.payload.tableID}});
+        //debugger;
 
-        debugger;
+//debugger;
+        /*
         const newitems = state.attribTableState.items;
         newitems.push(
           {
@@ -177,6 +179,7 @@ debugger;
           type: attribTabTypes.ITEMS,
           items: newitems
         });
+        */
 
     } }catch (e) {
 

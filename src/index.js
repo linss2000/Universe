@@ -28,7 +28,9 @@ import GridList from "./components/grid";
 import rootSaga from "./sagas/index";
 //import {initialState} from 'reducers/auth';
 import 'bootstrap/dist/css/bootstrap.css';
-import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import 'font-awesome/css/font-awesome.min.css';
+
+//import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 
 injectTapEventPlugin();
 

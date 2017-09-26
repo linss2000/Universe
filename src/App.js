@@ -14,8 +14,7 @@ const App = props => {
     <ConnectedRouter history={history}>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route path="/attrib" component={Attributes} />
-        <Route path="/attribtable" component={AttribTable} />
+        <Route path="/attrib" component={Attributes} />        
         <Route path="/attribtable" render= { match => 
           <AttribTable {...match}/> 
           }/>

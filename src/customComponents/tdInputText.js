@@ -137,7 +137,7 @@ class HVSTextControl extends React.Component {
       control = (
         <p
           className="form-control-static"
-          style={{ lineHeight: "0", padding: "0px" }}
+          style={{ lineHeight: "0", padding: "0px"}}
         >
           {this.state.value}
         </p>

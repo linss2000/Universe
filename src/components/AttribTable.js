@@ -13,6 +13,7 @@ import * as _ from "lodash";
 import { bindActionCreators } from "redux";
 import { types as attribTabTypes } from "reducers/attribtable";
 import { actions as attribTabActions } from "reducers/attribtable";
+import HVSPagination from "customComponents/pagination";
 
 import {
   Input,
@@ -112,14 +113,15 @@ class AttribTable extends Component {
     this.newUpdateValue = "";
 
     this.insertRow = this.insertRow.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
     //this.newAttribVal = "";
   }
 
   saveAttribVal = event => {
     debugger;
     this.setState({
-      attribValue : event.target.value
-    })
+      attribValue: event.target.value
+    });
     //newAttribVal = event.target.value;
   };
 
@@ -132,13 +134,20 @@ class AttribTable extends Component {
     attribTableState: {},
     selectedRowID: -1,
     modal: false,
-    attribValue: ""
+    attribValue: "",
+    pageOfItems: []
+  };
+
+  onChangePage = pageOfItems => {
+    debugger;
+    // update state with new page of items
+    this.setState({ pageOfItems: pageOfItems });
   };
 
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
-      attribValue : ""
+      attribValue: ""
     });
   };
 
@@ -216,6 +225,8 @@ class AttribTable extends Component {
       return false;
     }
 
+    this.newUpdateValue = row.hv_universal_name;
+
     this.props.makeRowEditable({
       type: attribTabTypes.MAKE_ROW_EDITABLE,
       payload: {
@@ -239,8 +250,6 @@ class AttribTable extends Component {
         value: this.state.attribValue
       }
     });
-
-    
   };
 
   render() {
@@ -259,6 +268,7 @@ class AttribTable extends Component {
                     padding:"2px",
                     lineHeight: "1"
                   }}
+                  {this.props.attribTableState.items.map((row, index) => (
         */
 
     return (
@@ -275,9 +285,15 @@ class AttribTable extends Component {
         </Row>
         <Row>
           <Col>
-            <Table striped hover size="md" style={Styles.propContainer}>
+            <Table
+              bordered
+              striped
+              hover
+              size="sm"
+              style={Styles.propContainer}
+            >
               <thead>
-                <tr>
+                <tr style={{ backgroundColor: "grey", color: "white" }}>
                   <th>#</th>
                   <th>Univesal ID</th>
                   <th>Universal Name</th>
@@ -285,23 +301,16 @@ class AttribTable extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.attribTableState.items.map((row, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      height: "20px",
-                      padding: "2px",
-                      lineHeight: "0.75"
-                    }}
-                  >
+                {this.state.pageOfItems.map((row, index) => (
+                  <tr key={index}>
                     <th scope="row">{index}</th>
                     <td>{row.hv_universal_i}</td>
-                    <td>
+                    <td style={{ verticalAlign: "middle" }}>
                       <HVSTextControl
                         selectedRowID={this.props.attribTableState.rowID}
                         value={row.hv_universal_name}
                         placeHolder={""}
-                        clientWidth={"100px"}
+                        clientWidth={"200px"}
                         rowID={row.hv_universal_i}
                         tableID={row.hv_table_i}
                         updateRowVal={this.updateRowVal}
@@ -311,39 +320,25 @@ class AttribTable extends Component {
                       {this.props.attribTableState.rowID !=
                       row.hv_universal_i ? (
                         <div>
-                          <Button
-                            color="primary"
-                            size="sm"
+                          <i
+                            className="fa fa-pencil fa-fw"
                             onClick={() => this.editRow(row)}
-                          >
-                            Edit
-                          </Button>{" "}
-                          {" "}
-                          <Button
-                            color="warning"
-                            size="sm"
+                          />{" "}
+                          <i
+                            className="fa fa-trash-o fa-fw"
                             onClick={() => this.deleteRow(row)}
-                          >
-                            Delete
-                          </Button>
+                          />
                         </div>
                       ) : (
                         <div>
-                          <Button
-                            color="primary"
-                            size="sm"
+                          <i
+                            className="fa fa-floppy-o fa-fw"
                             onClick={() => this.updateRow(row)}
-                          >
-                            Save
-                          </Button>{" "}
-                          {" "}
-                          <Button
-                            color="warning"
-                            size="sm"
+                          />{" "}
+                          <i
+                            className="fa fa-ban fa-fw"
                             onClick={() => this.cancelRow(row)}
-                          >
-                            Cancel
-                          </Button>
+                          />
                         </div>
                       )}
                     </td>
@@ -351,6 +346,14 @@ class AttribTable extends Component {
                 ))}
               </tbody>
             </Table>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <HVSPagination
+              items={this.props.attribTableState.items}
+              onChangePage={this.onChangePage}
+            />
           </Col>
         </Row>
 
