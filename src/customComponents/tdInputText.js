@@ -35,7 +35,7 @@ const Styles = {
 class HVSTextControl extends React.Component {
   //const value = ""
   constructor(props) {
-    debugger;
+    //debugger;
     super(props);
     
     //this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -54,12 +54,12 @@ class HVSTextControl extends React.Component {
   componentWillUnmount = () => {};
 
   componentDidUpdate = (prevProps, prevState) => {
-    debugger;
+    //debugger;
     console.log(this.props.selectedRowID)
   };
 
   componentWillReceiveProps(nextProps) {
-    debugger;
+    //debugger;
     if(this.props != nextProps) {
       this.setState({
         value: nextProps.value
@@ -68,7 +68,7 @@ class HVSTextControl extends React.Component {
   }
 
   componentDidMount = () => {
-  debugger;
+  //debugger;
     this.setState({
       rowID: this.props.rowID,
       tableID: this.props.tableID,
@@ -89,7 +89,7 @@ class HVSTextControl extends React.Component {
     //this.value = event.target.value;
     //_.debounce(() => {
       //this.props.updateRow(event.target.value);
-    debugger;
+    //debugger;
     this.setState({
       value: event.target.value
     });
@@ -99,7 +99,7 @@ class HVSTextControl extends React.Component {
       tableID:this.props.tableID,
       value:event.target.value
     }
-    debugger;
+    //debugger;
     this.props.updateRowVal(rowObj);
     //},250);
   };
@@ -109,7 +109,7 @@ class HVSTextControl extends React.Component {
   }
 
   render() {
-    debugger;
+    //debugger;
     console.log(this.props.selectedRowID)
     const {
       selectedRowID,
@@ -127,7 +127,7 @@ class HVSTextControl extends React.Component {
       control = (
         <Input
           type="text"
-          style={{ width: clientWidth, lineHeight: "0", padding: "0px" }}
+          style={{ width: clientWidth,lineHeight:"0.85"}}
           placeholder={placeHolder}
           value={this.state.value}
           onChange={this.handleChange}
@@ -135,16 +135,15 @@ class HVSTextControl extends React.Component {
       );
     } else {
       control = (
-        <p
-          className="form-control-static"
-          style={{ lineHeight: "0", padding: "0px"}}
+        <div
+          className="form-control-static align-middle"          
         >
           {this.state.value}
-        </p>
+        </div>
       );
     }
 
-    return <div>{control}</div>;
+    return [control];
   }
 }
 

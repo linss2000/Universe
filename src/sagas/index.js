@@ -2,12 +2,18 @@
 import { all, actionChannel, call, put, take, takeEvery, takeLatest, select, cancel, cancelled, fork, race, apply } from 'redux-saga/effects'
 import { delay, buffers, eventChannel, END } from 'redux-saga'
 import * as _ from 'lodash'
-import { types as authTypes } from './../reducers/auth'
-import { types as attribTypes } from './../reducers/attrib'
-import { types as attribTabTypes } from './../reducers/attribtable'
-import  * as authSagas  from './auth'
-import  * as attribSagas  from './attrib'
-import  * as attribTableSagas  from './attribtable'
+import { types as authTypes } from './../reducers/authreducer'
+import { types as attribTypes } from './../reducers/attribreducer'
+import { types as attribTabTypes } from './../reducers/attribtablereducer'
+import { types as showDataTypes } from './../reducers/showdatareducer'
+import { types as forgotPWDTypes } from './../reducers/forgotpwdreducer'
+import { types as changePWDTypes } from './../reducers/changepwdreducer'
+import  * as authSagas  from './authsaga'
+import  * as attribSagas  from './attribsaga'
+import  * as attribTableSagas  from './attribtablesaga'
+import  * as showDataSagas  from './showdatasaga'
+import  * as forgotPWDSagas  from './forgotpwdsaga'
+import  * as changePWDSagas  from './changepwdsaga'
 
 export default function* rootSaga () {
   try {
@@ -16,6 +22,9 @@ export default function* rootSaga () {
         takeLatest([authTypes.SIGNUP_REQUEST,authTypes.LOGIN_REQUEST,authTypes.PASSWORD_RESET_REQUEST,authTypes.LOGOUT], authSagas.handleRequest),
         takeLatest([attribTypes.FETCH_TABLES_REQUEST,attribTypes.INSERT_REQUEST,attribTypes.DELETE_REQUEST,attribTypes.UPDATE_REQUEST], attribSagas.handleRequest),
         takeLatest([attribTabTypes.FETCH_TABLE_REQUEST,attribTabTypes.CANCEL_REQUEST,attribTabTypes.MAKE_ROW_EDITABLE,attribTabTypes.INSERT_REQUEST,attribTabTypes.DELETE_REQUEST,attribTabTypes.UPDATE_REQUEST], attribTableSagas.handleRequest),
+        takeLatest([showDataTypes.FETCH_TABLE_REQUEST], showDataSagas.handleRequest),
+        takeLatest([forgotPWDTypes.CHECK_EMAIL_REQUEST], forgotPWDSagas.handleRequest),
+        takeLatest([changePWDTypes.UPD_PWD_REQUEST], changePWDSagas.handleRequest),
         ];
     /*
     const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])

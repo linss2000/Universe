@@ -3,3 +3,68 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+$Appfontcolor: ##4682b4;
+
+.hola {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid green;
+}
+.hola2 {
+  color: red;
+}
+.row1 {
+  border: 0px solid red;
+}
+.row3 {
+  border: 1px solid red;
+}
+.row2 {
+  text-align: left;
+  border: 0px solid green;
+}
+.navbar .nav-link {
+  font-size: 16px;
+  color: yellow;
+  text-align: center;
+  text-transform: uppercase;
+  padding-right: 10em !important;
+}
+
+.faicon {
+  color: grey;
+  border: grey 2px solid;
+  padding: 2px;
+  background: #fff;
+  border-radius: 5px;
+}
+.header-label {
+  color: Steelblue;
+}
+
+.subheader-label {
+  color: Steelblue;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-style {
+  border: none;
+}
+.col {
+  text-align: left;
+  font-size: 14px;
+}
+/*.container .row {
+  margin-bottom: 1rem;
+  min-height:15px;
+}
+
+.container .row > [class^="col-"] {
+  //padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: #E5EDF5;
+  border: 1px solid #C9C1D5;
+  color: #grey;
+}*/

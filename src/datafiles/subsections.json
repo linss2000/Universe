@@ -1,0 +1,24 @@
+[{
+    "table_group_i": "1",
+    "table_group_name":"Site or State Specific",
+    "table_group_order": "1",
+    "table_group_count": "13"
+  },
+  {
+	"table_group_i": "2",
+	"table_group_name": "Staff Member Fields",
+	"table_group_order": "2",
+	"table_group_count": "5"
+},
+{
+	"table_group_i": "3",
+	"table_group_name": "People Organization Fields",
+	"table_group_order": "3",
+	"table_group_count": "5"
+},
+{
+	"table_group_i": "4",
+	"table_group_name": "Cadet Characteristics",
+	"table_group_order": "4",
+	"table_group_count": "9"
+}]

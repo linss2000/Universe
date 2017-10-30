@@ -1,12 +1,15 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 import * as _ from "lodash";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
+/*
 const propTypes = {
   items: PropTypes.array.isRequired,
   onChangePage: PropTypes.func.isRequired,
   initialPage: PropTypes.number
 };
+*/
 
 const defaultProps = {
   initialPage: 1
@@ -14,8 +17,12 @@ const defaultProps = {
 
 class HVSPagination extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { pager: {} };
+    super(props);    
+    this.state = { 
+                    pager: {
+                      pageSize : this.props.pageSize || 10
+                    }                    
+                };
   }
 
   componentWillMount() {
@@ -28,14 +35,31 @@ class HVSPagination extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     debugger;
+
     // reset page if items array has changed
-    if (this.props.items !== prevProps.items) {
-    //if (this.props.items.length > 0) {
+    if (this.props.items !== prevProps.items || this.props.filterValue != prevProps.filterValue || this.props.pageSize != prevProps.pageSize) {
+      //if (this.props.items.length > 0) {
       // default page size is 10
-      const pageSize = this.state.pager.pageSize || 10;
+      //const pageSize = this.state.pager.pageSize || 10;
+      const pageSize = this.props.pageSize || 10;
+
+      let items;
+      if (this.props.filterValue.trim() != "") {
+        items = _.filter(this.props.items, item => {
+          return (
+            item.hv_universal_name
+              .toLowerCase()
+              .indexOf(this.props.filterValue) !== -1
+          );
+        });
+      } else {
+        items = this.props.items;
+      }
+
+      debugger;
 
       // calculate total pages
-      const totalPages = Math.ceil(this.props.items.length / pageSize);
+      const totalPages = Math.ceil(items.length / pageSize);
 
       if (this.state.pager.currentPage <= totalPages) {
         this.setPage(this.state.pager.currentPage);
@@ -53,8 +77,21 @@ class HVSPagination extends React.Component {
   }
 
   setPage(page) {
-      debugger;
-    const items = this.props.items;
+    debugger;
+
+    let items;
+    if (this.props.filterValue.trim() != "") {
+      items = _.filter(this.props.items, item => {
+        return (
+          item.hv_universal_name
+            .toLowerCase()
+            .indexOf(this.props.filterValue) !== -1
+        );
+      });
+    } else {
+      items = this.props.items;
+    }
+
     let pager = this.state.pager;
 
     /*
@@ -82,7 +119,8 @@ class HVSPagination extends React.Component {
     currentPage = currentPage || 1;
 
     // default page size is 10
-    pageSize = pageSize || 10;
+    //pageSize = pageSize || 10;
+    pageSize = this.props.pageSize || 10;
 
     // calculate total pages
     const totalPages = Math.ceil(totalItems / pageSize);
@@ -135,16 +173,18 @@ class HVSPagination extends React.Component {
       return null;
     }
 
-    return (
-      <Pagination size="sm">
+    return (      
+      <Pagination size="md" className="p-0 m-0">
         <PaginationItem className={pager.currentPage === 1 ? "disabled" : ""}>
           <PaginationLink onClick={() => this.setPage(1)}>
-            <i className="fa fa-fast-backward" />
+            {""}
+            <i className="fa fa-fast-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
         <PaginationItem className={pager.currentPage === 1 ? "disabled" : ""}>
           <PaginationLink onClick={() => this.setPage(pager.currentPage - 1)}>
-            <i className="fa fa-step-backward" />
+          {""}
+            <i className="fa fa-step-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
         {pager.pages.map((page, index) => (
@@ -153,6 +193,7 @@ class HVSPagination extends React.Component {
             className={pager.currentPage === page ? "active" : ""}
           >
             <PaginationLink onClick={() => this.setPage(page)}>
+            {""}
               {page}
             </PaginationLink>
           </PaginationItem>
@@ -161,14 +202,16 @@ class HVSPagination extends React.Component {
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.currentPage + 1)}>
-            <i className="fa fa-fast-forward" />
+          {""}
+            <i className="fa fa-step-forward fa-fw" />
           </PaginationLink>
         </PaginationItem>
         <PaginationItem
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.totalPages)}>
-            <i className="fa fa-step-forward" />
+          {""}
+            <i className="fa fa-fast-forward fa-fw" />
           </PaginationLink>
         </PaginationItem>
       </Pagination>
@@ -176,6 +219,6 @@ class HVSPagination extends React.Component {
   }
 }
 
-Pagination.propTypes = propTypes;
+//agination.propTypes = propTypes;
 //Pagination.defaultProps
 export default HVSPagination;

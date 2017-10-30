@@ -1,11 +1,17 @@
 import { combineReducers } from 'redux';
-import authState from './auth';
-import attribState from './attrib';
-import attribTableState from './attribtable';
+import authState from './authreducer';
+import attribState from './attribreducer';
+import attribTableState from './attribtablereducer';
+import showDataState from './showdatareducer';
+import forgotPWDState from './forgotpwdreducer';
+import changePWDState from './changepwdreducer';
 
 export default combineReducers({
    authState,
    attribState,
-   attribTableState
+   attribTableState,
+   showDataState,
+   forgotPWDState,
+   changePWDState
 });
 

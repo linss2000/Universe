@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 //import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { Table } from "reactstrap";
@@ -23,8 +24,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import CircularProgress from "material-ui/CircularProgress";
 import * as _ from "lodash";
 import { bindActionCreators } from "redux";
-import { types as attribTypes } from "reducers/attrib";
-import { actions as attribActions } from "reducers/attrib";
+import { types as attribTypes } from "reducers/attribreducer";
+import { actions as attribActions } from "reducers/attribreducer";
 import {
   ButtCollapse,
   Navbar,
