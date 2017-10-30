@@ -28,8 +28,8 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://localhost:3003/sendEmail/", {
-        //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
+      //return fetch("http://localhost:3003/sendEmail/", {
+        return fetch("http://hvs.selfip.net:3003/sendEmail/", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -69,7 +69,7 @@ import {
         debugger;
         yield put({
           type: forgotPWDTypes.MESSAGE,
-          message: resultObj.response.statusText
+          message: {val:-1,msg:resultObj.response.statusText}
         });
       } else {
         debugger;

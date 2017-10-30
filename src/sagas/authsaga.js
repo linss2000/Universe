@@ -21,35 +21,15 @@ import { types as authTypes } from "reducers/authreducer";
 //import { push } from 'react-router-redux';
 
 const authApi = {
-  register(userData) {
-    debugger;
-    return fetch("http://hvs.selfip.net:4000/reactlogin/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: "TTUSO",
-        password: "HNNTD2W3"
-        //name      : userData.name,
-        //email     : userData.email,
-      })
-    })
-      .then(statusHelper)
-      .then(response => response.json())
-      .catch(error => error);
-    //.then(data => data)
-  },
-
+  
   login(userData) {
     debugger;
     console.log(userData.user);
     console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://localhost:3003/loginsvc/", {
-      //return fetch("http://hvs.selfip.net:3003/loginsvc/", {
+    //return fetch("http://localhost:3003/loginsvc/", {
+      return fetch("http://hvs.selfip.net:3003/loginsvc/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -65,32 +45,7 @@ const authApi = {
       .catch(error => error);
   },
 
-  loadTO(userData) {
-    debugger;
-    //console.log(userData.password)
-    return fetch("http://hvs.selfip.net:3003/toLoadSvc/", {
-      //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "JWT " + userData.token
-      },
-      body: JSON.stringify({
-        usr: "",
-        pwd: ""
-      })
-    })
-      .then(statusHelper)
-      .then(response => response.json())
-      .catch(e => {
-        debugger;
-        const error = new Error(e);
-        error.response.ok = false;
-        error.response.statusText = e;
-        throw error;
-      });
-  }
+  
   //.then(data => data)
 };
 
