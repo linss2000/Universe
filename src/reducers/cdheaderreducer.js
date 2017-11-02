@@ -28,6 +28,6 @@ export default (state = initialState, action) => {
   
 
 export const actions = {
-   renderHeader: loadheader => ({ type: types.FETCH_REQUEST, loadheader })
+   renderHeader: (loadheader) => ({ type: types.FETCH_REQUEST, loadheader })
 };
 

@@ -28,8 +28,8 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      //return fetch("http://localhost:3003/sendEmail/", {
-        return fetch("http://hvs.selfip.net:3003/sendEmail/", {
+      return fetch("http://localhost:3003/sendEmail/", {
+      //return fetch("http://hvs.selfip.net:3003/sendEmail/", {
         method: "POST",
         headers: {
           Accept: "application/json",

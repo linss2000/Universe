@@ -27,7 +27,7 @@ export default function* rootSaga () {
         takeLatest([attribTabTypes.FETCH_TABLE_REQUEST,attribTabTypes.CANCEL_REQUEST,attribTabTypes.MAKE_ROW_EDITABLE,attribTabTypes.INSERT_REQUEST,attribTabTypes.DELETE_REQUEST,attribTabTypes.UPDATE_REQUEST], attribTableSagas.handleRequest),
         takeLatest([showDataTypes.FETCH_TABLE_REQUEST], showDataSagas.handleRequest),
         takeLatest([forgotPWDTypes.CHECK_EMAIL_REQUEST], forgotPWDSagas.handleRequest),
-        takeLatest([changePWDTypes.UPD_PWD_REQUEST], changePWDSagas.handleRequest),
+        takeLatest([changePWDTypes.UPD_PWD_REQUEST,changePWDTypes.CHK_TOKEN_REQUEST], changePWDSagas.handleRequest),
         takeLatest([headerTypes.FETCH_REQUEST], headersaga.handleRequest)    
         ];
     /*

@@ -46,6 +46,7 @@ const App = props => {
               <Switch>
                 <Route path="/login" component={Login} />   
                 <Route path="/forgotpwd" component={ForgotPassword} />    
+                <Route path="/changepwd/:secToken" render={props => <ChangePassword {...props} /> } /> 
                 <Route path="/changepwd" component={ChangePassword} />                     
                 <Route path="/listitems" component={ListItems} />
                 <Route

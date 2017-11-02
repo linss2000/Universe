@@ -67,23 +67,38 @@ export class ChangePassword extends Component {
     this.changePassword = this.changePassword.bind(this);
     this.cancel = this.cancel.bind(this);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      showCurrPwd: true,
+      userReadOnly : false,
+      userID : ""
     };
   }
 
   componentDidMount = () => {
-    this.userID.focus();
+    if (this.props.match.params.secToken) {
+      this.setState({ showCurrPwd: false , userReadOnly : true});
+      this.props.checkToken({
+        type: changePWDTypes.CHK_TOKEN_REQUEST,
+        token: this.props.match.params.secToken
+      });
+      this.newPWD.focus();
+    } else {
+        this.userID.focus();
+    }
+    //console.log(this.props.location);
+    //console.log(this.props.match.params);
+    //console.log(this.props.location.state.params);
+    
   };
 
   componentDidUpdate(prevProps, prevState) {
     debugger;
     if (this.props.changePWDState.message.val != "0") {
-       
-      alert(this.props.changePWDState.message.msg);      
-      this.setState({isLoading: false});
+      alert(this.props.changePWDState.message.msg);
+      this.setState({ isLoading: false });
       this.props.resetMessage({
         type: changePWDTypes.MESSAGE,
-        message: {val:0, msg:""}
+        message: { val: 0, msg: "" }
       });
 
       if (this.props.changePWDState.message.val == 1) {
@@ -93,9 +108,16 @@ export class ChangePassword extends Component {
       //this.props.history.push('/test', ...this.state);
     } else {
     }
+
+    if(this.props.changePWDState.userID != "" && this.state.userID === "") {
+        this.setState({
+            userID: this.props.changePWDState.userID
+        })
+    }
   }
 
   cancel = () => {
+    
     this.props.history.push("/login");
   };
   changePassword = () => {
@@ -145,7 +167,6 @@ export class ChangePassword extends Component {
         currPWD: _.trim(this.currPWD.value),
         newPWD: _.trim(this.newPWD.value)
       });
-
     } else {
       let msg = "";
       //console.log(invalidPWD);
@@ -187,6 +208,8 @@ export class ChangePassword extends Component {
                           <Input
                             size="sm"
                             type="text"
+                            value={this.state.userID}
+                            readOnly={this.state.userReadOnly}
                             id="userID"
                             innerRef={input => {
                               this.userID = input;
@@ -196,25 +219,27 @@ export class ChangePassword extends Component {
                         </InputGroup>
                       </Col>
                     </FormGroup>
-                    <FormGroup row>
-                      <Col sm={12}>
-                        <InputGroup size="sm">
-                          <InputGroupAddon>
-                            <i className="fa fa-lock fa-fw" />
-                          </InputGroupAddon>
+                    {this.state.showCurrPwd && (
+                      <FormGroup row>
+                        <Col sm={12}>
+                          <InputGroup size="sm">
+                            <InputGroupAddon>
+                              <i className="fa fa-lock fa-fw" />
+                            </InputGroupAddon>
 
-                          <Input
-                            size="sm"
-                            type="password"
-                            id="curPwd"
-                            innerRef={input => {
-                              this.currPWD = input;
-                            }}
-                            placeholder="Current Password"
-                          />
-                        </InputGroup>
-                      </Col>
-                    </FormGroup>
+                            <Input
+                              size="sm"
+                              type="password"
+                              id="curPwd"
+                              innerRef={input => {
+                                this.currPWD = input;
+                              }}
+                              placeholder="Current Password"
+                            />
+                          </InputGroup>
+                        </Col>
+                      </FormGroup>
+                    )}
                     <FormGroup row>
                       <Col sm={12}>
                         <InputGroup size="sm">
