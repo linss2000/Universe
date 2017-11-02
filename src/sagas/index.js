@@ -8,12 +8,15 @@ import { types as attribTabTypes } from './../reducers/attribtablereducer'
 import { types as showDataTypes } from './../reducers/showdatareducer'
 import { types as forgotPWDTypes } from './../reducers/forgotpwdreducer'
 import { types as changePWDTypes } from './../reducers/changepwdreducer'
+import { types as headerTypes } from './../reducers/cdheaderreducer'
 import  * as authSagas  from './authsaga'
 import  * as attribSagas  from './attribsaga'
 import  * as attribTableSagas  from './attribtablesaga'
 import  * as showDataSagas  from './showdatasaga'
 import  * as forgotPWDSagas  from './forgotpwdsaga'
 import  * as changePWDSagas  from './changepwdsaga'
+import  * as headersaga  from './cdheadersaga'
+
 
 export default function* rootSaga () {
   try {
@@ -25,6 +28,7 @@ export default function* rootSaga () {
         takeLatest([showDataTypes.FETCH_TABLE_REQUEST], showDataSagas.handleRequest),
         takeLatest([forgotPWDTypes.CHECK_EMAIL_REQUEST], forgotPWDSagas.handleRequest),
         takeLatest([changePWDTypes.UPD_PWD_REQUEST], changePWDSagas.handleRequest),
+        takeLatest([headerTypes.FETCH_REQUEST], headersaga.handleRequest)    
         ];
     /*
     const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])

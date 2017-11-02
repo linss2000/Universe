@@ -5,6 +5,8 @@ import attribTableState from './attribtablereducer';
 import showDataState from './showdatareducer';
 import forgotPWDState from './forgotpwdreducer';
 import changePWDState from './changepwdreducer';
+import headerState from './cdheaderreducer';
+
 
 export default combineReducers({
    authState,
@@ -12,6 +14,7 @@ export default combineReducers({
    attribTableState,
    showDataState,
    forgotPWDState,
-   changePWDState
+   changePWDState,
+   headerState
 });
 
