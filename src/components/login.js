@@ -55,7 +55,9 @@ class Login extends Component {
       items: [],
       message: "",
       value: "",
-      tooltipOpen: false
+      tooltipOpen: false,
+      txtUser: "",
+      txtPwd: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -106,10 +108,16 @@ class Login extends Component {
      
       if (
         _.trim(this.props.authState.message) != "" &&
-        this.props.authState.message != "ok"
+          this.props.authState.message != "ok"
       ) {
         this.setState({ isLoading: false });
         alert(this.props.authState.message);
+        this.setState({
+          txtUser: "",
+          txtPwd : ""
+        })
+        this.txtUser.focus();
+        
         this.props.resetMessage({
           type: authTypes.MESSAGE,
           message: ""
@@ -137,9 +145,9 @@ class Login extends Component {
     //alert(this.txtPwd.getValue())
 
     //ReactDOM.findDOMNode(this.refs["txtUser"]).focus()
-    if (this.refs["txtUser"].getValue() == "") {
+    if (this.txtUser.getValue() == "") {
       alert("Please Enter User ID");
-      this.refs["txtUser"].focus();
+      this.txtUser.focus();
       return false;
     }
 
@@ -153,14 +161,14 @@ class Login extends Component {
       requireSpecial: true
     });
 
-    if (!invalidPWD) {
+    if (!invalidPWD || 1 === 1) {
       debugger;
       this.setState({ isLoading: true });
 
       this.props.login({
         type: authTypes.LOGIN_REQUEST,
         payload: {
-          user: this.refs["txtUser"].getValue(),
+          user: this.txtUser.getValue(),
           password: this.txtPwd.getValue()
         }
       });
@@ -220,8 +228,10 @@ class Login extends Component {
                   </td>
                   <td style={font11}>
                     <TextField
-                      ref="txtUser"
+                      ref={element => (this.txtUser = element)}
+                      value={this.state.txtUser}
                       style={font11}
+                      onChange={(e)=> this.setState({txtUser: e.target.value})}
                       hintText="Enter User ID"
                     />
                   </td>
@@ -235,8 +245,10 @@ class Login extends Component {
                       id="txtPassword"
                       type="password"
                       ref={element => (this.txtPwd = element)}
+                      onChange={(e)=> this.setState({txtPwd: e.target.value})}
                       style={font11}
                       hintText="Enter Password"
+                      value={this.state.txtPwd}
                       onKeyPress={ev => {
                         //console.log(`Pressed keyCode ${ev.key}`);
                         if (ev.key === "Enter") {
