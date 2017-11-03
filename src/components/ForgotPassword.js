@@ -148,7 +148,7 @@ export class ForgotPassword extends Component {
               ) : null}
             </CardBody>
           </Card>
-          <a href={"http://localhost:3003/excel"}
+          <a href={"http://hvs.selfip.net:3003/excel"}
             download={"test.xlsx"}> Download Excel
         </a>
         </Container>
