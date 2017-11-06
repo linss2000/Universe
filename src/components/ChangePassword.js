@@ -64,31 +64,32 @@ export class ChangePassword extends Component {
 
   constructor(props) {
     super(props);
-    this.changePassword = this.changePassword.bind(this);
+    this.changePWD = this.changePWD.bind(this);
     this.cancel = this.cancel.bind(this);
     this.state = {
       isLoading: false,
       showCurrPwd: true,
-      userReadOnly : false,
-      userID : ""
+      userReadOnly: false,
+      userID: ""
     };
   }
 
   componentDidMount = () => {
+    debugger;
     if (this.props.match.params.secToken) {
-      this.setState({ showCurrPwd: false , userReadOnly : true});
+      this.setState({ showCurrPwd: false, userReadOnly: true });
       this.props.checkToken({
         type: changePWDTypes.CHK_TOKEN_REQUEST,
         token: this.props.match.params.secToken
       });
       this.newPWD.focus();
     } else {
-        this.userID.focus();
+      this.setState({ showCurrPwd: true, userReadOnly: false });
+      this.userID.focus();
     }
     //console.log(this.props.location);
     //console.log(this.props.match.params);
     //console.log(this.props.location.state.params);
-    
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -109,28 +110,31 @@ export class ChangePassword extends Component {
     } else {
     }
 
-    if(this.props.changePWDState.userID != "" && this.state.userID === "") {
-        this.setState({
-            userID: this.props.changePWDState.userID
-        })
+    if (this.props.changePWDState.userID != "" && this.state.userID === "") {
+      this.setState({
+        userID: this.props.changePWDState.userID
+      });
     }
   }
 
   cancel = () => {
-    
     this.props.history.push("/login");
   };
-  changePassword = () => {
+
+  changePWD = () => {
+    debugger;
     if (this.userID.value.trim() == "") {
       alert("Please enter the user ID");
       this.userID.focus();
       return false;
     }
 
-    if (this.currPWD.value.trim() == "") {
-      alert("Please enter the current password");
-      this.currPWD.focus();
-      return false;
+    if (this.state.showCurrPwd) {
+      if (this.currPWD.value.trim() == "") {
+        alert("Please enter the current password");
+        this.currPWD.focus();
+        return false;
+      }
     }
 
     if (this.newPWD.value.trim() == "") {
@@ -164,7 +168,7 @@ export class ChangePassword extends Component {
       this.props.changePWD({
         type: changePWDTypes.UPD_PWD_REQUEST,
         userID: _.trim(this.userID.value),
-        currPWD: _.trim(this.currPWD.value),
+        currPWD: (this.state.showCurrPwd ? _.trim(this.currPWD.value) : _.trim(this.newPWD.value)),
         newPWD: _.trim(this.newPWD.value)
       });
     } else {
@@ -209,6 +213,8 @@ export class ChangePassword extends Component {
                             size="sm"
                             type="text"
                             value={this.state.userID}
+                            onChange={e =>
+                              this.setState({ userID: e.target.value })}
                             readOnly={this.state.userReadOnly}
                             id="userID"
                             innerRef={input => {
@@ -230,7 +236,7 @@ export class ChangePassword extends Component {
                             <Input
                               size="sm"
                               type="password"
-                              id="curPwd"
+                              id="currPWD"
                               innerRef={input => {
                                 this.currPWD = input;
                               }}
@@ -249,7 +255,7 @@ export class ChangePassword extends Component {
                           <Input
                             size="sm"
                             type="password"
-                            id="newPwd"
+                            id="newPWD"
                             innerRef={input => {
                               this.newPWD = input;
                             }}
@@ -267,7 +273,7 @@ export class ChangePassword extends Component {
                           <Input
                             size="sm"
                             type="password"
-                            id="newPwd1"
+                            id="newPWD1"
                             innerRef={input => {
                               this.newPWD1 = input;
                             }}
@@ -289,11 +295,7 @@ export class ChangePassword extends Component {
                       Cancel
                     </Button>
                     {"  "}
-                    <Button
-                      size="sm"
-                      color="primary"
-                      onClick={this.changePassword}
-                    >
+                    <Button size="sm" color="primary" onClick={this.changePWD}>
                       {" "}
                       Change password
                     </Button>
