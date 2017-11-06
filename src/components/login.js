@@ -18,16 +18,16 @@ import { actions as authActions } from "reducers/authreducer";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import passwordRules from "password-rules";
 import { Tooltip } from "reactstrap";
-import RefreshIndicator from 'material-ui/RefreshIndicator';
+import RefreshIndicator from "material-ui/RefreshIndicator";
 
 //import { actions as messageActions } from 'ducks/message'
 
 const style = {
   margin: 12,
   refresh: {
-    display: 'inline-block',
-    position: 'relative',
-  },
+    display: "inline-block",
+    position: "relative"
+  }
 };
 
 const paperStyle = {
@@ -97,7 +97,7 @@ class Login extends Component {
       //alert("token: " + sessionStorage.getItem("token"));
       //this.props.history.push
       //this.props.history.push('/attrib', ...this.state);
-      this.setState({ isLoading: false });      
+      this.setState({ isLoading: false });
       this.props.resetMessage({
         type: authTypes.MESSAGE,
         message: ""
@@ -105,23 +105,28 @@ class Login extends Component {
       this.props.history.push("/listitems", ...this.state);
       //this.props.history.push('/test', ...this.state);
     } else {
-     
       if (
-        _.trim(this.props.authState.message) != "" &&
-          this.props.authState.message != "ok"
+        _.trim(this.props.authState.message.msg) != "" &&
+        this.props.authState.message.msg != "ok"
       ) {
         this.setState({ isLoading: false });
-        alert(this.props.authState.message);
-        this.setState({
-          txtUser: "",
-          txtPwd : ""
-        })
-        this.txtUser.focus();
-        
+        alert(this.props.authState.message.msg);
+
         this.props.resetMessage({
           type: authTypes.MESSAGE,
-          message: ""
+          message: { val: 0, msg: "" }
         });
+
+        this.setState({
+          txtUser: "",
+          txtPwd: ""
+        });
+        this.txtUser.focus();
+        //alert(this.props.authState.message.val)
+        if (this.props.authState.message.val == -2) {
+          this.props.history.push("/changepwd");
+        }
+
         //Reset the message
       }
     }
@@ -185,12 +190,12 @@ class Login extends Component {
     //this.context.router.history.push('/grid');
   };
 
-  handleKeyPress = (event) => {
+  handleKeyPress = event => {
     debugger;
     if (event.target.charCode == 13) {
       alert("Enter clicked!!!");
     }
-  }
+  };
 
   render() {
     if (this.state.hasErrored) {
@@ -231,7 +236,7 @@ class Login extends Component {
                       ref={element => (this.txtUser = element)}
                       value={this.state.txtUser}
                       style={font11}
-                      onChange={(e)=> this.setState({txtUser: e.target.value})}
+                      onChange={e => this.setState({ txtUser: e.target.value })}
                       hintText="Enter User ID"
                     />
                   </td>
@@ -245,7 +250,7 @@ class Login extends Component {
                       id="txtPassword"
                       type="password"
                       ref={element => (this.txtPwd = element)}
-                      onChange={(e)=> this.setState({txtPwd: e.target.value})}
+                      onChange={e => this.setState({ txtPwd: e.target.value })}
                       style={font11}
                       hintText="Enter Password"
                       value={this.state.txtPwd}
@@ -315,7 +320,9 @@ class Login extends Component {
                 <tr>
                   <td colSpan="2">
                     {this.state.isLoading ? (
-                      <div  className="py-2"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>               
+                      <div className="py-2">
+                        <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
+                      </div>
                     ) : null}
                   </td>
                 </tr>

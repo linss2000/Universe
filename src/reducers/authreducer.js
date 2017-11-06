@@ -17,7 +17,7 @@ export const initialState = {
   isLoading: false,
   error: null,
   items: [],
-  message: "",
+  message: { val: 0, msg: "" }, 
   token: ""
 };
 

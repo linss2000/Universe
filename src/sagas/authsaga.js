@@ -21,7 +21,6 @@ import { types as authTypes } from "reducers/authreducer";
 //import { push } from 'react-router-redux';
 
 const authApi = {
-  
   login(userData) {
     debugger;
     console.log(userData.user);
@@ -29,7 +28,7 @@ const authApi = {
 
     //new Promise((resolve, reject) => {
     //return fetch("http://localhost:3003/loginsvc/", {
-      return fetch("http://hvs.selfip.net:3003/loginsvc/", {
+    return fetch("http://hvs.selfip.net:3003/loginsvc/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -43,9 +42,8 @@ const authApi = {
       .then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
-  },
+  }
 
-  
   //.then(data => data)
 };
 
@@ -74,13 +72,18 @@ function* login(userData) {
       debugger;
       yield put({
         type: authTypes.MESSAGE,
-        message: resultObj.response.statusText
+        message: { val: -1, msg: resultObj.response.statusText }
       });
     } else {
-      sessionStorage.setItem("token", JSON.parse(resultObj).token);
+      if (JSON.parse(resultObj).message == 1) {
+        sessionStorage.setItem("token", JSON.parse(resultObj).token);
+      }
       yield put({
         type: authTypes.MESSAGE,
-        message: JSON.parse(resultObj).message
+        message: {
+          val: JSON.parse(resultObj).result,
+          msg: JSON.parse(resultObj).message
+        }
       });
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
@@ -100,11 +103,14 @@ function* login(userData) {
     }
     */
     debugger;
-    yield put({ type: authTypes.MESSAGE, message: e });
+    yield put({ type: authTypes.MESSAGE, message: { val: -1, msg: e } });
   } finally {
     debugger;
     if (yield cancelled())
-      yield put({ type: authTypes.MESSAGE, message: "Task Cancelled" });
+      yield put({
+        type: authTypes.MESSAGE,
+        message: { val: -1, msg: "Task Cancelled" }
+      });
   }
 }
 
