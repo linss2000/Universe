@@ -169,7 +169,8 @@ export class ChangePassword extends Component {
         type: changePWDTypes.UPD_PWD_REQUEST,
         userID: _.trim(this.userID.value),
         currPWD: (this.state.showCurrPwd ? _.trim(this.currPWD.value) : _.trim(this.newPWD.value)),
-        newPWD: _.trim(this.newPWD.value)
+        newPWD: _.trim(this.newPWD.value),
+        emailReset : (this.state.showCurrPwd ? "N" : "Y")
       });
     } else {
       let msg = "";

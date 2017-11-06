@@ -21,7 +21,7 @@ import { types as changePWDTypes } from "reducers/changepwdreducer";
 //import { push } from 'react-router-redux';
 
 const attribApi = {
-  changePWD(userID, currPWD, newPWD) {
+  changePWD(userID, currPWD, newPWD, emailReset) {
     debugger;
     //console.log(userData.user);
     //console.log(userData.password);
@@ -37,7 +37,8 @@ const attribApi = {
       body: JSON.stringify({
         userID: userID,
         currPWD: currPWD,
-        newPWD: newPWD
+        newPWD: newPWD,
+        emailReset : emailReset
       })
     })
       .then(statusHelper)
@@ -121,12 +122,12 @@ function* checkToken(secToken) {
   }
 }
 
-function* changePWD(userID, currPWD, newPWD) {
+function* changePWD(userID, currPWD, newPWD, emailReset) {
   debugger;
   try {
     //yield call(delay, 5000)
     //yield put({ type: changePWDTypes.LOGIN_REQUEST, isLoading: false })
-    const resultObj = yield call(attribApi.changePWD, userID, currPWD, newPWD);
+    const resultObj = yield call(attribApi.changePWD, userID, currPWD, newPWD, emailReset);
 
     debugger;
     if (resultObj.response && !resultObj.response.ok) {
@@ -183,7 +184,8 @@ export function* handleRequest(action) {
           changePWD,
           action.userID,
           action.currPWD,
-          action.newPWD
+          action.newPWD,
+          action.emailReset
         );
         debugger;
         break;

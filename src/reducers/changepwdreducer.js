@@ -42,7 +42,8 @@ export const actions = {
     type: payload.type,
     userID: payload.userID,
     currPWD: payload.currPWD,
-    newPWD: payload.newPWD
+    newPWD: payload.newPWD,
+    emailReset : payload.emailReset
   }),
   checkToken: payload => ({ type: payload.type, token: payload.token }),
   resetMessage: payload => ({
