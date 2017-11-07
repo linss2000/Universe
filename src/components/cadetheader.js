@@ -15,7 +15,13 @@ import ReactDOM from "react-dom";
     this.items = [];
 
    this.state = {
-       items: []
+       items: [
+         {
+           user:'',
+           img:''
+         }
+       ],
+         locationinfo: "Location Name and Code, 1 Main Str, Washington DC, MD 11111"
    };
  }
 
@@ -30,15 +36,33 @@ import ReactDOM from "react-dom";
       }
     });
   }
+  componentDidUpdate(prevProps, prevState) {
+    debugger
+    console.log("componentDidUpdate");
+    console.log(this.state.items[0].user);
+  }
+   componentWillReceiveProps(nextProps) {
+     debugger
+    this.state.items = nextProps.headerState.items;
+    
+  }
 
+  
+
+  componentWillMount = () => {
+    debugger;
+  };
+
+  
  render() {
+   debugger 
    return (
      <div>
         <Container fluid>
         <Row>
           <Col>
             <div className="float-left p-3" >
-              <img src={cadetlogo} width="60" height="60"  alt="logo"   />
+              <img src={this.state.items[0].logo} width="60" height="60"  alt="logo"   />
                 <img src={cadettitle} height="60"  alt="logoTitle" className="px-3"/>
                 {/*<h3 className="d-inline align-middle">Welcome to React</h3>*/}
                 </div>
@@ -52,7 +76,7 @@ import ReactDOM from "react-dom";
           </Col>
           <Col>
             <div className="float-right  header-label px-2" >
-            Welcome, {this.state.personname}
+            Welcome, {this.state.items[0].user}
             </div>
           </Col>
         </Row>
@@ -78,4 +102,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CadetHeader);
-
