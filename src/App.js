@@ -13,12 +13,14 @@ import ForgotPassword from "./components/ForgotPassword";
 import ChangePassword from "./components/ChangePassword";
 import ReactStrapComp from "./components/ReactStrap";
 
+
 import logo from "./logo.svg";
 import "./App.css";
 
 import { Button, Container, Row, Col } from "reactstrap";
 import CadetHeader from "./components/cadetheader";
 import MainNavList from "./components/MainNavList";
+import HomeComponent from "./components/HomeMainComponent";
 
 const Root = props => <div {...props} />;
 
@@ -55,6 +57,7 @@ const App = props => {
                 />
                 <Route path="/test" component={ShowData} />
                 <Route path="/tabs" component={ReactStrapComp} />
+                <Route path="/homes" component={HomeComponent} />
                 <Route path="/" component={Main} />
               </Switch>
             </ConnectedRouter>

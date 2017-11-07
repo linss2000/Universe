@@ -6,6 +6,7 @@ import showDataState from './showdatareducer';
 import forgotPWDState from './forgotpwdreducer';
 import changePWDState from './changepwdreducer';
 import headerState from './cdheaderreducer';
+import notificationState from './notificationsreducer';
 
 
 export default combineReducers({
@@ -15,6 +16,7 @@ export default combineReducers({
    showDataState,
    forgotPWDState,
    changePWDState,
-   headerState
+   headerState,
+   notificationState
 });
 
