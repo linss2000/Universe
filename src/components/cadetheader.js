@@ -4,7 +4,7 @@ import cadettitle from 'images/cadettitl.png'
 import 'App.css';
 import { actions as headerActions } from "reducers/cdheaderreducer";
 import { types as headertypes } from "reducers/cdheaderreducer";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col ,Alert} from 'reactstrap';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
@@ -21,7 +21,7 @@ import ReactDOM from "react-dom";
            img:''
          }
        ],
-         locationinfo: "Location Name and Code, 1 Main Str, Washington DC, MD 11111"
+         locationinfo: "3201 Oak Hill Drive, Laurel, Maryland 20724"
    };
  }
 
@@ -75,7 +75,7 @@ import ReactDOM from "react-dom";
             </div>
           </Col>
           <Col>
-            <div className="float-right  header-label px-2" >
+            <div className="float-right  header-label px-2" style={{fontWeight: 'bold',color:'black'}} >
             Welcome, {this.state.items[0].user}
             </div>
           </Col>
