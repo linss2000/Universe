@@ -41,6 +41,7 @@ import { types as cadetSearchTypes } from "reducers/cadetsearchreducer";
 import { actions as cadetSearchActions } from "reducers/cadetsearchreducer";
 
 import HVSPagination from "customComponents/pagination";
+import CadetDetails from "./CadetDetails";
 import {
   Input,
   InputGroup,
@@ -119,13 +120,15 @@ export class CadetsSearch extends Component {
       pageSize: 10,
       dropdownOpen: false,
       popoverOpen: false,
-      inputSearch: ""
+      inputSearch: "",
+      inDetailsTab: false
     };
 
     this.tableID = 0;
     this.newUpdateValue = "";
     this.filterValue = "";
     this.items = [];
+    this.selectedCadetRow = {};
 
     //this.insertRow = this.insertRow.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
@@ -219,9 +222,14 @@ export class CadetsSearch extends Component {
   }
 
   showDetails = row => {
-      debugger;
+    debugger;
     //alert(row.hv_cadet_id);
-    this.props.history.push("/cadetdetails", { params: row });
+    this.selectedCadetRow = row;
+    this.setState({
+      activeTab: "3",
+      inDetailsTab: true
+    });
+    //this.props.history.push("/cadetdetails",{ params: row});
   };
 
   sortTable = columnName => {
@@ -267,11 +275,12 @@ export class CadetsSearch extends Component {
     });
   };
 
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal,
-      attribValue: ""
-    });
+  toggle = tab => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   };
 
   dropToggle = () => {
@@ -296,14 +305,6 @@ export class CadetsSearch extends Component {
     this.setState({
       pageSize: val
     });
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
   }
 
   RenderHeaderColumn = columnName => {
@@ -334,28 +335,51 @@ export class CadetsSearch extends Component {
           }}
         >
           <Nav tabs size="md">
-            <NavItem>
-              <NavLink
-                style={{ cursor: "pointer" }}
-                className={classnames({ active: this.state.activeTab === "1" })}
-                onClick={() => {
-                  this.toggle("1");
-                }}
-              >
-                <i className="fa fa-home" /> Cadets
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                style={{ cursor: "pointer" }}
-                className={classnames({ active: this.state.activeTab === "2" })}
-                onClick={() => {
-                  this.toggle("2");
-                }}
-              >
-                <i className="fa fa-podcast" /> Mentors
-              </NavLink>
-            </NavItem>
+            {!this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
+                  onClick={() => {
+                    this.toggle("1");
+                  }}
+                >
+                  <i className="fa fa-home" /> Cadets
+                </NavLink>
+              </NavItem>
+            )}
+            {!this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
+                  onClick={() => {
+                    this.toggle("2");
+                  }}
+                >
+                  <i className="fa fa-podcast" /> Mentors
+                </NavLink>
+              </NavItem>
+            )}
+            {this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "3"
+                  })}
+                  onClick={() => {
+                    this.toggle("3");
+                  }}
+                >
+                  <i className="fa fa-podcast" /> Cadet Details
+                </NavLink>
+              </NavItem>
+            )}
           </Nav>
 
           <TabContent activeTab={this.state.activeTab}>
@@ -392,7 +416,8 @@ export class CadetsSearch extends Component {
                         }}
                       />
                       <InputGroupAddon>
-                        <i style={styles.link}
+                        <i
+                          style={styles.link}
                           onClick={() => {
                             this.setState({
                               inputSearch: ""
@@ -612,6 +637,27 @@ export class CadetsSearch extends Component {
               <Row>
                 <Col sm="6">1</Col>
                 <Col sm="6">2</Col>
+              </Row>
+            </TabPane>
+            <TabPane tabId="3">
+              <Row className="mt-2 mb-0 p-0">
+                <Col sm="12">
+                  <div className="float-right">
+                    {" "}
+                    <Button size="sm"
+                      color="primary"
+                      onClick={() =>
+                        this.setState({ inDetailsTab: false, activeTab: "1" })}
+                    >
+                      Cancel Details
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="m-0 p-0">
+                <Col sm="12">
+                  <CadetDetails cadetRow={this.selectedCadetRow} />
+                </Col>
               </Row>
             </TabPane>
           </TabContent>

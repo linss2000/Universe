@@ -93,7 +93,7 @@ export class CadetDetails extends Component {
     debugger;
     console.log(this.props);
 
-    //alert(this.props.location.state.params.hv_table_i)
+    //alert(this.props.cadetRow.hv_table_i)
     //if (this.props) {
     /*
     console.log(this.props.location);
@@ -355,7 +355,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_name}
+                      {this.props.cadetRow.hv_cadet_name}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -365,7 +365,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_dob}
+                      {this.props.cadetRow.hv_cadet_dob}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -375,7 +375,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_age}
+                      {this.props.cadetRow.hv_cadet_age}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -385,7 +385,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_gender}
+                      {this.props.cadetRow.hv_cadet_gender}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -395,7 +395,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      ***-**-{this.props.location.state.params.hv_cadet_ssn}
+                      ***-**-{this.props.cadetRow.hv_cadet_ssn}
                     </Col>
                   </FormGroup>
                 </Form>
@@ -411,7 +411,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_id}
+                      {this.props.cadetRow.hv_cadet_id}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -422,10 +422,10 @@ export class CadetDetails extends Component {
                     </Col>
                     <Col sm={8}>
                       <div>
-                        {this.props.location.state.params.hv_cadet_addr1} <br />
-                        {this.props.location.state.params.hv_cadet_city}{" "}
-                        {this.props.location.state.params.hv_cadet_st}{" "}
-                        {this.props.location.state.params.hv_cadet_zip}
+                        {this.props.cadetRow.hv_cadet_addr1} <br />
+                        {this.props.cadetRow.hv_cadet_city}{" "}
+                        {this.props.cadetRow.hv_cadet_st}{" "}
+                        {this.props.cadetRow.hv_cadet_zip}
                       </div>
                     </Col>
                   </FormGroup>
@@ -442,7 +442,7 @@ export class CadetDetails extends Component {
                       </Label>
                     </Col>
                     <Col sm={8}>
-                      {this.props.location.state.params.hv_cadet_class}
+                      {this.props.cadetRow.hv_cadet_class}
                     </Col>
                   </FormGroup>
                   <FormGroup row className="m-0 p-0">
@@ -453,10 +453,10 @@ export class CadetDetails extends Component {
                     </Col>
                     <Col sm={8}>
                       <div>
-                        {this.props.location.state.params.hv_cadet_addr1} <br />
-                        {this.props.location.state.params.hv_cadet_city}{" "}
-                        {this.props.location.state.params.hv_cadet_st}{" "}
-                        {this.props.location.state.params.hv_cadet_zip}
+                        {this.props.cadetRow.hv_cadet_addr1} <br />
+                        {this.props.cadetRow.hv_cadet_city}{" "}
+                        {this.props.cadetRow.hv_cadet_st}{" "}
+                        {this.props.cadetRow.hv_cadet_zip}
                       </div>
                     </Col>
                   </FormGroup>

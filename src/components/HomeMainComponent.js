@@ -145,14 +145,6 @@ const mapStateToProps = state => {
     };
   };
 
-  const mapDispatchToProps = dispatch => ({
-    ...bindActionCreators(
-      {
-        ...cadetDetailsActions
-      },
-      dispatch
-    )
-  });
-  
+  const mapDispatchToProps = {};
 
   export default connect(mapStateToProps,mapDispatchToProps)(HomeComponent);
