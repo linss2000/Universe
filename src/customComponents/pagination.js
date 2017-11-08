@@ -47,7 +47,7 @@ class HVSPagination extends React.Component {
       if (this.props.filterValue.trim() != "") {
         items = _.filter(this.props.items, item => {
           return (
-            item.hv_universal_name
+            item[this.props.searchCol]
               .toLowerCase()
               .indexOf(this.props.filterValue) !== -1
           );
@@ -83,7 +83,7 @@ class HVSPagination extends React.Component {
     if (this.props.filterValue.trim() != "") {
       items = _.filter(this.props.items, item => {
         return (
-          item.hv_universal_name
+          item[this.props.searchCol]
             .toLowerCase()
             .indexOf(this.props.filterValue) !== -1
         );

@@ -201,6 +201,7 @@ class AttribTable extends Component {
     pageOfItems: [],
     filterValue: "",
     sortAsc: true,
+    searchCol: "hv_universal_name",
     sortedCol: "hv_universal_i",
     pageSize: 10,
     dropdownOpen: false,
@@ -600,8 +601,8 @@ class AttribTable extends Component {
                       />
                     </td>
                     <td>
-                      {this.props.attribTableState.rowID !=
-                      row.hv_universal_i ? (
+                      {(this.props.attribTableState.rowID !=
+                      row.hv_universal_i || 1 === 1) ? (
                         row.hv_universal_name
                       ) : (
                         <div
@@ -731,6 +732,7 @@ class AttribTable extends Component {
                       filterValue={this.state.filterValue}
                       onChangePage={this.onChangePage}
                       pageSize={this.state.pageSize}
+                      searchCol={this.state.searchCol}
                     />
                   </td>
                 </tr>

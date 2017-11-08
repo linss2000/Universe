@@ -9,6 +9,7 @@ import { bindActionCreators } from "redux";
 import { types as changePWDTypes } from "reducers/changepwdreducer";
 import { actions as changePWDActions } from "reducers/changepwdreducer";
 import * as _ from "lodash";
+import bgImg from "images/cgyca_background.png";
 
 import {
   Table,
@@ -58,6 +59,26 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+
+const styles = {
+    margin: 12,
+    refresh: {
+      display: "inline-block",
+      position: "relative"
+    },
+  
+    container: {
+      overflow: "hidden",
+      margin: "0px",
+      width: "100%",
+      height: "100vh",
+      padding: "1px",
+      backgroundImage: `url(${bgImg})`,
+      backgroundSize: "100%",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat"
+    }
+  };
 
 export class ChangePassword extends Component {
   static propTypes = {};
@@ -168,9 +189,11 @@ export class ChangePassword extends Component {
       this.props.changePWD({
         type: changePWDTypes.UPD_PWD_REQUEST,
         userID: _.trim(this.userID.value),
-        currPWD: (this.state.showCurrPwd ? _.trim(this.currPWD.value) : _.trim(this.newPWD.value)),
+        currPWD: this.state.showCurrPwd
+          ? _.trim(this.currPWD.value)
+          : _.trim(this.newPWD.value),
         newPWD: _.trim(this.newPWD.value),
-        emailReset : (this.state.showCurrPwd ? "N" : "Y")
+        emailReset: this.state.showCurrPwd ? "N" : "Y"
       });
     } else {
       let msg = "";
@@ -186,144 +209,149 @@ export class ChangePassword extends Component {
 
   render() {
     return (
-      <div className="App" style={{ height: "100vh" }}>
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Cadet Systems</h2>
-        </div>
-        <img src={clientlogo} className="mx-auto my-2" />
-        <Container
-          className="mx-auto"
-          fluid
-          style={{ width: "960px", height: "600px" }}
-        >
-          <Row>
-            <Col sm="2" />
-            <Col sm="5">
-              <Card>
-                <CardHeader>Change Password</CardHeader>
-                <CardBody>
-                  <Form>
-                    <FormGroup row>
-                      <Col sm={12}>
-                        <InputGroup size="sm">
-                          <InputGroupAddon>
-                            <i className="fa fa-user fa-fw" />
-                          </InputGroupAddon>
-                          <Input
-                            size="sm"
-                            type="text"
-                            value={this.state.userID}
-                            onChange={e =>
-                              this.setState({ userID: e.target.value })}
-                            readOnly={this.state.userReadOnly}
-                            id="userID"
-                            innerRef={input => {
-                              this.userID = input;
-                            }}
-                            placeholder="User ID"
-                          />
-                        </InputGroup>
-                      </Col>
-                    </FormGroup>
-                    {this.state.showCurrPwd && (
+      <div style={styles.container}>
+        <div className="App" style={{ height: "100vh" }}>
+          <div  style={{margin:"20px"}}>
+            <img src={clientlogo} className="mx-auto my-2" />
+            <h2 className="text-danger">Welcome to Cadet Systems</h2>
+          </div>
+          <Container
+            className="mx-auto"
+            fluid
+            style={{ width: "960px", height: "600px" }}
+          >
+            <Row>
+              <Col sm="2" />
+              <Col sm="5">
+                <Card>
+                  <CardHeader>Change Password</CardHeader>
+                  <CardBody>
+                    <Form>
                       <FormGroup row>
                         <Col sm={12}>
                           <InputGroup size="sm">
                             <InputGroupAddon>
-                              <i className="fa fa-lock fa-fw" />
+                              <i className="fa fa-user fa-fw" />
                             </InputGroupAddon>
-
                             <Input
                               size="sm"
-                              type="password"
-                              id="currPWD"
+                              type="text"
+                              value={this.state.userID}
+                              onChange={e =>
+                                this.setState({ userID: e.target.value })}
+                              readOnly={this.state.userReadOnly}
+                              id="userID"
                               innerRef={input => {
-                                this.currPWD = input;
+                                this.userID = input;
                               }}
-                              placeholder="Current Password"
+                              placeholder="User ID"
                             />
                           </InputGroup>
                         </Col>
                       </FormGroup>
-                    )}
-                    <FormGroup row>
-                      <Col sm={12}>
-                        <InputGroup size="sm">
-                          <InputGroupAddon>
-                            <i className="fa fa-unlock fa-fw" />
-                          </InputGroupAddon>
-                          <Input
-                            size="sm"
-                            type="password"
-                            id="newPWD"
-                            innerRef={input => {
-                              this.newPWD = input;
-                            }}
-                            placeholder="New Password"
-                          />
-                        </InputGroup>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col sm={12}>
-                        <InputGroup size="sm">
-                          <InputGroupAddon>
-                            <i className="fa fa-unlock-alt fa-fw" />
-                          </InputGroupAddon>
-                          <Input
-                            size="sm"
-                            type="password"
-                            id="newPWD1"
-                            innerRef={input => {
-                              this.newPWD1 = input;
-                            }}
-                            placeholder="Reenter New Password"
-                          />
-                        </InputGroup>
-                      </Col>
-                    </FormGroup>
-                  </Form>
-                  <br />
-                  <div className="float-right">
-                    <Button
-                      size="sm"
-                      color="secondary"
-                      onClick={this.cancel}
-                      className="text-white"
-                    >
-                      {" "}
-                      Cancel
-                    </Button>
-                    {"  "}
-                    <Button size="sm" color="primary" onClick={this.changePWD}>
-                      {" "}
-                      Change password
-                    </Button>
-                    {this.state.isLoading ? (
-                      <div className="py-2 mx-auto">
-                        <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
-                      </div>
-                    ) : null}
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col sm="5">
-              <Card body inverse color="warning">
-                <CardHeader>Password Must:</CardHeader>
-                <CardBody>
-                  <ul>
-                    <li>Password must be at least 8 letters long</li>
-                    <li>Password must contain a Capital letter</li>
-                    <li>Password must contain a number</li>
-                    <li>Password must contain a special character</li>
-                  </ul>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+                      {this.state.showCurrPwd && (
+                        <FormGroup row>
+                          <Col sm={12}>
+                            <InputGroup size="sm">
+                              <InputGroupAddon>
+                                <i className="fa fa-lock fa-fw" />
+                              </InputGroupAddon>
+
+                              <Input
+                                size="sm"
+                                type="password"
+                                id="currPWD"
+                                innerRef={input => {
+                                  this.currPWD = input;
+                                }}
+                                placeholder="Current Password"
+                              />
+                            </InputGroup>
+                          </Col>
+                        </FormGroup>
+                      )}
+                      <FormGroup row>
+                        <Col sm={12}>
+                          <InputGroup size="sm">
+                            <InputGroupAddon>
+                              <i className="fa fa-unlock fa-fw" />
+                            </InputGroupAddon>
+                            <Input
+                              size="sm"
+                              type="password"
+                              id="newPWD"
+                              innerRef={input => {
+                                this.newPWD = input;
+                              }}
+                              placeholder="New Password"
+                            />
+                          </InputGroup>
+                        </Col>
+                      </FormGroup>
+                      <FormGroup row>
+                        <Col sm={12}>
+                          <InputGroup size="sm">
+                            <InputGroupAddon>
+                              <i className="fa fa-unlock-alt fa-fw" />
+                            </InputGroupAddon>
+                            <Input
+                              size="sm"
+                              type="password"
+                              id="newPWD1"
+                              innerRef={input => {
+                                this.newPWD1 = input;
+                              }}
+                              placeholder="Reenter New Password"
+                            />
+                          </InputGroup>
+                        </Col>
+                      </FormGroup>
+                    </Form>
+                    <br />
+                    <div className="float-right">
+                      <Button
+                        size="sm"
+                        color="secondary"
+                        onClick={this.cancel}
+                        className="text-white"
+                      >
+                        {" "}
+                        Cancel
+                      </Button>
+                      {"  "}
+                      <Button
+                        size="sm"
+                        color="primary"
+                        onClick={this.changePWD}
+                      >
+                        {" "}
+                        Change password
+                      </Button>
+                      {this.state.isLoading ? (
+                        <div className="py-2 mx-auto">
+                          <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
+                        </div>
+                      ) : null}
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col sm="5">
+                <Card body inverse color="warning">
+                  <CardHeader>Password Must:</CardHeader>
+                  <CardBody>
+                    <ul>
+                      <li>Password must be at least 8 letters long</li>
+                      <li>Password must contain a Capital letter</li>
+                      <li>Password must contain a number</li>
+                      <li>Password must contain a special character</li>
+                    </ul>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </div>
     );
   }

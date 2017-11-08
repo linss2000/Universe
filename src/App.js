@@ -12,6 +12,8 @@ import ShowData from "./components/showdata";
 import ForgotPassword from "./components/ForgotPassword";
 import ChangePassword from "./components/ChangePassword";
 import ReactStrapComp from "./components/ReactStrap";
+import CadetsSearch from "./components/CadetsSearch";
+import CadetDetails from "./components/CadetDetails";
 
 import logo from "./logo.svg";
 import "./App.css";
@@ -49,6 +51,11 @@ const App = props => {
                 <Route path="/changepwd/:secToken" render={props => <ChangePassword {...props} /> } /> 
                 <Route path="/changepwd" component={ChangePassword} />                     
                 <Route path="/listitems" component={ListItems} />
+                <Route path="/cadet" component={CadetsSearch} />
+                <Route
+                  path="/cadetdetails"
+                  render={props => <CadetDetails {...props} />}
+                />
                 <Route
                   path="/attribtable"
                   render={match => <AttribTable {...match} />}

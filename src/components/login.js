@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import logo from "logo.svg";
 import clientlogo from "images/cadetlogo.png";
+import bgImg from "images/cgyca_background.png";
 import "App.css";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
@@ -19,14 +20,29 @@ import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import passwordRules from "password-rules";
 import { Tooltip } from "reactstrap";
 import RefreshIndicator from "material-ui/RefreshIndicator";
+import {
+  Container
+} from "reactstrap";
 
 //import { actions as messageActions } from 'ducks/message'
 
-const style = {
+const styles = {
   margin: 12,
   refresh: {
     display: "inline-block",
     position: "relative"
+  },
+
+  container: {
+    overflow: "hidden",
+    margin: "0px",
+    width: "100%",
+    height: "100vh",
+    padding: "1px",
+    backgroundImage: `url(${bgImg})`,
+    backgroundSize: "100%",
+    backgroundPosition:"center",
+    backgroundRepeat:"no-repeat"
   }
 };
 
@@ -91,7 +107,7 @@ class Login extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     debugger;
-    if (this.props.authState.message == "ok") {
+    if (this.props.authState.message.msg == "ok") {
       debugger;
       //this.context.router.history.push('/grid', ...this.state);
       //alert("token: " + sessionStorage.getItem("token"));
@@ -102,7 +118,7 @@ class Login extends Component {
         type: authTypes.MESSAGE,
         message: ""
       });
-      this.props.history.push("/listitems", ...this.state);
+      this.props.history.push("/cadet", ...this.state);
       //this.props.history.push('/test', ...this.state);
     } else {
       if (
@@ -212,73 +228,88 @@ class Login extends Component {
     */
 
     return (
-      <div className="App" style={{ height: "100vh" }}>
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Cadet Systems</h2>
-        </div>
-        <img src={clientlogo} className="mx-auto my-2" />
-        <div className="d-flex justify-content-center">
-          <Paper style={paperStyle} zDepth={5}>
-            <table style={{ cellSpacing: "20px" }} className="w-75">
-              <tbody>
-                <tr>
-                  <td colSpan="2">
-                    <br />
-                  </td>
-                </tr>
-                <tr>
-                  <td style={font11} className="text-left">
-                    User ID:
-                  </td>
-                  <td style={font11}>
-                    <TextField
-                      ref={element => (this.txtUser = element)}
-                      value={this.state.txtUser}
-                      style={font11}
-                      onChange={e => this.setState({ txtUser: e.target.value })}
-                      hintText="Enter User ID"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td style={font11} className="text-left">
-                    Password:
-                  </td>
-                  <td style={font11}>
-                    <TextField
-                      id="txtPassword"
-                      type="password"
-                      ref={element => (this.txtPwd = element)}
-                      onChange={e => this.setState({ txtPwd: e.target.value })}
-                      style={font11}
-                      hintText="Enter Password"
-                      value={this.state.txtPwd}
-                      onKeyPress={ev => {
-                        //console.log(`Pressed keyCode ${ev.key}`);
-                        if (ev.key === "Enter") {
-                          // Do code here
-                          this._handleTouchTap();
-                          ev.preventDefault();
-                        }
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td />
-                  <td className="text-primary d-flex justify-content-between p-3">
-                    <h6 style={{ cursor: "pointer" }} onClick={this.forgotPWD}>
-                      Forgot password?
-                    </h6>{" "}
-                    {""}{" "}
-                    <h6 style={{ cursor: "pointer" }} onClick={this.changePWD}>
-                      Change password
-                    </h6>{" "}
-                  </td>
-                </tr>
+      <div style={styles.container}>
+        <Container
+          fluid
+          style={{
+            overflow: "hidden",
+            margin: "20px"
+          }}
+        >
+          <div className="App" >
+            <div>
+            <img src={clientlogo} className="mx-auto my-2" />
+              <h2 className="text-danger">Welcome to Cadet Systems</h2>
+            </div>
+            <div className="d-flex justify-content-center">
+              <Paper style={paperStyle} zDepth={5}>
+                <table style={{ cellSpacing: "20px" }} className="w-75">
+                  <tbody>
+                    <tr>
+                      <td colSpan="2">
+                        <br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={font11} className="text-left">
+                        User ID:
+                      </td>
+                      <td style={font11}>
+                        <TextField
+                          ref={element => (this.txtUser = element)}
+                          value={this.state.txtUser}
+                          style={font11}
+                          onChange={e =>
+                            this.setState({ txtUser: e.target.value })}
+                          hintText="Enter User ID"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={font11} className="text-left">
+                        Password:
+                      </td>
+                      <td style={font11}>
+                        <TextField
+                          id="txtPassword"
+                          type="password"
+                          ref={element => (this.txtPwd = element)}
+                          onChange={e =>
+                            this.setState({ txtPwd: e.target.value })}
+                          style={font11}
+                          hintText="Enter Password"
+                          value={this.state.txtPwd}
+                          onKeyPress={ev => {
+                            //console.log(`Pressed keyCode ${ev.key}`);
+                            if (ev.key === "Enter") {
+                              // Do code here
+                              this._handleTouchTap();
+                              ev.preventDefault();
+                            }
+                          }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td />
+                      <td className="text-primary d-flex justify-content-between p-3">
+                        <h6
+                          style={{ cursor: "pointer" }}
+                          onClick={this.forgotPWD}
+                        >
+                          Forgot password?
+                        </h6>{" "}
+                        {""}{" "}
+                        <h6
+                          style={{ cursor: "pointer" }}
+                          onClick={this.changePWD}
+                        >
+                          Change password
+                        </h6>{" "}
+                      </td>
+                    </tr>
 
-                {/*
+                    {/*
                 <tr>
                   <td style={font11}>Application:</td>
                   <td>
@@ -306,47 +337,49 @@ class Login extends Component {
                           />
                       </div>
                 */}
-                <tr>
-                  <td colSpan="2">
-                    <RaisedButton
-                      className="rounded"
-                      label="Login"
-                      fullWidth={true}
-                      primary={true}
-                      onClick={this._handleTouchTap}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan="2">
-                    {this.state.isLoading ? (
-                      <div className="py-2">
-                        <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
-                      </div>
-                    ) : null}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </Paper>
-        </div>
+                    <tr>
+                      <td colSpan="2">
+                        <RaisedButton
+                          className="rounded"
+                          label="Login"
+                          fullWidth={true}
+                          primary={true}
+                          onClick={this._handleTouchTap}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan="2">
+                        {this.state.isLoading ? (
+                          <div className="py-2">
+                            <i className="fa fa-spinner fa-spin fa-2x fa-fw" />
+                          </div>
+                        ) : null}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Paper>
+            </div>
 
-        {/*
+            {/*
         <div className="d-flex justify-content-center">
           <FormText color="primary"><h6>New Customer? SIGN UP</h6></FormText>
         </div>
         */}
-        <Tooltip
-          placement="right"
-          isOpen={this.state.tooltipOpen}
-          target="txtPassword"
-          toggle={this.tooltipToggle}
-        >
-          Password must be at least 8 letters long<br />
-          Password must contain a Capital letter<br />
-          Password must contain a number<br />
-          Password must contain a special character<br />
-        </Tooltip>
+            <Tooltip
+              placement="right"
+              isOpen={this.state.tooltipOpen}
+              target="txtPassword"
+              toggle={this.tooltipToggle}
+            >
+              Password must be at least 8 letters long<br />
+              Password must contain a Capital letter<br />
+              Password must contain a number<br />
+              Password must contain a special character<br />
+            </Tooltip>
+          </div>
+        </Container>
       </div>
     );
   }

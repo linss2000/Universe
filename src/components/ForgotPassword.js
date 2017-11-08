@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { types as forgotPWDTypes } from "reducers/forgotpwdreducer";
 import { actions as forgotPWDActions } from "reducers/forgotpwdreducer";
 import * as _ from "lodash";
+import bgImg from "images/cgyca_background.png";
 
 import {
   Table,
@@ -54,26 +55,45 @@ import {
   ModalFooter
 } from "reactstrap";
 
+const styles = {
+  margin: 12,
+  refresh: {
+    display: "inline-block",
+    position: "relative"
+  },
+
+  container: {
+    overflow: "hidden",
+    margin: "0px",
+    width: "100%",
+    height: "100vh",
+    padding: "1px",
+    backgroundImage: `url(${bgImg})`,
+    backgroundSize: "100%",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat"
+  }
+};
+
 export class ForgotPassword extends Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
     this.state = {
-        isLoading : false
-    }
+      isLoading: false
+    };
     this.reqPassword = this.reqPassword.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     debugger;
     if (this.props.forgotPWDState.message.val != "0") {
-       
-      alert(this.props.forgotPWDState.message.msg);      
-      this.setState({isLoading: false});
+      alert(this.props.forgotPWDState.message.msg);
+      this.setState({ isLoading: false });
       this.props.resetMessage({
         type: forgotPWDTypes.MESSAGE,
-        message: {val:0, msg:""}
+        message: { val: 0, msg: "" }
       });
 
       if (this.props.forgotPWDState.message.val == 1) {
@@ -98,7 +118,7 @@ export class ForgotPassword extends Component {
       return false;
     }
 
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
 
     this.props.checkEmail({
       type: forgotPWDTypes.CHECK_EMAIL_REQUEST,
@@ -109,49 +129,52 @@ export class ForgotPassword extends Component {
 
   render() {
     return (
-      <div className="App" style={{ height: "100vh" }}>
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Cadet Systems</h2>
+      <div style={styles.container}>
+        <div className="App" style={{ height: "100vh" }}>
+          <div style={{ margin: "20px" }}>
+            <img src={clientlogo} className="mx-auto my-2" />
+            <h2 className="text-danger">Welcome to Cadet Systems</h2>
+          </div>
+          <Container
+            fluid
+            style={{ width: "500px", height: "600px" }}
+            className="d-flex align-items-start"
+          >
+            <Card>
+              <CardHeader>Password Recovery</CardHeader>
+              <CardBody>
+                <CardText>
+                  Enter in your email address and we'll send you a link to reset
+                  your password
+                </CardText>
+                <InputGroup>
+                  <InputGroupAddon>@</InputGroupAddon>
+                  <Input
+                    placeholder="Email"
+                    innerRef={input => {
+                      this.textInput = input;
+                    }}
+                  />
+                </InputGroup>
+                <br />
+                <Button color="primary" block onClick={this.reqPassword}>
+                  {" "}
+                  Request new password
+                </Button>
+                {this.state.isLoading ? (
+                  <div className="py-2 mx-auto">
+                    <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
+                  </div>
+                ) : null}
+              </CardBody>
+            </Card>{" "}
+            {/*
+            <a href={"http://hvs.selfip.net:3003/excel"} download={"test.xlsx"}>
+              {" "}
+              Download Excel
+            </a> */}
+          </Container>
         </div>
-        <img src={clientlogo} className="mx-auto my-2" />
-        <Container
-          fluid
-          style={{ width: "400px", height: "600px" }}
-          className="d-flex align-items-start"
-        >
-          <Card>
-            <CardHeader>Password Recovery</CardHeader>
-            <CardBody>
-              <CardText>
-                Enter in your email address and we'll send you a link to reset
-                your password
-              </CardText>
-              <InputGroup>
-                <InputGroupAddon>@</InputGroupAddon>
-                <Input
-                  placeholder="Email"
-                  innerRef={input => {
-                    this.textInput = input;
-                  }}
-                />
-              </InputGroup>
-              <br />
-              <Button color="primary" block onClick={this.reqPassword}>
-                {" "}
-                Request new password
-              </Button>
-              {this.state.isLoading ? (
-                <div className="py-2 mx-auto">
-                  <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
-                </div>
-              ) : null}
-            </CardBody>
-          </Card>
-          <a href={"http://hvs.selfip.net:3003/excel"}
-            download={"test.xlsx"}> Download Excel
-        </a>
-        </Container>
       </div>
     );
   }
