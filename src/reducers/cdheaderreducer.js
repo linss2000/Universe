@@ -5,7 +5,12 @@ ITEMS: "HEADER/ITEMS"
 
 export const initialState = {
   error: null,
-  items: [],
+  items: [
+    {
+      user:"sv",
+      logo:""
+    }
+  ],
   MESSAGE:''
 };
 

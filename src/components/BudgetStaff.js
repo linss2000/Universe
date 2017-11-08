@@ -11,7 +11,7 @@ export default class BudgetStaff extends React.Component {
         }} >
         <div className="d-flex">
           <Row> <Col sm="12">
-             <h4 className="text-default">Budget and Staff  <i class="fa fa-arrow-circle-o-down" />    </h4>
+             <h4 className="text-default">Budget and Staff  <i className="fa fa-arrow-circle-o-down" />    </h4>
           </Col>
           </Row>
         </div>

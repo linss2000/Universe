@@ -62,7 +62,7 @@ import ReactDOM from "react-dom";
         <Row>
           <Col>
             <div className="float-left p-3" >
-              <img src={this.state.items[0].logo} width="60" height="60"  alt="logo"   />
+              <img src={this.props.headerState.items[0].logo} width="60" height="60"  alt="logo"   />
                 <img src={cadettitle} height="60"  alt="logoTitle" className="px-3"/>
                 {/*<h3 className="d-inline align-middle">Welcome to React</h3>*/}
                 </div>

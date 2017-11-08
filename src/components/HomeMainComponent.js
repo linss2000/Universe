@@ -5,7 +5,9 @@ import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import { bindActionCreators } from "redux";
 
+import { actions as cadetDetailsActions } from "reducers/cadetdetailsreducer";
 import {
     Container,
     TabContent,
@@ -35,9 +37,9 @@ class HomeComponent extends Component {
     }
 
     renderList(){
-        return this.props.notificationState.map((notification) => {
+        return this.props.notificationState.map((notification,index) => {
             return(
-                <tr >
+                <tr key={index} >
                    <td><b>{notification.total_ntf_cnt}</b></td>
                    <td>{notification.notify_type}</td>
                    <td>{notification.notify_message}</td>
@@ -52,7 +54,7 @@ class HomeComponent extends Component {
             <Container fluid  style={{width: 1024,overflow: "hidden", margin: "20px"}} >
                 <div className="d-flex">
                     <Row> <Col sm="12">
-                  <h4 className="text-default">Home  <i class="fa fa-arrow-circle-o-down" />    </h4>
+                  <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" />    </h4>
                   <h5 className="text-primary">Welcome to the CGYCA Solution. </h5>
                    <span className="text-default">The CGYCA Solution is an all-in-one system that tracks cadets, courses and budget information.<br />
                    This home page gives you quick access notifications and key metrics, and provides you with the quick links to 
@@ -67,7 +69,7 @@ class HomeComponent extends Component {
                     <Row>
                         <Col>
                         <div>
-                        <i class="fa fa-caret-down fa-lg"  onClick={() => {
+                        <i className="fa fa-caret-down fa-lg"  onClick={() => {
                                             this.setState({ notifycollapse: !this.state.notifycollapse }); }} />
                         <span className="text-default"> Notifications </span>
                         <Badge  badgeContent={10}
@@ -103,7 +105,7 @@ class HomeComponent extends Component {
                     <Row>
                         <Col>
                         <div>
-                        <i class="fa fa-caret-down fa-lg"  onClick={() => {
+                        <i className="fa fa-caret-down fa-lg"  onClick={() => {
                                             this.setState({ indicatorscollapse : !this.state.indicatorscollapse }); }} />
                         <span className="text-default"> Key Indicators</span>
                         <Divider />
@@ -143,4 +145,14 @@ const mapStateToProps = state => {
     };
   };
 
-  export default connect(mapStateToProps)(HomeComponent);
+  const mapDispatchToProps = dispatch => ({
+    ...bindActionCreators(
+      {
+        ...cadetDetailsActions
+      },
+      dispatch
+    )
+  });
+  
+
+  export default connect(mapStateToProps,mapDispatchToProps)(HomeComponent);

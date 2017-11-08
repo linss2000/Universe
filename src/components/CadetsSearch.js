@@ -87,7 +87,7 @@ export class CadetsSearch extends Component {
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
 
-    console.log(this.props.location);
+    //console.log(this.props.location);
 
     this.props.getCadets({
       type: cadetSearchTypes.FETCH_TABLES_REQUEST,
@@ -219,7 +219,8 @@ export class CadetsSearch extends Component {
   }
 
   showDetails = row => {
-    alert(row.hv_cadet_id);
+      debugger;
+    //alert(row.hv_cadet_id);
     this.props.history.push("/cadetdetails", { params: row });
   };
 

@@ -118,7 +118,7 @@ class Login extends Component {
         type: authTypes.MESSAGE,
         message: ""
       });
-      this.props.history.push("/cadet", ...this.state);
+      this.props.history.push("/tabs", ...this.state);
       //this.props.history.push('/test', ...this.state);
     } else {
       if (

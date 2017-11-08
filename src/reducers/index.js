@@ -8,6 +8,7 @@ import changePWDState from './changepwdreducer';
 import headerState from './cdheaderreducer';
 import cadetSearchState from './cadetsearchreducer';
 import cadetDetailsState from './cadetdetailsreducer';
+import notificationState from './notificationsreducer';
 
 export default combineReducers({
    authState,
@@ -18,6 +19,7 @@ export default combineReducers({
    changePWDState,
    headerState,
    cadetSearchState,
-   cadetDetailsState
+   cadetDetailsState,
+   notificationState
 });
 

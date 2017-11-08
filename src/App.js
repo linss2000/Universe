@@ -63,8 +63,14 @@ const App = props => {
                   render={match => <AttribTable {...match} />}
                 />
                 <Route path="/test" component={ShowData} />
-                <Route path="/tabs" component={ReactStrapComp} />
-                <Route path="/homes" component={HomeComponent} />
+                <Route
+                  path="/tabs"
+                  render={props => <ReactStrapComp {...props} />}
+                />
+                <Route
+                  path="/homes"
+                  render={props => <HomeComponent {...props} />}
+                />                
                 <Route path="/" component={Main} />
               </Switch>
             </ConnectedRouter>

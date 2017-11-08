@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import CadetHeader from "./cadetheader"
-import cadetlogo from 'images/cadetlogo.png'
-import cadettitle from 'images/cadettitl.png'
+import CadetHeader from "./cadetheader";
+import cadetlogo from "images/cadetlogo.png";
+import cadettitle from "images/cadettitl.png";
 import {
   Container,
   TabContent,
@@ -24,11 +24,12 @@ import {
   CardImg,
   CardSubtitle,
   CardHeader
-
 } from "reactstrap";
 import HomeComponent from "./HomeMainComponent";
 import BudgetStaff from "./BudgetStaff";
-import 'App.css';
+import CadetsSearch from "./CadetsSearch";
+
+import "App.css";
 
 const FirstFunctional = props => {
   return <div onClick={() => props.showMessage("Child")}>{props.name}</div>;
@@ -64,110 +65,133 @@ export class ReactStrapComp extends Component {
   render() {
     return (
       <div>
-
         <Card>
-          <CardHeader>    <CadetHeader></CadetHeader></CardHeader>
+          <CardHeader>
+            {" "}
+            <CadetHeader />
+          </CardHeader>
 
           <CardBody>
-
             <Nav tabs size="md">
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "1" })}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
                   onClick={() => {
                     this.toggle("1");
-                  } }
-                  >
-                  <i class="fa fa-home" /> Home
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-home" /> Home
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "2" })}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
                   onClick={() => {
                     this.toggle("2");
-                  } }
-                  >
-                  <i class="fa fa-podcast" /> Cadets
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-podcast" /> Cadets
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "3" })}
+                  className={classnames({
+                    active: this.state.activeTab === "3"
+                  })}
                   onClick={() => {
                     this.toggle("3");
-                  } }
-                  >
-                  <i class="fa fa-users" /> Staff and Budget
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-users" /> Staff and Budget
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "4" })}
+                  className={classnames({
+                    active: this.state.activeTab === "4"
+                  })}
                   onClick={() => {
                     this.toggle("4");
-                  } }
-                  >
-                  <i class="fa fa-calendar" /> Course Schedule
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-calendar" /> Course Schedule
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "5" })}
+                  className={classnames({
+                    active: this.state.activeTab === "5"
+                  })}
                   onClick={() => {
                     this.toggle("5");
-                  } }
-                  >
-                  <i class="fa fa-check-circle" /> Approvals
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-check-circle" /> Approvals
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "6" })}
+                  className={classnames({
+                    active: this.state.activeTab === "6"
+                  })}
                   onClick={() => {
                     this.toggle("6");
-                  } }
-                  >
-                  <i class="fa fa-line-chart" /> Reports
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-line-chart" /> Reports
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}
-                  className={classnames({ active: this.state.activeTab === "7" })}
+                  className={classnames({
+                    active: this.state.activeTab === "7"
+                  })}
                   onClick={() => {
                     this.toggle("7");
-                  } }
-                  >
-                  <i class="fa fa-cog" /> Admin
-              </NavLink>
+                  }}
+                >
+                  <i className="fa fa-cog" /> Admin
+                </NavLink>
               </NavItem>
             </Nav>
-            <TabContent activeTab={this.state.activeTab}
-
+            <TabContent
+              activeTab={this.state.activeTab}
               style={{
-                height: "500px"
+                height: "500px",
+                width: "100%"
               }}
+            >
+              <div
+                className="tab-content card"
+                style={{
+                  height: "500px",
+                  overflow: "scroll"
+                }}
               >
-              <div class="tab-content card" style={{
-                height: "500px",overflow:'scroll'
-              }}>
                 <TabPane tabId="1">
                   <Row>
                     <Col sm="12">
-                      <HomeComponent></HomeComponent>
+                      <HomeComponent />
                     </Col>
                   </Row>
                 </TabPane>
                 <TabPane tabId="2">
                   <Row>
-               
+                    <Col sm="11">
+                      <CadetsSearch {...this.props} /> 
+                    </Col>
+                    <Col sm="1"></Col>
                   </Row>
                 </TabPane>
 
@@ -175,7 +199,7 @@ export class ReactStrapComp extends Component {
                   <Row>
                     <Col sm="12">
                       <div className="d-flex">
-                        <BudgetStaff></BudgetStaff>
+                        <BudgetStaff />
                       </div>
                       <Collapse isOpen={this.state.collapse}>
                         <br />
@@ -184,9 +208,9 @@ export class ReactStrapComp extends Component {
                             <Card body>
                               <CardTitle>Special Title Treatment</CardTitle>
                               <CardText>
-                                With supporting text below as a natural lead-in to
-                            additional content.
-                          </CardText>
+                                With supporting text below as a natural lead-in
+                                to additional content.
+                              </CardText>
                               <Button>Go somewhere</Button>
                             </Card>
                           </Col>
@@ -194,9 +218,9 @@ export class ReactStrapComp extends Component {
                             <Card body>
                               <CardTitle>Special Title Treatment</CardTitle>
                               <CardText>
-                                With supporting text below as a natural lead-in to
-                            additional content.
-                          </CardText>
+                                With supporting text below as a natural lead-in
+                                to additional content.
+                              </CardText>
                               <Button>Go somewhere</Button>
                             </Card>
                           </Col>
@@ -204,9 +228,9 @@ export class ReactStrapComp extends Component {
                             <Card body>
                               <CardTitle>Special Title Treatment</CardTitle>
                               <CardText>
-                                With supporting text below as a natural lead-in to
-                            additional content.
-                          </CardText>
+                                With supporting text below as a natural lead-in
+                                to additional content.
+                              </CardText>
                               <Button>Go somewhere</Button>
                             </Card>
                           </Col>
@@ -222,19 +246,26 @@ export class ReactStrapComp extends Component {
                         fluid
                         style={{
                           width: 1024,
-                          overflow: "hidden", margin: "20px"
-                        }} >
+                          overflow: "hidden",
+                          margin: "20px"
+                        }}
+                      >
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-                            <h4 className="text-default">Course Schedule <i class="fa fa-arrow-circle-o-down" />    </h4>
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12">
+                              <h4 className="text-default">
+                                Course Schedule{" "}
+                                <i className="fa fa-arrow-circle-o-down" />{" "}
+                              </h4>
+                            </Col>
                           </Row>
                         </div>
                         <hr sstyle="height:1px; color:#aaa;" />
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12" />
                           </Row>
                         </div>
                       </Container>
@@ -248,19 +279,26 @@ export class ReactStrapComp extends Component {
                         fluid
                         style={{
                           width: 1024,
-                          overflow: "hidden", margin: "20px"
-                        }} >
+                          overflow: "hidden",
+                          margin: "20px"
+                        }}
+                      >
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-                            <h4 className="text-default">Approvals  <i class="fa fa-arrow-circle-o-down" />    </h4>
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12">
+                              <h4 className="text-default">
+                                Approvals{" "}
+                                <i className="fa fa-arrow-circle-o-down" />{" "}
+                              </h4>
+                            </Col>
                           </Row>
                         </div>
                         <hr sstyle="height:1px; color:#aaa;" />
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12" />
                           </Row>
                         </div>
                       </Container>
@@ -274,19 +312,26 @@ export class ReactStrapComp extends Component {
                         fluid
                         style={{
                           width: 1024,
-                          overflow: "hidden", margin: "20px"
-                        }} >
+                          overflow: "hidden",
+                          margin: "20px"
+                        }}
+                      >
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-                            <h4 className="text-default">Reports  <i class="fa fa-arrow-circle-o-down" />    </h4>
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12">
+                              <h4 className="text-default">
+                                Reports{" "}
+                                <i className="fa fa-arrow-circle-o-down" />{" "}
+                              </h4>
+                            </Col>
                           </Row>
                         </div>
                         <hr sstyle="height:1px; color:#aaa;" />
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12" />
                           </Row>
                         </div>
                       </Container>
@@ -300,19 +345,26 @@ export class ReactStrapComp extends Component {
                         fluid
                         style={{
                           width: 1024,
-                          overflow: "hidden", margin: "20px"
-                        }} >
+                          overflow: "hidden",
+                          margin: "20px"
+                        }}
+                      >
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-                            <h4 className="text-default">Admin  <i class="fa fa-arrow-circle-o-down" />    </h4>
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12">
+                              <h4 className="text-default">
+                                Admin{" "}
+                                <i className="fa fa-arrow-circle-o-down" />{" "}
+                              </h4>
+                            </Col>
                           </Row>
                         </div>
                         <hr sstyle="height:1px; color:#aaa;" />
                         <div className="d-flex">
-                          <Row> <Col sm="12">
-
-                          </Col>
+                          <Row>
+                            {" "}
+                            <Col sm="12" />
                           </Row>
                         </div>
                       </Container>
@@ -321,10 +373,8 @@ export class ReactStrapComp extends Component {
                 </TabPane>
               </div>
             </TabContent>
-
           </CardBody>
         </Card>
-
       </div>
     );
   }

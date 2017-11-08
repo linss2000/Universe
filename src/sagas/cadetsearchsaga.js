@@ -28,8 +28,8 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      //return fetch("http://hvs.selfip.net:3003/getCadets/", {
-        return fetch("http://localhost:3003/getCadets/", {
+      return fetch("http://hvs.selfip.net:3003/getCadets/", {
+        //return fetch("http://localhost:3003/getCadets/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
