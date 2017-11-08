@@ -4,7 +4,7 @@ import cadettitle from 'images/cadettitl.png'
 import 'App.css';
 import { actions as headerActions } from "reducers/cdheaderreducer";
 import { types as headertypes } from "reducers/cdheaderreducer";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col ,Alert} from 'reactstrap';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
@@ -15,7 +15,13 @@ import ReactDOM from "react-dom";
     this.items = [];
 
    this.state = {
-       items: []
+       items: [
+         {
+           user:'',
+           img:''
+         }
+       ],
+         locationinfo: "3201 Oak Hill Drive, Laurel, Maryland 20724"
    };
  }
 
@@ -30,15 +36,33 @@ import ReactDOM from "react-dom";
       }
     });
   }
+  componentDidUpdate(prevProps, prevState) {
+    debugger
+    console.log("componentDidUpdate");
+    console.log(this.state.items[0].user);
+  }
+   componentWillReceiveProps(nextProps) {
+     debugger
+    this.state.items = nextProps.headerState.items;
+    
+  }
 
+  
+
+  componentWillMount = () => {
+    debugger;
+  };
+
+  
  render() {
+   debugger 
    return (
      <div>
         <Container fluid>
         <Row>
           <Col>
             <div className="float-left p-3" >
-              <img src={cadetlogo} width="60" height="60"  alt="logo"   />
+              <img src={this.state.items[0].logo} width="60" height="60"  alt="logo"   />
                 <img src={cadettitle} height="60"  alt="logoTitle" className="px-3"/>
                 {/*<h3 className="d-inline align-middle">Welcome to React</h3>*/}
                 </div>
@@ -51,8 +75,8 @@ import ReactDOM from "react-dom";
             </div>
           </Col>
           <Col>
-            <div className="float-right  header-label px-2" >
-            Welcome, {this.state.personname}
+            <div className="float-right  header-label px-2" style={{fontWeight: 'bold',color:'black'}} >
+            Welcome, {this.state.items[0].user}
             </div>
           </Col>
         </Row>
@@ -78,4 +102,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CadetHeader);
-

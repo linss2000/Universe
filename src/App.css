@@ -29,3 +29,13 @@ body{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.nav-tabs {
+    border: 0;
+    padding: .7rem;
+ 
+    margin-bottom: -20px;
+    background-color: lightgray;
+    z-index: 2;
+    position: relative;
+    border-radius: 2px;
+}
