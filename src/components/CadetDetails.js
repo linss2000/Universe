@@ -41,6 +41,7 @@ import {
 } from "reactstrap";
 
 import clientpic from "images/cadet_photo_square.png";
+import bottompic from "images/cadet_details_botframe.png";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import * as _ from "lodash";
@@ -337,133 +338,138 @@ export class CadetDetails extends Component {
             margin: "5px"
           }}
         >
-          <CardGroup style={{ height: "200px" }}>
-            <Card>
-              <CardImg
-                top
-                style={{width:"132px",height:"147px"}}
-                src={clientpic}                
-              />
-            </Card>
-            <Card>
-              <CardBody>
-                <Form>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Name:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_name}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Birth Date:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_dob}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Current Age:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_age}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Gender:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_gender}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>SSN:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      ***-**-{this.props.cadetRow.hv_cadet_ssn}
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
-                <Form>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>ID:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_id}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Physical address:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      <div>
-                        {this.props.cadetRow.hv_cadet_addr1} <br />
-                        {this.props.cadetRow.hv_cadet_city}{" "}
-                        {this.props.cadetRow.hv_cadet_st}{" "}
-                        {this.props.cadetRow.hv_cadet_zip}
-                      </div>
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
-                <Form>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Class:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      {this.props.cadetRow.hv_cadet_class}
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row className="m-0 p-0">
-                    <Col sm={4}>
-                      <Label>
-                        <strong>Mailing address:</strong>
-                      </Label>
-                    </Col>
-                    <Col sm={8}>
-                      <div>
-                        {this.props.cadetRow.hv_cadet_addr1} <br />
-                        {this.props.cadetRow.hv_cadet_city}{" "}
-                        {this.props.cadetRow.hv_cadet_st}{" "}
-                        {this.props.cadetRow.hv_cadet_zip}
-                      </div>
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
-          </CardGroup>
+          <Row>
+            <Col sm="12">
+              <CardGroup style={{ height: "200px" }}>
+                <Card>
+                  <CardImg
+                    top
+                    style={{ width: "132px", height: "147px" }}
+                    src={clientpic}
+                  />
+                </Card>
+                <Card>
+                  <CardBody>
+                    <Form>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Name:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_name}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Birth Date:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_dob}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Current Age:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_age}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Gender:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_gender}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>SSN:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>
+                          ***-**-{this.props.cadetRow.hv_cadet_ssn}
+                        </Col>
+                      </FormGroup>
+                    </Form>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardBody>
+                    <Form>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>ID:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_id}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Physical address:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>
+                          <div>
+                            {this.props.cadetRow.hv_cadet_addr1} <br />
+                            {this.props.cadetRow.hv_cadet_city}{" "}
+                            {this.props.cadetRow.hv_cadet_st}{" "}
+                            {this.props.cadetRow.hv_cadet_zip}
+                          </div>
+                        </Col>
+                      </FormGroup>
+                    </Form>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardBody>
+                    <Form>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Class:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>{this.props.cadetRow.hv_cadet_class}</Col>
+                      </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={4}>
+                          <Label>
+                            <strong>Mailing address:</strong>
+                          </Label>
+                        </Col>
+                        <Col sm={8}>
+                          <div>
+                            {this.props.cadetRow.hv_cadet_addr1} <br />
+                            {this.props.cadetRow.hv_cadet_city}{" "}
+                            {this.props.cadetRow.hv_cadet_st}{" "}
+                            {this.props.cadetRow.hv_cadet_zip}
+                          </div>
+                        </Col>
+                      </FormGroup>
+                    </Form>
+                  </CardBody>
+                </Card>
+              </CardGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="12">
+              <CardGroup style={{ height: "200px" }}>
+                <Card>
+                  <CardImg
+                    top
+                    width="100%"
+                    src={bottompic}
+                  />
+                </Card>
+              </CardGroup>
+            </Col>
+          </Row>
         </Container>
       </div>
     );

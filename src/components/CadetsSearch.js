@@ -138,7 +138,7 @@ export class CadetsSearch extends Component {
     this.toggle = this.toggle.bind(this);
     this.onDropDownItemClick = this.onDropDownItemClick.bind(this);
     this.clickedItem = this.clickedItem.bind(this);
-
+    this.classToggle = this.classToggle.bind(this);
     //this.newAttribVal = "";
   }
 
@@ -283,6 +283,10 @@ export class CadetsSearch extends Component {
     }
   };
 
+  classToggle = () => {
+
+  }
+
   dropToggle = () => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
@@ -396,7 +400,7 @@ export class CadetsSearch extends Component {
                     <i className="fa fa-list-ul fa-stack-1x" />
                   </span>
                 </Col>
-                <Col sm="4">
+                <Col sm="3">
                   <div className="float-left">
                     <InputGroup size="sm" style={{ width: "300px" }}>
                       <InputGroupAddon>
@@ -431,14 +435,22 @@ export class CadetsSearch extends Component {
                     </InputGroup>
                   </div>
                 </Col>
-                <Col sm="1" className="d-flex align-items-center">
-                  <Label>{this.state.pageOfItems.length} Cadets</Label>
-                </Col>
-                <Col sm="5">
+                <Col sm="4">
+                 <div className="d-flex justify-content-between text-center flex-nowrap mw-100">
+                  <Dropdown disabled={true}  toggle={this.classToggle}>
+                    <DropdownToggle caret>Residential class 51(In Application)</DropdownToggle>
+                    <DropdownMenu>                     
+                      <DropdownItem>Another Action</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                  <span className="d-flex align-items-center">{this.state.pageOfItems.length} Cadets</span>
+                  </div>
+                </Col>                
+                <Col sm="3">
                   <div className="float-right">
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-square-o fa-stack-2x" />
-                      <i className="fa f fa-file-excel-o fa-stack-1x" />
+                      <a href={"http://localhost:3003/cadetexcel"} download={"test.xlsx"}><i className="fa f fa-file-excel-o fa-stack-1x"/></a>
                     </span>{" "}
                     {" "}
                     <span className="fa-stack fa-lg">
@@ -570,51 +582,54 @@ export class CadetsSearch extends Component {
                         className="p-0 m-0"
                       >
                         <td className="p-0 m-0 border-0" />
-                        <td className="p-0 m-0 border-0"><div className="d-flex justify-content-around"><Label>Page Size:</Label>
-                          <Dropdown
-                            size="sm"
-                            dropup
-                            className="p-0 m-0 border-0"
-                            isOpen={this.state.dropdownOpen}
-                            toggle={this.dropToggle}
-                          >
-                            <DropdownToggle caret>
-                              {this.state.pageSize}
-                            </DropdownToggle>
-                            <DropdownMenu
-                              style={{ minWidth: "20px" }}
-                              className="p-0 m-0"
+                        <td className="p-0 m-0 border-0">
+                          <div className="d-flex justify-content-around">
+                            <Label>Page Size:</Label>
+                            <Dropdown
+                              size="sm"
+                              dropup
+                              className="p-0 m-0 border-0"
+                              isOpen={this.state.dropdownOpen}
+                              toggle={this.dropToggle}
                             >
-                              <DropdownItem
-                                onClick={() => {
-                                  this.onDropDownItemClick(5);
-                                }}
+                              <DropdownToggle caret>
+                                {this.state.pageSize}
+                              </DropdownToggle>
+                              <DropdownMenu
+                                style={{ minWidth: "20px" }}
+                                className="p-0 m-0"
                               >
-                                5
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.onDropDownItemClick(10);
-                                }}
-                              >
-                                10
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.onDropDownItemClick(15);
-                                }}
-                              >
-                                15
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.onDropDownItemClick(20);
-                                }}
-                              >
-                                20
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown></div>
+                                <DropdownItem
+                                  onClick={() => {
+                                    this.onDropDownItemClick(5);
+                                  }}
+                                >
+                                  5
+                                </DropdownItem>
+                                <DropdownItem
+                                  onClick={() => {
+                                    this.onDropDownItemClick(10);
+                                  }}
+                                >
+                                  10
+                                </DropdownItem>
+                                <DropdownItem
+                                  onClick={() => {
+                                    this.onDropDownItemClick(15);
+                                  }}
+                                >
+                                  15
+                                </DropdownItem>
+                                <DropdownItem
+                                  onClick={() => {
+                                    this.onDropDownItemClick(20);
+                                  }}
+                                >
+                                  20
+                                </DropdownItem>
+                              </DropdownMenu>
+                            </Dropdown>
+                          </div>
                         </td>
                         <td colSpan={6} className="p-0 m-0 border-0" />
                         <td className="float-right p-0 m-0 border-0">
@@ -642,14 +657,21 @@ export class CadetsSearch extends Component {
               <Row className="mt-2 mb-0 p-0">
                 <Col sm="12">
                   <div className="float-right">
-                    {" "}
-                    <Button size="sm"
+                  <span className="fa-stack" style={styles.link} onClick={() =>
+                        this.setState({ inDetailsTab: false, activeTab: "1" })}>
+                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-times fa-stack-1x" />
+                    </span>                    
+                    {/*
+                    <Button
+                      size="sm"
                       color="primary"
                       onClick={() =>
                         this.setState({ inDetailsTab: false, activeTab: "1" })}
                     >
                       Cancel Details
                     </Button>
+                      */}
                   </div>
                 </Col>
               </Row>

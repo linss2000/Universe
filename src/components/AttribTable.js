@@ -123,8 +123,8 @@ class AttribTable extends Component {
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
 
-    console.log(this.props.location);
-    if (this.props.location.state) {
+    //console.log(this.props.location);
+    if (this.props.location) {
       this.props.getAttribTable({
         type: attribTabTypes.FETCH_TABLE_REQUEST,
         payload: {
@@ -137,7 +137,7 @@ class AttribTable extends Component {
       this.props.getAttribTable({
         type: attribTabTypes.FETCH_TABLE_REQUEST,
         payload: {
-          hv_table_i: 1
+          hv_table_i: this.props.hv_table_i
         }
       });
 

@@ -26,10 +26,10 @@ import {
       debugger;
       //console.log(userData.user);
       //console.log(userData.password);
-  
+      //alert("Before call")
       //new Promise((resolve, reject) => {
       return fetch("http://hvs.selfip.net:3003/db/", {
-        //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
+        //return fetch("http://localhost:3003/db/", {
         method: "POST",
         headers: {
           Accept: "application/json",
