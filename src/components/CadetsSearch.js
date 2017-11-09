@@ -334,7 +334,7 @@ export class CadetsSearch extends Component {
             margin: "20px"
           }}
         >
-          <Nav tabs size="md">
+          <Nav tabs className="m-0 p-0">
             {!this.state.inDetailsTab && (
               <NavItem>
                 <NavLink
@@ -570,8 +570,7 @@ export class CadetsSearch extends Component {
                         className="p-0 m-0"
                       >
                         <td className="p-0 m-0 border-0" />
-                        <td className="p-0 m-0 border-0">Page Size:</td>
-                        <td className="p-0 m-0 border-0">
+                        <td className="p-0 m-0 border-0"><div className="d-flex justify-content-around"><Label>Page Size:</Label>
                           <Dropdown
                             size="sm"
                             dropup
@@ -615,9 +614,9 @@ export class CadetsSearch extends Component {
                                 20
                               </DropdownItem>
                             </DropdownMenu>
-                          </Dropdown>
+                          </Dropdown></div>
                         </td>
-                        <td colSpan={5} className="p-0 m-0 border-0" />
+                        <td colSpan={6} className="p-0 m-0 border-0" />
                         <td className="float-right p-0 m-0 border-0">
                           <HVSPagination
                             searchCol={this.state.searchCol}

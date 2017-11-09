@@ -72,7 +72,7 @@ export class ReactStrapComp extends Component {
           </CardHeader>
 
           <CardBody>
-            <Nav tabs size="md">
+            <Nav tabs className="m-0 p-0">
               <NavItem>
                 <NavLink
                   style={{ cursor: "pointer" }}

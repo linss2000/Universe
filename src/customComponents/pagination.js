@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import * as _ from "lodash";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
+const styles = {
+  link:{
+    cursor:"pointer"
+  }
+}
 /*
 const propTypes = {
   items: PropTypes.array.isRequired,
@@ -175,20 +180,20 @@ class HVSPagination extends React.Component {
 
     return (      
       <Pagination size="md" className="p-0 m-0">
-        <PaginationItem className={pager.currentPage === 1 ? "disabled" : ""}>
+        <PaginationItem style={styles.link} className={pager.currentPage === 1 ? "disabled" : ""}>
           <PaginationLink onClick={() => this.setPage(1)}>
             {""}
             <i className="fa fa-fast-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
-        <PaginationItem className={pager.currentPage === 1 ? "disabled" : ""}>
+        <PaginationItem style={styles.link} className={pager.currentPage === 1 ? "disabled" : ""}>
           <PaginationLink onClick={() => this.setPage(pager.currentPage - 1)}>
           {""}
             <i className="fa fa-step-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
         {pager.pages.map((page, index) => (
-          <PaginationItem
+          <PaginationItem style={styles.link}
             key={index}
             className={pager.currentPage === page ? "active" : ""}
           >
@@ -198,7 +203,7 @@ class HVSPagination extends React.Component {
             </PaginationLink>
           </PaginationItem>
         ))}
-        <PaginationItem
+        <PaginationItem style={styles.link}
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.currentPage + 1)}>
@@ -206,7 +211,7 @@ class HVSPagination extends React.Component {
             <i className="fa fa-step-forward fa-fw" />
           </PaginationLink>
         </PaginationItem>
-        <PaginationItem
+        <PaginationItem style={styles.link}
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.totalPages)}>
