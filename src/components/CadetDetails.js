@@ -40,6 +40,7 @@ import {
   DropdownItem
 } from "reactstrap";
 
+import clientpic from "images/cadet_photo_square.png";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import * as _ from "lodash";
@@ -333,16 +334,15 @@ export class CadetDetails extends Component {
           fluid
           style={{
             overflow: "hidden",
-            margin: "20px"
+            margin: "5px"
           }}
         >
           <CardGroup style={{ height: "200px" }}>
             <Card>
               <CardImg
                 top
-                width="100%"
-                src="https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180"
-                alt="Card image cap"
+                style={{width:"132px",height:"147px"}}
+                src={clientpic}                
               />
             </Card>
             <Card>
