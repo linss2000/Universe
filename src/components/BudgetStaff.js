@@ -1,57 +1,54 @@
-import React from 'react';
-import { Container, Row, Col,Table,hr } from 'reactstrap';
-export default class BudgetStaff extends React.Component {
-  render() {
-    return (
-      <Container
-        fluid
-        style={{
-          width: 1024,
-          overflow: "hidden", margin: "20px"
-        }} >
-        <div className="d-flex">
-          <Row> <Col sm="12">
-             <h4 className="text-default">Budget and Staff  <i className="fa fa-arrow-circle-o-down" />    </h4>
-          </Col>
-          </Row>
-        </div>
-        <hr sstyle="height:1px; color:#aaa;"/>
-        <div className="d-flex">
-          <Row> <Col sm="12">
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
-          </Row>
-        </div>
-      </Container>
-    );
-  }
+import React, { Component } from 'react';
+import Staffandbdgt from 'images/Staffandbdgt.PNG'
+
+import {
+    Container,
+    TabContent,
+    TabPane,
+    Card,
+    Table,
+    Collapse,
+    CardBody,
+    Button,
+    CardTitle,
+    CardText,
+    Row,
+    Col,
+    CardImg
+    
+} from "reactstrap";
+import Divider from 'material-ui/Divider';
+
+export default class ApprovalsTab extends Component {
+
+    render() {
+        return(
+            <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
+                 
+                    <div className="d-flex" >
+                  
+                        <Row> <Col sm="12">
+                            <h4 className="text-default">Staff and Budget <i className="fa fa-arrow-circle-o-down" /></h4><br />
+                        </Col>
+                        </Row>
+                    </div>
+                    <Divider />
+            <div className="d-flex">
+               
+                <Row> <Col sm="12">
+                <Card style={{ width: '1000px'} }>
+                 <CardImg
+                
+                style={{width:"100%",height:"100%"}}
+                    src={Staffandbdgt}                
+              />
+            </Card>
+                </Col>
+
+                </Row>
+            </div>
+            </Container>
+        )
+    }
+
 }

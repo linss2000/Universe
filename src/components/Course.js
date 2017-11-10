@@ -25,7 +25,7 @@ export default class Course extends Component {
         return(
             <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
                    <div className="d-flex" >
-                  <br/>
+                  
                         <Row> <Col sm="12">
                             <h4 className="text-default">Course Schedule <i className="fa fa-arrow-circle-o-down" /></h4><br />
                         </Col>
