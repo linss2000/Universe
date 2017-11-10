@@ -27,7 +27,7 @@ export const types = {
         return { ...state, message: action.message };
   
       case types.TOKEN:
-        return { ...state, message: action.token };
+        return { ...state, token: action.token };
      
       case types.FETCH_DATA_SUCCESS:
       case types.DATA_SUCCESS:

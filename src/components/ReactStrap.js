@@ -92,8 +92,13 @@ export class ReactStrapComp extends Component {
     this.state = {
       activeTab: "1",
       collapse: false,
-      status: "Closed"
+      status: "Closed",
+      cadetName: "",
+      activeTab : "0"
     };
+
+    this.cadetSearch = this.cadetSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   toggle(tab) {
@@ -107,6 +112,24 @@ export class ReactStrapComp extends Component {
     alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
   }
 
+  cadetSearch(cadet){
+    //alert(cadet.hv_cadet_name);
+    this.setState({
+      cadetName : cadet.hv_cadet_name
+    })
+    this.setState({
+      activeTab: "1"
+    });
+
+  }
+
+  handleChange = (value) => {
+   // alert(value)
+    this.setState({
+      activeTab: value,
+    });
+  };
+
   render() {
     return (
 
@@ -119,36 +142,27 @@ export class ReactStrapComp extends Component {
             <CadetHeader></CadetHeader>
           </Paper>
           
-            <Tabs >
-              <Tab style={tabStyles} label="Home" IconMenu='fa fa-home'>
+            <Tabs value={this.state.activeTab} onChange={this.handleChange}>
+              <Tab style={tabStyles} label="Home" IconMenu='fa fa-home' value="0" >
 
                 <div>
 
                   <p>
-                    <HomeComponent></HomeComponent>
+                    <HomeComponent callParentSearch={this.cadetSearch}></HomeComponent>
                   </p>
 
 
                 </div>
               </Tab>
-              <Tab style={tabStyles} label="Cadets" >
+              <Tab style={tabStyles} label="Cadets" value="1" >
                 <div>
 
                   <p>
-  <CadetsSearch {...this.props} />
+  <CadetsSearch cadetName={this.state.cadetName} />
                   </p>
                 </div>
               </Tab>
-              <Tab  style={tabStyles}  label="Staff and Budget" >
-                <div>
-
-                  <p>
-
-                  </p>
-                </div>
-              </Tab>
-
-              <Tab  style={tabStyles}  label="Course Schedule" >
+              <Tab  style={tabStyles}  label="Staff and Budget"  value="2" > 
                 <div>
 
                   <p>
@@ -157,22 +171,31 @@ export class ReactStrapComp extends Component {
                 </div>
               </Tab>
 
+              <Tab  style={tabStyles}  label="Course Schedule" value="3">
+                <div>
 
-              <Tab  style={tabStyles}  label="Approvals" >
+                  <p>
+
+                  </p>
+                </div>
+              </Tab>
+
+
+              <Tab  style={tabStyles}  label="Approvals" value="4" >
                 <div>
 
                   <p>
             <ApprovalsTab></ApprovalsTab>
                   </p>
                 </div>
-              </Tab> <Tab  style={tabStyles}  label="Reports" >
+              </Tab> <Tab  style={tabStyles}  label="Reports"  value="5" >
                 <div>
 
                   <p>
 
                   </p>
                 </div>
-              </Tab> <Tab  style={tabStyles}  label="Admin" >
+              </Tab> <Tab  style={tabStyles}  label="Admin" value="6" >
               <Row className="m-0 p-0">
               <Col sm="12">
                 <Container

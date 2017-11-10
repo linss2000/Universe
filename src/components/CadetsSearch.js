@@ -68,8 +68,29 @@ export class CadetsSearch extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps");
-    console.log(nextProps);
+    //alert("componentWillReceiveProps");
+    //console.log(nextProps);
+    //alert(this.props.cadetName )
+    //alert(nextProps.cadetName )
+    
+    if (this.props.cadetName != nextProps.cadetName){
+        //alert("in");
+        //alert( nextProps.cadetName)
+        this.setState({
+            inputSearch: nextProps.cadetName
+          });
+      
+          this.filterValue = nextProps.cadetName;
+          this.debouncedSearch();
+        /*
+        
+        this.props.getCadets({
+            type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+            cname: nextProps.cadetName
+          });
+          */
+    }
+    
     if (nextProps.cadetSearchState.items) {
       this.items = nextProps.cadetSearchState.items;
     }
@@ -89,13 +110,15 @@ export class CadetsSearch extends Component {
     debugger;
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
-
+   //alert("mount")
+//alert(this.props.cadetName)
     //console.log(this.props.location);
-
-    this.props.getCadets({
-      type: cadetSearchTypes.FETCH_TABLES_REQUEST,
-      name: "%"
-    });
+   
+      this.props.getCadets({
+        type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+        cname: "%"
+      });
+    
   }
 
   constructor(props) {
@@ -455,7 +478,7 @@ export class CadetsSearch extends Component {
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-square-o fa-stack-2x" />
                       <a
-                        href={"http://localhost:3003/cadetexcel"}
+                        href={"http://hvs.selfip.net:3003/cadetexcel"}
                         download={"test.xlsx"}
                       >
                         <i className="fa f fa-file-excel-o fa-stack-1x" />

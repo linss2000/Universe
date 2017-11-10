@@ -9,6 +9,7 @@ import headerState from './cdheaderreducer';
 import cadetSearchState from './cadetsearchreducer';
 import cadetDetailsState from './cadetdetailsreducer';
 import notificationState from './notificationsreducer';
+import CadetInlineSearchState from './cadetinlinesearchreducer';
 
 export default combineReducers({
    authState,
@@ -20,6 +21,7 @@ export default combineReducers({
    headerState,
    cadetSearchState,
    cadetDetailsState,
-   notificationState
+   notificationState,
+   CadetInlineSearchState
 });
 

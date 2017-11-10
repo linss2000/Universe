@@ -11,6 +11,7 @@ import export_excel from 'images/export_excel.PNG'
 import chart from 'images/chart.PNG'
 
 import ApprovalsTab from './Approvals';
+import CadetInlineSearch from './CadetInlineSearch';
 import { actions as cadetDetailsActions } from "reducers/cadetdetailsreducer";
 import {
     Container,
@@ -49,8 +50,13 @@ class HomeComponent extends Component {
 
         };
         // this.onClickAction = this.onClickAction.bind(this);
+        this.cadetSearch = this.cadetSearch.bind(this);
     }
 
+    cadetSearch(cadet){
+        this.props.callParentSearch(cadet);
+        //alert(cadet.hv_cadet_name);
+    }
     onClickLink(index) {
         debugger
         if (index == 1) {
@@ -82,8 +88,8 @@ class HomeComponent extends Component {
             <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
                 <div style={{display: this.state.showHome == true ? 'block': 'none'}}>
                     <div className="d-flex" >
-                        <Row> <Col sm="12">
-                            <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />
+                        <Row className="m-1 p-1"> <Col sm="12">
+                            {/*<h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />*/}
                             <h5 className="text-primary">Welcome to the CGYCA Solution. </h5>
                             <span className="text-default">The CGYCA Solution is an all-in-one system that tracks cadets, courses and budget information.<br />
                                 This home page gives you quick access notifications and key metrics, and provides you with the quick links to
@@ -93,6 +99,11 @@ class HomeComponent extends Component {
                         </Row>
                     </div>
                     <Divider />
+                    <Row>
+                            <Col sm="12">
+                                <CadetInlineSearch callParentSearch={this.cadetSearch}></CadetInlineSearch>
+                            </Col>
+                        </Row>
                     <div>
                         <Row>
                             {/* <Col> */}
@@ -238,6 +249,7 @@ class HomeComponent extends Component {
                             </Col>
 
                         </Row>
+                        
                     </div>
 
                 </div>

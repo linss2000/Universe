@@ -1,11 +1,11 @@
 export const types = {
-    FETCH_TABLES_REQUEST: "CSEARCH/FETCH_REQUEST",
-    ITEMS: "CSEARCH/ITEMS",
-    DELETE_REQUEST: "CSEARCH/DELETE_REQUEST",
-    INSERT_REQUEST: "CSEARCH/INSERT_REQUEST",
-    UPDATE_REQUEST: "CSEARCH/UPDATE_REQUEST",
-    MESSAGE: "CSEARCH/MESSAGE",
-    TOKEN: "CSEARCH/TOKEN"
+    FETCH_TABLES_REQUEST: "CADETINLINE/FETCH_REQUEST",
+    ITEMS: "CADETINLINE/ITEMS",
+    DELETE_REQUEST: "CADETINLINE/DELETE_REQUEST",
+    INSERT_REQUEST: "CADETINLINE/INSERT_REQUEST",
+    UPDATE_REQUEST: "CADETINLINE/UPDATE_REQUEST",
+    MESSAGE: "CADETINLINE/MESSAGE",
+    TOKEN: "CADETINLINE/TOKEN"
   };
   
   export const initialState = {
@@ -29,16 +29,22 @@ export const types = {
       case types.TOKEN:
         return { ...state, token: action.token };
      
+      case types.FETCH_DATA_SUCCESS:
+      case types.DATA_SUCCESS:
+        return { ...state, isLoading: false, hasErrored:false};
+  
+      case types.FETCH_DATA_FAILURE:
+      case types.DATA_FAILURE:
+        return { ...state, isLoading: false, hasErrored:true};
+  
       default:
         return state;
     }
   };
   
   export const actions = {
-    getCadets: (payload) => ({ type: payload.type, cname: payload.cname }),
-    insertCadet: (payload) => ({ type: types.INSERT_REQUEST, payload }),
-    updateCadet: (payload) => ({ type: types.UPDATE_REQUEST, payload }),
-    deleteCadet: (payload) => ({ type: types.DELETE_REQUEST, payload })
+    getCadetsInline: (payload) => ({ type: types.FETCH_TABLES_REQUEST, name:  payload.name }),
+    
   };
   
   /*

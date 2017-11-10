@@ -22,8 +22,10 @@ import {
   
   const cadetSearchApi = {
     
-    getcadetSearchTables(name) {
+    getcadetSearchTables(cname) {
       debugger;
+      //alert("getcadetSearchTables")
+      //alert(cname)
       //console.log(userData.user);
       //console.log(userData.password);
     //alert("in Cadets")
@@ -37,7 +39,7 @@ import {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: name
+            name: cname
         })
       })
         .then(statusHelper)
@@ -58,12 +60,12 @@ import {
     return response;
   }
   
-  function* getcadetSearchTables(userData) {
+  function* getcadetSearchTables(cname) {
     debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: cadetSearchTypes.LOGIN_REQUEST, isLoading: false })
-      const resultObj = yield call(cadetSearchApi.getcadetSearchTables, userData.payload);
+      const resultObj = yield call(cadetSearchApi.getcadetSearchTables, cname);
   
       debugger;
       if (resultObj.response && !resultObj.response.ok) {
@@ -105,7 +107,7 @@ import {
         case cadetSearchTypes.FETCH_TABLES_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
           debugger;
-          const fetchTask = yield fork(getcadetSearchTables, action.name);
+          const fetchTask = yield fork(getcadetSearchTables, action.cname);
           debugger;
           break;
         }

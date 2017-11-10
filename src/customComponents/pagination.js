@@ -89,6 +89,8 @@ class HVSPagination extends React.Component {
     debugger;
 
     let items;
+    //alert(this.props.items)
+
     if (this.props.filterValue.trim() != "") {
       items = _.filter(this.props.items, item => {
         return (
@@ -101,7 +103,7 @@ class HVSPagination extends React.Component {
       items = this.props.items;
     }
 
-    if(!items){
+    if(!items || typeof(items) == "undefined"){
       items=[];
     }
     let pager = this.state.pager;
@@ -111,7 +113,8 @@ class HVSPagination extends React.Component {
       return;
     }
     */
-
+//console.log(items)
+//alert(items.length)
     // get new pager object for specified page
     pager = this.getPager(items.length, page);
 

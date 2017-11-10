@@ -13,7 +13,7 @@ class TypeAhead extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
+    //debugger;
     typeRoot = document.getElementById(this.props.container);
     typeRoot.appendChild(this.el);
   }

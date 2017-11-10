@@ -11,6 +11,8 @@ import { types as changePWDTypes } from './../reducers/changepwdreducer'
 import { types as headerTypes } from './../reducers/cdheaderreducer'
 import { types as cadetSearchTypes } from './../reducers/cadetsearchreducer'
 import { types as cadetDetailsTypes } from './../reducers/cadetdetailsreducer'
+import { types as CadetInlineTypes } from "reducers/cadetinlinesearchreducer";
+
 
 import  * as authSagas  from './authsaga'
 import  * as attribSagas  from './attribsaga'
@@ -21,6 +23,7 @@ import  * as changePWDSagas  from './changepwdsaga'
 import  * as headersaga  from './cdheadersaga'
 import  * as cadetSearchSaga  from './cadetsearchsaga'
 import  * as cadetDetailsSaga  from './cadetsearchsaga'
+import  * as cadetInlineSaga  from './cadetinlinesearchsaga'
 
 
 export default function* rootSaga () {
@@ -36,6 +39,7 @@ export default function* rootSaga () {
         takeLatest([headerTypes.FETCH_REQUEST], headersaga.handleRequest),
         takeLatest([cadetSearchTypes.FETCH_TABLES_REQUEST], cadetSearchSaga.handleRequest),
         takeLatest([cadetDetailsTypes.FETCH_TABLES_REQUEST], cadetDetailsSaga.handleRequest),
+        takeLatest([CadetInlineTypes.FETCH_TABLES_REQUEST], cadetInlineSaga.handleRequest),
 
         ];
     /*
