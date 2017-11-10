@@ -23,7 +23,7 @@ export const initialState = {
 
 //export function authState (state = initialState, action) {
 export default (state = initialState, action) => {
-  debugger;
+  //debugger;
   switch (action.type) {
     case types.ITEMS:
       return { ...state, items: action.items };
@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
       return { ...state, message: action.message };
 
     case types.TOKEN:
-      return { ...state, message: action.token };
+      return { ...state, token: action.token };
 
     case types.FETCH_DATA_SUCCESS:
     case types.DATA_SUCCESS:

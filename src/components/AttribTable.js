@@ -86,13 +86,43 @@ const httpTaskCallback = task => {
 var typeRoot = null;
 
 class AttribTable extends Component {
+
+  renderData(tableID) {
+    if (this.tableID != tableID) {
+      this.props.getAttribTable({
+        type: attribTabTypes.FETCH_TABLE_REQUEST,
+        payload: {
+          hv_table_i: this.props.hv_table_i
+        }
+      });
+
+      this.tableID = tableID; //1;
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    this.items = nextProps.attribTableState.items;
+
+   
     //this.setState({pageOfItems: this.props.attribTableState.items});
     //console.log("nextProps ");
     //debugger;
     //console.log(nextProps);
     //this.forceUpdate();
+   debugger;
+    if (this.props.hv_table_i != nextProps.hv_table_i) {
+      this.props.getAttribTable({
+        type: attribTabTypes.FETCH_TABLE_REQUEST,
+        payload: {
+          hv_table_i: nextProps.hv_table_i
+        }
+      });
+
+      this.tableID =nextProps.hv_table_i; //1;
+    }
+   
+    if( nextProps.attribTableState){
+      this.items = nextProps.attribTableState.items;
+      }
   }
 
   //shouldComponentUpdate(nextProps, nextState) {
@@ -122,26 +152,30 @@ class AttribTable extends Component {
     debugger;
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
-
-    console.log(this.props.location);
-    if (this.props.location.state) {
+    
+    //console.log(this.props.location);
+    if (this.props.location) {
       this.props.getAttribTable({
         type: attribTabTypes.FETCH_TABLE_REQUEST,
         payload: {
-          hv_table_i: this.props.location.state.params.hv_table_i? this.props.location.state.params.hv_table_i : 1
+          hv_table_i: this.props.location.state.params.hv_table_i
+            ? this.props.location.state.params.hv_table_i
+            : 1
         }
       });
 
       this.tableID = this.props.location.state.params.hv_table_i;
     } else {
+      /*
       this.props.getAttribTable({
         type: attribTabTypes.FETCH_TABLE_REQUEST,
         payload: {
-          hv_table_i: 1
+          hv_table_i: this.props.hv_table_i
         }
       });
 
-      this.tableID = 1;
+      this.tableID = this.props.hv_table_i; //1;
+      */
     }
     //}
   }
@@ -389,7 +423,7 @@ class AttribTable extends Component {
       pageOfItems: filteredItems,
       filterValue: this.filterValue.toLowerCase(),
       selectedRowID: -1,
-      popoverOpen:  false,
+      popoverOpen: false,
       dropdownOpen: false
     });
   }
@@ -466,11 +500,13 @@ class AttribTable extends Component {
 
   render() {
     return (
-      <Container fluid style={Styles.propContainer}>
+      <Container fluid>
+        {/*
         <Row>
           <Col><h3>Attribute Table</h3></Col>
           <Col><div className="float-right"> <Button color="secondary" size="sm" onClick={() => this.props.history.push('/tabs', ...this.state)}>Show Tabs</Button></div></Col>
         </Row>
+        */}
         <Row>
           <Col>
             <i onClick={this.toggle} size="sm" className="fa fa-plus-circle" />
@@ -601,8 +637,8 @@ class AttribTable extends Component {
                       />
                     </td>
                     <td>
-                      {(this.props.attribTableState.rowID !=
-                      row.hv_universal_i || 1 === 1) ? (
+                      {this.props.attribTableState.rowID !=
+                        row.hv_universal_i || 1 === 1 ? (
                         row.hv_universal_name
                       ) : (
                         <div
@@ -640,7 +676,7 @@ class AttribTable extends Component {
                                   <div className="d-flex justify-content-end">
                                     <div className="mr-auto">
                                       {row.hv_universal_name}
-                                    </div>                                    
+                                    </div>
                                   </div>
                                 </ListGroupItem>
                               ))}

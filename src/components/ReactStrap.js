@@ -2,9 +2,34 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import CadetHeader from "./cadetheader";
 import cadetlogo from "images/cadetlogo.png";
 import cadettitle from "images/cadettitl.png";
+import CadetHeader from "./cadetheader"
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import Toggle from 'material-ui/Toggle';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Avatar from 'material-ui/Avatar';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import FontIcon from 'material-ui/FontIcon';
+import List from 'material-ui/List/List';
+import ListItem from 'material-ui/List/ListItem';
+import { Tabs, Tab } from 'material-ui/Tabs';
+
+import {
+  blue300,
+  indigo900,
+  orange200,
+  deepOrange300,
+  pink400,
+  purple500,
+} from 'material-ui/styles/colors';
+import Paper from 'material-ui/Paper';
+ 
 import {
   Container,
   TabContent,
@@ -28,14 +53,30 @@ import {
 import HomeComponent from "./HomeMainComponent";
 import BudgetStaff from "./BudgetStaff";
 import CadetsSearch from "./CadetsSearch";
+import AttribList from "./AttribTables";
 
 import "App.css";
+ 
+const tabStyles = {
+  backgroundColor:'#1b3039'
+   
+};
+ 
 
+const paperStyle = {
+  height: "100px",
+  width: "98%",
+  margin: 15,
+  // textAlign: "left",
+  // display: "flex",
+  // justifyContent: "left"
+};
 const FirstFunctional = props => {
   return <div onClick={() => props.showMessage("Child")}>{props.name}</div>;
 };
 
 export class ReactStrapComp extends Component {
+  
   static propTypes = {
     //name: PropTypes.string.isRequired
   };
@@ -61,320 +102,89 @@ export class ReactStrapComp extends Component {
       });
     }
   }
+  handleActive(tab) {
+    alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
+  }
 
   render() {
     return (
+
+
       <div>
+       
         <Card>
-          <CardHeader>
-            {" "}
-            <CadetHeader />
-          </CardHeader>
 
-          <CardBody>
-            <Nav tabs className="m-0 p-0">
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "1"
-                  })}
-                  onClick={() => {
-                    this.toggle("1");
-                  }}
-                >
-                  <i className="fa fa-home" /> Home
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "2"
-                  })}
-                  onClick={() => {
-                    this.toggle("2");
-                  }}
-                >
-                  <i className="fa fa-podcast" /> Cadets
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "3"
-                  })}
-                  onClick={() => {
-                    this.toggle("3");
-                  }}
-                >
-                  <i className="fa fa-users" /> Staff and Budget
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "4"
-                  })}
-                  onClick={() => {
-                    this.toggle("4");
-                  }}
-                >
-                  <i className="fa fa-calendar" /> Course Schedule
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "5"
-                  })}
-                  onClick={() => {
-                    this.toggle("5");
-                  }}
-                >
-                  <i className="fa fa-check-circle" /> Approvals
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "6"
-                  })}
-                  onClick={() => {
-                    this.toggle("6");
-                  }}
-                >
-                  <i className="fa fa-line-chart" /> Reports
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "7"
-                  })}
-                  onClick={() => {
-                    this.toggle("7");
-                  }}
-                >
-                  <i className="fa fa-cog" /> Admin
-                </NavLink>
-              </NavItem>
-            </Nav>
-            <TabContent
-              activeTab={this.state.activeTab}
-              style={{
-                height: "500px",
-                width: "100%"
-              }}
-            >
-              <div
-                className="tab-content card"
-                style={{
-                  height: "500px",
-                  overflow: "scroll"
-                }}
-              >
-                <TabPane tabId="1">
-                  <Row>
-                    <Col sm="12">
-                      <HomeComponent />
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="2">
-                  <Row>
-                    <Col sm="11">
-                      <CadetsSearch {...this.props} /> 
-                    </Col>
-                    <Col sm="1"></Col>
-                  </Row>
-                </TabPane>
+          <Paper style={paperStyle} zDepth={5} >
+            <CadetHeader></CadetHeader>
+          </Paper>
+          
+            <Tabs >
+              <Tab style={tabStyles} label="Home" IconMenu='fa fa-home'>
 
-                <TabPane tabId="3">
-                  <Row>
-                    <Col sm="12">
-                      <div className="d-flex">
-                        <BudgetStaff />
-                      </div>
-                      <Collapse isOpen={this.state.collapse}>
-                        <br />
-                        <Row>
-                          <Col sm="4">
-                            <Card body>
-                              <CardTitle>Special Title Treatment</CardTitle>
-                              <CardText>
-                                With supporting text below as a natural lead-in
-                                to additional content.
-                              </CardText>
-                              <Button>Go somewhere</Button>
-                            </Card>
-                          </Col>
-                          <Col sm="4">
-                            <Card body>
-                              <CardTitle>Special Title Treatment</CardTitle>
-                              <CardText>
-                                With supporting text below as a natural lead-in
-                                to additional content.
-                              </CardText>
-                              <Button>Go somewhere</Button>
-                            </Card>
-                          </Col>
-                          <Col sm="4">
-                            <Card body>
-                              <CardTitle>Special Title Treatment</CardTitle>
-                              <CardText>
-                                With supporting text below as a natural lead-in
-                                to additional content.
-                              </CardText>
-                              <Button>Go somewhere</Button>
-                            </Card>
-                          </Col>
-                        </Row>
-                      </Collapse>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="4">
-                  <Row>
-                    <Col sm="12">
-                      <Container
-                        fluid
-                        style={{
-                          width: 1024,
-                          overflow: "hidden",
-                          margin: "20px"
-                        }}
-                      >
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12">
-                              <h4 className="text-default">
-                                Course Schedule{" "}
-                                <i className="fa fa-arrow-circle-o-down" />{" "}
-                              </h4>
-                            </Col>
-                          </Row>
-                        </div>
-                        <hr sstyle="height:1px; color:#aaa;" />
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12" />
-                          </Row>
-                        </div>
-                      </Container>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="5">
-                  <Row>
-                    <Col sm="12">
-                      <Container
-                        fluid
-                        style={{
-                          width: 1024,
-                          overflow: "hidden",
-                          margin: "20px"
-                        }}
-                      >
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12">
-                              <h4 className="text-default">
-                                Approvals{" "}
-                                <i className="fa fa-arrow-circle-o-down" />{" "}
-                              </h4>
-                            </Col>
-                          </Row>
-                        </div>
-                        <hr sstyle="height:1px; color:#aaa;" />
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12" />
-                          </Row>
-                        </div>
-                      </Container>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="6">
-                  <Row>
-                    <Col sm="12">
-                      <Container
-                        fluid
-                        style={{
-                          width: 1024,
-                          overflow: "hidden",
-                          margin: "20px"
-                        }}
-                      >
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12">
-                              <h4 className="text-default">
-                                Reports{" "}
-                                <i className="fa fa-arrow-circle-o-down" />{" "}
-                              </h4>
-                            </Col>
-                          </Row>
-                        </div>
-                        <hr sstyle="height:1px; color:#aaa;" />
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12" />
-                          </Row>
-                        </div>
-                      </Container>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="7">
-                  <Row>
-                    <Col sm="12">
-                      <Container
-                        fluid
-                        style={{
-                          width: 1024,
-                          overflow: "hidden",
-                          margin: "20px"
-                        }}
-                      >
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12">
-                              <h4 className="text-default">
-                                Admin{" "}
-                                <i className="fa fa-arrow-circle-o-down" />{" "}
-                              </h4>
-                            </Col>
-                          </Row>
-                        </div>
-                        <hr sstyle="height:1px; color:#aaa;" />
-                        <div className="d-flex">
-                          <Row>
-                            {" "}
-                            <Col sm="12" />
-                          </Row>
-                        </div>
-                      </Container>
-                    </Col>
-                  </Row>
-                </TabPane>
-              </div>
-            </TabContent>
-          </CardBody>
+                <div>
+
+                  <p>
+                    <HomeComponent></HomeComponent>
+                  </p>
+
+
+                </div>
+              </Tab>
+              <Tab style={tabStyles} label="Cadets" >
+                <div>
+
+                  <p>
+  <CadetsSearch {...this.props} />
+                  </p>
+                </div>
+              </Tab>
+              <Tab  style={tabStyles}  label="Staff and Budget" >
+                <div>
+
+                  <p>
+
+                  </p>
+                </div>
+              </Tab>
+
+              <Tab  style={tabStyles}  label="Course Schedule" >
+                <div>
+
+                  <p>
+
+                  </p>
+                </div>
+              </Tab>
+
+
+              <Tab  style={tabStyles}  label="Approvals" >
+                <div>
+
+                  <p>
+
+                  </p>
+                </div>
+              </Tab> <Tab  style={tabStyles}  label="Reports" >
+                <div>
+
+                  <p>
+
+                  </p>
+                </div>
+              </Tab> <Tab  style={tabStyles}  label="Admin" >
+                <div>
+
+                  <p>
+
+                  </p>
+                </div>
+              </Tab>
+            </Tabs>
+
+          
         </Card>
+
+
       </div>
     );
   }

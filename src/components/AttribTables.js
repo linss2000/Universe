@@ -1,22 +1,11 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { Table } from "reactstrap";
 import { ListGroup, ListGroupItem, Badge } from "reactstrap";
 
-//import { itemsFetchData, itemUpdateData, itemDeleteData } from '../actions/items';
-/*
-import {
-  Table,
-  TableBody,
-  TableFooter,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from "material-ui/Table";
-*/
+import AttribTable from "./AttribTable";
 import TextField from "material-ui/TextField";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
@@ -26,6 +15,7 @@ import * as _ from "lodash";
 import { bindActionCreators } from "redux";
 import { types as attribTypes } from "reducers/attribreducer";
 import { actions as attribActions } from "reducers/attribreducer";
+import classnames from "classnames";
 import {
   ButtCollapse,
   Navbar,
@@ -41,7 +31,21 @@ import {
   Button
 } from "reactstrap";
 
-const Styles = {
+import {
+  TabContent,
+  TabPane,
+  Card,
+  Collapse,
+  CardBody,
+  CardTitle,
+  CardText,
+  Label
+} from "reactstrap";
+
+const styles = {
+  link: {
+    cursor: "pointer"
+  },
   propContainer: {
     width: 400,
     overflow: "hidden",
@@ -79,6 +83,7 @@ class AttribList extends Component {
   componentDidMount() {
     debugger;
     if (this.props) {
+      //alert("in Tables")
       this.props.getAttribTables({
         type: attribTypes.FETCH_TABLES_REQUEST,
         payload: {}
@@ -88,184 +93,149 @@ class AttribList extends Component {
 
   constructor(props) {
     super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.attribTable = null;
+
+    this.state = {
+      fixedHeader: true,
+      fixedFooter: true,
+      stripedRows: false,
+      showRowHover: false,
+      selectable: true,
+      multiSelectable: true,
+      enableSelectAll: true,
+      deselectOnClickaway: true,
+      showCheckboxes: true,
+      height: "300px",
+      items: [],
+      mode: undefined,
+      itemsHasErrored: false,
+      itemsIsLoading: false,
+      hv_table_i: 1,
+      inDetailsTab: false,
+      activeTab: "1",
+      tableName : ""
+    };
   }
-
-  state = {
-    fixedHeader: true,
-    fixedFooter: true,
-    stripedRows: false,
-    showRowHover: false,
-    selectable: true,
-    multiSelectable: true,
-    enableSelectAll: true,
-    deselectOnClickaway: true,
-    showCheckboxes: true,
-    height: "300px",
-    items: [],
-    mode: undefined,
-    itemsHasErrored: false,
-    itemsIsLoading: false,
-    
-  };
-
-  _handleTouchTap = (row, edit) => {
-    debugger;
-    //console.log(e);
-    //alert(e.target)
-    //alert(e.target.outerHTML)
-    //alert(e.target.name)
-    if (edit === "E") {
-      this.props.updateData({ type: attribTypes.UPDATE_REQUEST, payload: row });
-      //this.props.updateData(row);
-    } else {
-      this.props.deleteData({ type: attribTypes.DELETE_REQUEST, payload: row });
-    }
-    //e.preventDefault();
-    //this.forceUpdate();
-    //alert(row);
-  };
 
   itemClick = row => {
     debugger;
     console.log(row);
-    this.props.history.push('/attribtable', { params : row });
+
+    this.setState({
+      hv_table_i: row.hv_table_i,
+      inDetailsTab: true,
+      activeTab: "2",
+      tableName : row.hv_table_name,
+    });
+    //this.attribTable.renderData(row.hv_table_i);
+    //this.props.history.push("/attribtable", { params: row });
   };
+
+  toggle = tab => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  };
+
   render() {
-    /*
-        if (this.props.hasErrored) {
-            return <p>Sorry! There was an error loading the items</p>;
-        }
-
-        if (this.props.isLoading) {
-            return <p>Loading…</p>;
-        }
-
-        style={{
-                    cursor: "pointer",
-                    height: "28px",
-                    padding:"2px",
-                    lineHeight: "1"
-                  }}
-        */
-
     return (
-      <Container fluid>
-        <Row noGutters>
-          <h3>Attribute Tables</h3>
-        </Row>
-        <Row>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem
-                style={{
-                    cursor: "pointer",              
-                  }}
-                  
-                  key={index}
-                  className="justify-content-between"
+      <div>
+        <Container
+          fluid
+          style={{
+            overflow: "hidden",
+            margin: "1px"
+          }}
+        >
+          <Nav tabs className="m-0 p-0">
+            {!this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
                   onClick={() => {
-                    this.itemClick(row);
+                    this.toggle("1");
                   }}
                 >
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-        </Row>
-        <Row>
-          <br />
-        </Row>
-        <Row>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-        </Row>
-        <Row>
-          <br />
-        </Row>
-        <Row>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-          <Col>
-            <ListGroup>
-              {this.props.attribState.items.map((row, index) => (
-                <ListGroupItem key={index} className="justify-content-between">
-                  {row.hv_table_name}
-                  <Badge pill>14</Badge>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Col>
-        </Row>
-      </Container>
+                  <i className="fa fa-home" /> Attribute Tables
+                </NavLink>
+              </NavItem>
+            )}
+            {this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
+                  onClick={() => {
+                    this.toggle("2");
+                  }}
+                >
+                  <i className="fa fa-podcast" /> Atrribute
+                </NavLink>
+              </NavItem>
+            )}
+          </Nav>
+
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              <Row className="p-0 mt-1">
+                <Col sm="12">
+                  <ListGroup>
+                    {this.props.attribState.items.map((row, index) => (
+                      <ListGroupItem
+                        style={{
+                          cursor: "pointer"
+                        }}
+                        key={index}
+                        onClick={() => {
+                          this.itemClick(row);
+                        }}
+                      >
+                        {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
+                </Col>
+              </Row>
+            </TabPane>
+
+            <TabPane tabId="2">
+              <Row className="mt-2 mb-0 p-0">
+                <Col sm="12">
+                 <div className="float-left"><h6>{this.state.tableName}</h6></div>
+                  <div className="float-right">
+                    <span
+                      className="fa-stack"
+                      style={styles.link}
+                      onClick={() =>
+                        this.setState({
+                          inDetailsTab: false,
+                          activeTab: "1"
+                        })}
+                    >
+                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-times fa-stack-1x" />
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="m-0 p-0">
+                <Col sm="12">
+                  <AttribTable ref={instance => { this.attribTable = instance; }} hv_table_i={this.state.hv_table_i} />
+                </Col>
+              </Row>
+            </TabPane>
+          </TabContent>
+        </Container>
+      </div>
       /*
             <ul>
                 {this.props.items.map((item,index) => (

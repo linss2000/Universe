@@ -26,11 +26,11 @@ import {
       debugger;
       //console.log(userData.user);
       //console.log(userData.password);
-  
+    //alert("in Cadets")
       //new Promise((resolve, reject) => {
       return fetch("http://hvs.selfip.net:3003/getCadets/", {
         //return fetch("http://localhost:3003/getCadets/", {
-        //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
+        
         method: "POST",
         headers: {
           Accept: "application/json",

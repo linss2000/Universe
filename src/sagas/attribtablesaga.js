@@ -29,7 +29,8 @@ import {
   
       //new Promise((resolve, reject) => {
       return fetch("http://hvs.selfip.net:3003/GetAttribTable/", {
-        //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
+        //return fetch("http://localhost:3003/GetAttribTable/", {
+        
         method: "POST",
         headers: {
           Accept: "application/json",
