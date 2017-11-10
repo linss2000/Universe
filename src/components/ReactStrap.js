@@ -19,7 +19,6 @@ import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import ApprovalsTab  from "./Approvals";
 
 import {
   blue300,
@@ -52,7 +51,12 @@ import {
   CardHeader
 } from "reactstrap";
 import HomeComponent from "./HomeMainComponent";
+import ApprovalsTab from "./Approvals";
 import BudgetStaff from "./BudgetStaff";
+import Reports from "./Reports";
+import Course from "./Course";
+
+
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
 
@@ -132,8 +136,6 @@ export class ReactStrapComp extends Component {
 
   render() {
     return (
-
-
       <div>
        
         <Card>
@@ -162,40 +164,45 @@ export class ReactStrapComp extends Component {
                   </p>
                 </div>
               </Tab>
-              <Tab  style={tabStyles}  label="Staff and Budget"  value="2" > 
+              <Tab  style={tabStyles}  label="Staff and Budget"  value="2" icon={<FontIcon className='fa fa-users'/>} >
                 <div>
 
                   <p>
-
-                  </p>
-                </div>
-              </Tab>
-
-              <Tab  style={tabStyles}  label="Course Schedule" value="3">
-                <div>
-
-                  <p>
-
+<BudgetStaff></BudgetStaff>
                   </p>
                 </div>
               </Tab>
 
 
-              <Tab  style={tabStyles}  label="Approvals" value="4" >
+              <Tab  style={tabStyles}  label="Course Schedule" value="3" icon={<FontIcon className='fa fa-calendar'/>} >
+
                 <div>
 
                   <p>
-            <ApprovalsTab></ApprovalsTab>
+<Course></Course>
                   </p>
                 </div>
-              </Tab> <Tab  style={tabStyles}  label="Reports"  value="5" >
+              </Tab>
+
+
+            
+              <Tab  style={tabStyles}  label="Approvals" value="4" icon={<FontIcon className='fa fa-check-circle'/>}>
                 <div>
 
                   <p>
-
+                    <ApprovalsTab></ApprovalsTab>
                   </p>
                 </div>
-              </Tab> <Tab  style={tabStyles}  label="Admin" value="6" >
+     
+              </Tab> <Tab  style={tabStyles}  label="Reports" value="5" icon={<FontIcon className='fa fa-line-chart'/>}>
+                <div>
+
+                  <p>
+<Reports></Reports>
+                  </p>
+                </div>
+           
+              </Tab> <Tab  style={tabStyles}  label="Admin" value="6"  icon={<FontIcon className='fa fa-cog'/>}>
               <Row className="m-0 p-0">
               <Col sm="12">
                 <Container
@@ -205,14 +212,14 @@ export class ReactStrapComp extends Component {
                     margin: "2px"
                   }}
                 >
-                  <Row className="m-0 p-0">                            
+                  {/* <Row className="m-0 p-0">                            
                     <Col sm="12">
                       <h4 className="text-default">
                         Admin{" "}
                         <i className="fa fa-arrow-circle-o-down" />{" "}
                       </h4>
                     </Col>
-                  </Row>
+                  </Row> */}
                   <Row className="m-0 p-0">
                     {" "}
                     <Col sm="12">
@@ -239,3 +246,5 @@ const mapStateToProps = state => ({});
 const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactStrapComp);
+
+ 

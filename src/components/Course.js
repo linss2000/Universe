@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Staffandbdgt from 'images/Staffandbdgt.PNG'
+import CourseImg from 'images/course_cal.PNG'
 
 import {
     Container,
@@ -19,20 +19,18 @@ import {
 } from "reactstrap";
 import Divider from 'material-ui/Divider';
 
-export default class ApprovalsTab extends Component {
+export default class Course extends Component {
 
     render() {
         return(
             <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
-                 
-            <div className="d-flex">
-               
+           <div className="d-flex">             
                 <Row> <Col sm="12">
-                <Card style={{ width: '1000px'} }>
+                <Card style={{ width: '900px'} }>
                  <CardImg
                 
                 style={{width:"100%",height:"100%"}}
-                    src={Staffandbdgt}                
+                    src={CourseImg}                
               />
             </Card>
                 </Col>
