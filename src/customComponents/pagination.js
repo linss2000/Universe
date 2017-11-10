@@ -1,13 +1,13 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import * as _ from "lodash";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
 const styles = {
-  link:{
-    cursor:"pointer"
+  link: {
+    cursor: "pointer"
   }
-}
+};
 /*
 const propTypes = {
   items: PropTypes.array.isRequired,
@@ -22,12 +22,12 @@ const defaultProps = {
 
 class HVSPagination extends React.Component {
   constructor(props) {
-    super(props);    
-    this.state = { 
-                    pager: {
-                      pageSize : this.props.pageSize || 10
-                    }                    
-                };
+    super(props);
+    this.state = {
+      pager: {
+        pageSize: this.props.pageSize || 10
+      }
+    };
   }
 
   componentWillMount() {
@@ -42,7 +42,11 @@ class HVSPagination extends React.Component {
     debugger;
 
     // reset page if items array has changed
-    if (this.props.items !== prevProps.items || this.props.filterValue != prevProps.filterValue || this.props.pageSize != prevProps.pageSize) {
+    if (
+      this.props.items !== prevProps.items ||
+      this.props.filterValue != prevProps.filterValue ||
+      this.props.pageSize != prevProps.pageSize
+    ) {
       //if (this.props.items.length > 0) {
       // default page size is 10
       //const pageSize = this.state.pager.pageSize || 10;
@@ -64,7 +68,7 @@ class HVSPagination extends React.Component {
       debugger;
 
       // calculate total pages
-      const totalPages = Math.ceil(items.length / pageSize);
+      const totalPages = Math.ceil((items ? items.length : 0) / pageSize);
 
       if (this.state.pager.currentPage <= totalPages) {
         this.setPage(this.state.pager.currentPage);
@@ -97,6 +101,9 @@ class HVSPagination extends React.Component {
       items = this.props.items;
     }
 
+    if(!items){
+      items=[];
+    }
     let pager = this.state.pager;
 
     /*
@@ -178,44 +185,53 @@ class HVSPagination extends React.Component {
       return null;
     }
 
-    return (      
+    return (
       <Pagination size="md" className="p-0 m-0">
-        <PaginationItem style={styles.link} className={pager.currentPage === 1 ? "disabled" : ""}>
+        <PaginationItem
+          style={styles.link}
+          className={pager.currentPage === 1 ? "disabled" : ""}
+        >
           <PaginationLink onClick={() => this.setPage(1)}>
             {""}
             <i className="fa fa-fast-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
-        <PaginationItem style={styles.link} className={pager.currentPage === 1 ? "disabled" : ""}>
+        <PaginationItem
+          style={styles.link}
+          className={pager.currentPage === 1 ? "disabled" : ""}
+        >
           <PaginationLink onClick={() => this.setPage(pager.currentPage - 1)}>
-          {""}
+            {""}
             <i className="fa fa-step-backward fa-fw" />
           </PaginationLink>
         </PaginationItem>
         {pager.pages.map((page, index) => (
-          <PaginationItem style={styles.link}
+          <PaginationItem
+            style={styles.link}
             key={index}
             className={pager.currentPage === page ? "active" : ""}
           >
             <PaginationLink onClick={() => this.setPage(page)}>
-            {""}
+              {""}
               {page}
             </PaginationLink>
           </PaginationItem>
         ))}
-        <PaginationItem style={styles.link}
+        <PaginationItem
+          style={styles.link}
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.currentPage + 1)}>
-          {""}
+            {""}
             <i className="fa fa-step-forward fa-fw" />
           </PaginationLink>
         </PaginationItem>
-        <PaginationItem style={styles.link}
+        <PaginationItem
+          style={styles.link}
           className={pager.currentPage === pager.totalPages ? "disabled" : ""}
         >
           <PaginationLink onClick={() => this.setPage(pager.totalPages)}>
-          {""}
+            {""}
             <i className="fa fa-fast-forward fa-fw" />
           </PaginationLink>
         </PaginationItem>

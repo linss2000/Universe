@@ -31,9 +31,7 @@ import {
   Button
 } from "reactstrap";
 
-
 import {
-  
   TabContent,
   TabPane,
   Card,
@@ -60,7 +58,6 @@ const styles = {
     marginTop: 16
   }
 };
-
 
 class AttribList extends Component {
   componentWillReceiveProps(nextProps) {
@@ -97,6 +94,8 @@ class AttribList extends Component {
   constructor(props) {
     super(props);
 
+    this.toggle = this.toggle.bind(this);
+
     this.state = {
       fixedHeader: true,
       fixedFooter: true,
@@ -124,10 +123,19 @@ class AttribList extends Component {
     this.setState({
       hv_table_i: row.hv_table_i,
       inDetailsTab: true,
-      activeTab: "1"
-    })
+      activeTab: "2"
+    });
     //this.props.history.push("/attribtable", { params: row });
   };
+
+  toggle = tab => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  };
+
   render() {
     return (
       <div>
@@ -138,72 +146,78 @@ class AttribList extends Component {
             margin: "1px"
           }}
         >
-          <Row>
-            <Nav tabs className="m-0 p-0">
-              {!this.state.inDetailsTab && (
-                <NavItem>
-                  <NavLink
-                    style={{ cursor: "pointer" }}
-                    className={classnames({
-                      active: this.state.activeTab === "1"
-                    })}
-                    onClick={() => {
-                      this.toggle("1");
-                    }}
-                  >
-                    <i className="fa fa-home" /> Attribute Tables
-                  </NavLink>
-                </NavItem>
-              )}
-              {this.state.inDetailsTab && (
-                <NavItem>
-                  <NavLink
-                    style={{ cursor: "pointer" }}
-                    className={classnames({
-                      active: this.state.activeTab === "2"
-                    })}
-                    onClick={() => {
-                      this.toggle("2");
-                    }}
-                  >
-                    <i className="fa fa-podcast" /> Atrribute
-                  </NavLink>
-                </NavItem>
-              )}
-            </Nav>
+          <Nav tabs className="m-0 p-0">
+            {!this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
+                  onClick={() => {
+                    this.toggle("1");
+                  }}
+                >
+                  <i className="fa fa-home" /> Attribute Tables
+                </NavLink>
+              </NavItem>
+            )}
+            {this.state.inDetailsTab && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
+                  onClick={() => {
+                    this.toggle("2");
+                  }}
+                >
+                  <i className="fa fa-podcast" /> Atrribute
+                </NavLink>
+              </NavItem>
+            )}
+          </Nav>
 
-            <TabContent activeTab={this.state.activeTab}>
-              <TabPane tabId="1">
-                <Row className="p-0 m-0">
-                  <Col sm="12">
-                    <ListGroup>
-                      {this.props.attribState.items.map((row, index) => (
-                        <ListGroupItem
-                          style={{
-                            cursor: "pointer"
-                          }}
-                          key={index}
-                          onClick={() => {
-                            this.itemClick(row);
-                          }}
-                        >
-                          {row.hv_table_name}  <Badge pill>14</Badge>
-                        </ListGroupItem>
-                      ))}
-                    </ListGroup>
-                  </Col>
-                </Row>
-              </TabPane>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              <Row className="p-0 mt-1">
+                <Col sm="12">
+                  <ListGroup>
+                    {this.props.attribState.items.map((row, index) => (
+                      <ListGroupItem
+                        style={{
+                          cursor: "pointer"
+                        }}
+                        key={index}
+                        onClick={() => {
+                          this.itemClick(row);
+                        }}
+                      >
+                        {row.hv_table_name} <Badge pill>14</Badge>
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
+                </Col>
+              </Row>
+            </TabPane>
 
-              <TabPane tabId="2">
+            <TabPane tabId="2">
               <Row className="mt-2 mb-0 p-0">
                 <Col sm="12">
                   <div className="float-right">
-                  <span className="fa-stack" style={styles.link} onClick={() =>
-                        this.setState({ inDetailsTab: false, activeTab: "1" })}>
+                    <span
+                      className="fa-stack"
+                      style={styles.link}
+                      onClick={() =>
+                        this.setState({
+                          inDetailsTab: false,
+                          activeTab: "1"
+                        })}
+                    >
                       <i className="fa fa-square-o fa-stack-2x" />
                       <i className="fa fa-times fa-stack-1x" />
-                    </span>                                        
+                    </span>
                   </div>
                 </Col>
               </Row>
@@ -213,9 +227,7 @@ class AttribList extends Component {
                 </Col>
               </Row>
             </TabPane>
-
-            </TabContent>
-          </Row>
+          </TabContent>
         </Container>
       </div>
       /*

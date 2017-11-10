@@ -70,7 +70,9 @@ export class CadetsSearch extends Component {
   componentWillReceiveProps(nextProps) {
     console.log("componentWillReceiveProps");
     console.log(nextProps);
-    this.items = nextProps.cadetSearchState.items;
+    if (nextProps.cadetSearchState.items) {
+      this.items = nextProps.cadetSearchState.items;
+    }
     //this.setState({pageOfItems: this.props.attribTableState.items});
     //console.log("nextProps ");
     //debugger;
@@ -283,9 +285,7 @@ export class CadetsSearch extends Component {
     }
   };
 
-  classToggle = () => {
-
-  }
+  classToggle = () => {};
 
   dropToggle = () => {
     this.setState({
@@ -436,21 +436,30 @@ export class CadetsSearch extends Component {
                   </div>
                 </Col>
                 <Col sm="4">
-                 <div className="d-flex justify-content-between text-center flex-nowrap mw-100">
-                  <Dropdown disabled={true}  toggle={this.classToggle}>
-                    <DropdownToggle caret>Residential class 51(In Application)</DropdownToggle>
-                    <DropdownMenu>                     
-                      <DropdownItem>Another Action</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                  <span className="d-flex align-items-center">{this.state.pageOfItems.length} Cadets</span>
+                  <div className="d-flex justify-content-between text-center flex-nowrap mw-100">
+                    <Dropdown disabled={true} toggle={this.classToggle}>
+                      <DropdownToggle caret>
+                        Residential class 51(In Application)
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>Another Action</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    <span className="d-flex align-items-center">
+                      {this.state.pageOfItems.length} Cadets
+                    </span>
                   </div>
-                </Col>                
+                </Col>
                 <Col sm="3">
                   <div className="float-right">
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-square-o fa-stack-2x" />
-                      <a href={"http://localhost:3003/cadetexcel"} download={"test.xlsx"}><i className="fa f fa-file-excel-o fa-stack-1x"/></a>
+                      <a
+                        href={"http://localhost:3003/cadetexcel"}
+                        download={"test.xlsx"}
+                      >
+                        <i className="fa f fa-file-excel-o fa-stack-1x" />
+                      </a>
                     </span>{" "}
                     {" "}
                     <span className="fa-stack fa-lg">
@@ -657,11 +666,15 @@ export class CadetsSearch extends Component {
               <Row className="mt-2 mb-0 p-0">
                 <Col sm="12">
                   <div className="float-right">
-                  <span className="fa-stack" style={styles.link} onClick={() =>
-                        this.setState({ inDetailsTab: false, activeTab: "1" })}>
+                    <span
+                      className="fa-stack"
+                      style={styles.link}
+                      onClick={() =>
+                        this.setState({ inDetailsTab: false, activeTab: "1" })}
+                    >
                       <i className="fa fa-square-o fa-stack-2x" />
                       <i className="fa fa-times fa-stack-1x" />
-                    </span>                    
+                    </span>
                     {/*
                     <Button
                       size="sm"

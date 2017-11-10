@@ -87,12 +87,23 @@ var typeRoot = null;
 
 class AttribTable extends Component {
   componentWillReceiveProps(nextProps) {
-    this.items = nextProps.attribTableState.items;
+    //this.items = nextProps.attribTableState.items;
     //this.setState({pageOfItems: this.props.attribTableState.items});
     //console.log("nextProps ");
     //debugger;
     //console.log(nextProps);
     //this.forceUpdate();
+    if(this.props.hv_table_i != nextProps.hv_table_i){
+      this.props.getAttribTable({
+        type: attribTabTypes.FETCH_TABLE_REQUEST,
+        payload: {
+          hv_table_i: this.props.hv_table_i
+        }
+      });
+
+      this.tableID = this.props.hv_table_i;//1;
+
+    }
   }
 
   //shouldComponentUpdate(nextProps, nextState) {
@@ -141,7 +152,7 @@ class AttribTable extends Component {
         }
       });
 
-      this.tableID = 1;
+      this.tableID = this.props.hv_table_i;//1;
     }
     //}
   }
@@ -466,7 +477,7 @@ class AttribTable extends Component {
 
   render() {
     return (
-      <Container fluid style={Styles.propContainer}>
+      <Container fluid>
         <Row>
           <Col><h3>Attribute Table</h3></Col>
           <Col><div className="float-right"> <Button color="secondary" size="sm" onClick={() => this.props.history.push('/tabs', ...this.state)}>Show Tabs</Button></div></Col>
