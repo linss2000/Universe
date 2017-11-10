@@ -23,9 +23,11 @@ export default class ApprovalsTab extends Component {
     render() {
         return(
             <Container fluid style={{ width: 1024, overflow: "hidden" }} >
+                <div style={{height : '50px'}}></div>
             <div className="d-flex">
+               
                 <Row> <Col sm="12">
-                <Card style={{ width: 900} }>
+                <Card style={{ width: '1000px'} }>
                  <CardImg
                 
                 style={{width:"100%",height:"100%"}}

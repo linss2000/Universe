@@ -51,6 +51,7 @@ import {
   CardHeader
 } from "reactstrap";
 import HomeComponent from "./HomeMainComponent";
+import ApprovalsTab from "./Approvals";
 import BudgetStaff from "./BudgetStaff";
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
@@ -161,7 +162,7 @@ export class ReactStrapComp extends Component {
                 <div>
 
                   <p>
-
+                    <ApprovalsTab></ApprovalsTab>
                   </p>
                 </div>
               </Tab> <Tab  style={tabStyles}  label="Reports" >
