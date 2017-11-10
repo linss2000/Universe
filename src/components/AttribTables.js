@@ -95,6 +95,7 @@ class AttribList extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.attribTable = null;
 
     this.state = {
       fixedHeader: true,
@@ -113,18 +114,22 @@ class AttribList extends Component {
       itemsIsLoading: false,
       hv_table_i: 1,
       inDetailsTab: false,
-      activeTab: "1"
+      activeTab: "1",
+      tableName : ""
     };
   }
 
   itemClick = row => {
     debugger;
     console.log(row);
+
     this.setState({
       hv_table_i: row.hv_table_i,
       inDetailsTab: true,
-      activeTab: "2"
+      activeTab: "2",
+      tableName : row.hv_table_name,
     });
+    //this.attribTable.renderData(row.hv_table_i);
     //this.props.history.push("/attribtable", { params: row });
   };
 
@@ -194,7 +199,7 @@ class AttribList extends Component {
                           this.itemClick(row);
                         }}
                       >
-                        {row.hv_table_name} <Badge pill>14</Badge>
+                        {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
                       </ListGroupItem>
                     ))}
                   </ListGroup>
@@ -205,6 +210,7 @@ class AttribList extends Component {
             <TabPane tabId="2">
               <Row className="mt-2 mb-0 p-0">
                 <Col sm="12">
+                 <div className="float-left"><h6>{this.state.tableName}</h6></div>
                   <div className="float-right">
                     <span
                       className="fa-stack"
@@ -223,7 +229,7 @@ class AttribList extends Component {
               </Row>
               <Row className="m-0 p-0">
                 <Col sm="12">
-                  <AttribTable hv_table_i={this.state.hv_table_i} />
+                  <AttribTable ref={instance => { this.attribTable = instance; }} hv_table_i={this.state.hv_table_i} />
                 </Col>
               </Row>
             </TabPane>
