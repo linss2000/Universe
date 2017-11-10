@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import cadetlogo from 'images/cadetlogo.png'
-import cadettitle from 'images/cadettitl.png'
+import cadetlogo from 'images/cadetLogoCir.gif'
+import cadettitle from 'images/cadetheaderlabel.png'
 import 'App.css';
 import { actions as headerActions } from "reducers/cdheaderreducer";
 import { types as headertypes } from "reducers/cdheaderreducer";
@@ -8,6 +8,8 @@ import { Container, Row, Col ,Alert} from 'reactstrap';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
+import Avatar from 'material-ui/Avatar';
+
  class CadetHeader extends React.Component {
   constructor(props) {
    super(props);
@@ -58,29 +60,32 @@ import ReactDOM from "react-dom";
    debugger 
    return (
      <div>
-        <Container fluid>
+         
         <Row>
-          <Col>
-            <div className="float-left p-3" >
-              <img src={this.props.headerState.items[0].logo} width="60" height="60"  alt="logo"   />
+          
+            
+            <Col sm="11">
+            <div  >
+              <img src={cadetlogo} width="60" height="60"  alt="logo"   />
                 <img src={cadettitle} height="60"  alt="logoTitle" className="px-3"/>
                 {/*<h3 className="d-inline align-middle">Welcome to React</h3>*/}
                 </div>
           </Col>
+          
         </Row>
-        <Row className="py-0">
+        <Row  >
           <Col>
             <div className="float-left header-label px-4" >
             {this.state.locationinfo}
             </div>
           </Col>
           <Col>
-            <div className="float-right  header-label px-2" style={{fontWeight: 'bold',color:'black'}} >
+            <div className="float-right  header-label px-2" style={{fontWeight: 'bold',color:'#102027'}} >
             Welcome, {this.state.items[0].user}
             </div>
           </Col>
         </Row>
-        </Container>
+       
 </div>
 )
 };
