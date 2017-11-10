@@ -19,6 +19,7 @@ import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import ApprovalsTab  from "./Approvals";
 
 import {
   blue300,
@@ -51,7 +52,6 @@ import {
   CardHeader
 } from "reactstrap";
 import HomeComponent from "./HomeMainComponent";
-import ApprovalsTab from "./Approvals";
 import BudgetStaff from "./BudgetStaff";
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
@@ -162,7 +162,7 @@ export class ReactStrapComp extends Component {
                 <div>
 
                   <p>
-                    <ApprovalsTab></ApprovalsTab>
+            <ApprovalsTab></ApprovalsTab>
                   </p>
                 </div>
               </Tab> <Tab  style={tabStyles}  label="Reports" >
@@ -173,12 +173,32 @@ export class ReactStrapComp extends Component {
                   </p>
                 </div>
               </Tab> <Tab  style={tabStyles}  label="Admin" >
-                <div>
-
-                  <p>
-
-                  </p>
-                </div>
+              <Row className="m-0 p-0">
+              <Col sm="12">
+                <Container
+                  fluid
+                  style={{
+                    overflow: "hidden",
+                    margin: "2px"
+                  }}
+                >
+                  <Row className="m-0 p-0">                            
+                    <Col sm="12">
+                      <h4 className="text-default">
+                        Admin{" "}
+                        <i className="fa fa-arrow-circle-o-down" />{" "}
+                      </h4>
+                    </Col>
+                  </Row>
+                  <Row className="m-0 p-0">
+                    {" "}
+                    <Col sm="12">
+                    <AttribList {...this.props} />
+                    </Col>
+                  </Row>
+                </Container>
+              </Col>
+            </Row>
               </Tab>
             </Tabs>
 
