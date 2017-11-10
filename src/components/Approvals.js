@@ -17,22 +17,13 @@ import {
     CardImg
     
 } from "reactstrap";
-import Divider from 'material-ui/Divider';
 
 export default class ApprovalsTab extends Component {
 
     render() {
         return(
-            <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
-                 
-                    <div className="d-flex" >
-                  
-                        <Row> <Col sm="12">
-                            <h4 className="text-default">Approvals <i className="fa fa-arrow-circle-o-down" /></h4><br />
-                        </Col>
-                        </Row>
-                    </div>
-                    <Divider />
+            <Container fluid style={{ width: 1024, overflow: "hidden",margin:'20px' }} >
+                <div style={{height : '10px'}}></div>
             <div className="d-flex">
                
                 <Row> <Col sm="12">

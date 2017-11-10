@@ -34,6 +34,11 @@ const paperStyle = {
     width: "100%",
     display: "flex"
 };
+const styles = {
+    link: {
+      cursor: "pointer"
+    }
+  };
 
 
 class HomeComponent extends Component {
@@ -83,7 +88,7 @@ class HomeComponent extends Component {
                 <div style={{display: this.state.showHome == true ? 'block': 'none'}}>
                     <div className="d-flex" >
                         <Row> <Col sm="12">
-                            <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />
+                            {/* <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br /> */}
                             <h5 className="text-primary">Welcome to the CGYCA Solution. </h5>
                             <span className="text-default">The CGYCA Solution is an all-in-one system that tracks cadets, courses and budget information.<br />
                                 This home page gives you quick access notifications and key metrics, and provides you with the quick links to
@@ -167,7 +172,13 @@ class HomeComponent extends Component {
                                                     applications. </span>
                                                             <span><br />
                                                                 <br />
-                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                                <a
+                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 download={"test.xlsx"}
+                                                                 >
+                                                                 <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
+                                                                </a>
+                                                                {/* <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} /> */}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -197,7 +208,13 @@ class HomeComponent extends Component {
                                                             <span style={{ fontSize: '10px' }}>This applications are fully<br /> approved.
                                                     </span>
                                                             <span> <br /><br />
-                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                            <a
+                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 download={"test.xlsx"}
+                                                                 >
+                                                                 <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
+                                                                </a>
+                                                               
                                                             </span>
                                                         </td>
 
@@ -225,7 +242,13 @@ class HomeComponent extends Component {
                                                         <td style={{ width: '55%' }}>
                                                             <img src={chart} height="90%" width='100%' alt="chart" className="px-3" />
                                                             <span> <br />
-                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                            <a
+                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 download={"test.xlsx"}
+                                                                 >
+                                                                 <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
+                                                                </a>
+                                                                {/* <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} /> */}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -244,12 +267,27 @@ class HomeComponent extends Component {
                 <div style={{ display: this.state.showApprovals == true ? 'block' : 'none' }}>
                     <div className="d-flex" >
                         <Row> <Col sm="12">
-                            <h5 className="text-default" style={{cursor:'pointer'}} onClick={() => {
+                        <div style={{float:'right', margin:'25px'}}>
+                    <span
+                      className="fa-stack"
+                      style={styles.link}
+                      onClick={() => {
+                                if (this.state.showHome == false)
+                                       this.setState
+                                        ({ showApprovals: !this.state.showApprovals,
+                                        showHome : !this.state.showHome })}}                     
+                    >
+                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-times fa-stack-1x" />
+                    </span>
+                                     </div>             
+                                     
+                            {/* <h5 className="text-default" style={{cursor:'pointer'}} onClick={() => {
                                 if (this.state.showHome == false)
                                        this.setState
                                         ({ showApprovals: !this.state.showApprovals,
                                         showHome : !this.state.showHome })}}>Home  <i className="fa fa-arrow-circle-o-down" />&nbsp;
-                                       <span style={{fontSize:'12px'}}><i className="fa fa-chevron-right"/>Approvals</span></h5>
+                                       <span style={{fontSize:'12px'}}><i className="fa fa-chevron-right"/>Approvals</span></h5> */}
                             <ApprovalsTab></ApprovalsTab>                  
                         </Col>
                         </Row>

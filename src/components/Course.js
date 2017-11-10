@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CourseImg from 'images/course.PNG'
+import CourseImg from 'images/course_cal.PNG'
 
 import {
     Container,
@@ -24,19 +24,9 @@ export default class Course extends Component {
     render() {
         return(
             <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
-                   <div className="d-flex" >
-                  
-                        <Row> <Col sm="12">
-                            <h4 className="text-default">Course Schedule <i className="fa fa-arrow-circle-o-down" /></h4><br />
-                        </Col>
-                        </Row>
-                    </div>
-                    <Divider />
-                <div style={{height : '50px'}}></div>
-            <div className="d-flex">
-               
+           <div className="d-flex">             
                 <Row> <Col sm="12">
-                <Card style={{ width: '1000px'} }>
+                <Card style={{ width: '900px'} }>
                  <CardImg
                 
                 style={{width:"100%",height:"100%"}}

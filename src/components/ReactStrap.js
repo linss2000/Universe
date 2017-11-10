@@ -184,14 +184,14 @@ export class ReactStrapComp extends Component {
                     margin: "2px"
                   }}
                 >
-                  <Row className="m-0 p-0">                            
+                  {/* <Row className="m-0 p-0">                            
                     <Col sm="12">
                       <h4 className="text-default">
                         Admin{" "}
                         <i className="fa fa-arrow-circle-o-down" />{" "}
                       </h4>
                     </Col>
-                  </Row>
+                  </Row> */}
                   <Row className="m-0 p-0">
                     {" "}
                     <Col sm="12">
