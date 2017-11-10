@@ -40,7 +40,7 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import clientpic from "images/cadet_photo_square.png";
+import clientpic from "images/cadet_photo_square.PNG";
 import bottompic from "images/cadet_details_botframe.png";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
