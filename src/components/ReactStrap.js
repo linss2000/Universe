@@ -145,7 +145,7 @@ export class ReactStrapComp extends Component {
           </Paper>
           
             <Tabs value={this.state.activeTab} onChange={this.handleChange}>
-              <Tab style={tabStyles} label="Home" IconMenu='fa fa-home' value="0" >
+              <Tab style={tabStyles} label="Home" value="0"  icon={<FontIcon className='fa fa-home'/>}>
 
                 <div>
 
@@ -153,10 +153,9 @@ export class ReactStrapComp extends Component {
                     <HomeComponent callParentSearch={this.cadetSearch}></HomeComponent>
                   </p>
 
-
                 </div>
               </Tab>
-              <Tab style={tabStyles} label="Cadets" value="1" >
+              <Tab style={tabStyles} label="Cadets" value="1"   icon={<FontIcon className='fa fa-home'/>}>
                 <div>
 
                   <p>
