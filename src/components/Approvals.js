@@ -23,7 +23,7 @@ export default class ApprovalsTab extends Component {
     render() {
         return(
             <Container fluid style={{ width: 1024, overflow: "hidden",margin:'20px' }} >
-                <div style={{height : '10px'}}></div>
+                {/* <div style={{height : '50px'}}></div> */}
             <div className="d-flex">
                
                 <Row> <Col sm="12">

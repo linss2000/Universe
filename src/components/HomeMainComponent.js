@@ -267,7 +267,7 @@ class HomeComponent extends Component {
                 <div style={{ display: this.state.showApprovals == true ? 'block' : 'none' }}>
                     <div className="d-flex" >
                         <Row> <Col sm="12">
-                        <div style={{float:'right', margin:'25px'}}>
+                        <div style={{float:'right', margin:'55px'}}>
                     <span
                       className="fa-stack"
                       style={styles.link}
