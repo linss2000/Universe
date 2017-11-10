@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux";
 import export_excel from 'images/export_excel.PNG'
 import chart from 'images/chart.PNG'
 
+import ApprovalsTab from './Approvals';
 import { actions as cadetDetailsActions } from "reducers/cadetdetailsreducer";
 import {
     Container,
@@ -29,10 +30,11 @@ import {
 
 
 const paperStyle = {
-    height: "120px",
+    height: "180px",
     width: "100%",
-    display: "flex"    
-  };
+    display: "flex"
+};
+
 
 class HomeComponent extends Component {
 
@@ -41,11 +43,23 @@ class HomeComponent extends Component {
 
         this.state = {
             notifycollapse: true,
-            indicatorscollapse: true
+            indicatorscollapse: true,
+            showApprovals: false,
+            showHome: true
 
         };
+        // this.onClickAction = this.onClickAction.bind(this);
     }
 
+    onClickLink(index) {
+        debugger
+        if (index == 1) {
+            this.setState({
+                showApprovals: true,
+                showHome: false
+            })
+        }
+    }
     renderList() {
         return this.props.notificationState.map((notification, index) => {
             return (
@@ -53,7 +67,11 @@ class HomeComponent extends Component {
                     <td><b>{notification.total_ntf_cnt}</b></td>
                     <td >{notification.notify_type}</td>
                     <td>{notification.notify_message}</td>
-                    <td ><a href="">{notification.nofity_details}</a></td>
+                    <td ><label  style={{cursor:'pointer',textDecorationLine:'underline',color:'#4f8acc' }} onClick={() => {
+                        if (index == 1){
+                                        this.setState
+                                        ({ showApprovals: !this.state.showApprovals,
+                                        showHome : !this.state.showHome })}}}>{notification.nofity_details}</label></td>
                 </tr>
             )
         });
@@ -62,21 +80,22 @@ class HomeComponent extends Component {
     render() {
         return (
             <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
-                <div className="d-flex">
-                    <Row> <Col sm="12">
-                        <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" />    </h4>
-                        <h5 className="text-primary">Welcome to the CGYCA Solution. </h5>
-                        <span className="text-default">The CGYCA Solution is an all-in-one system that tracks cadets, courses and budget information.<br />
-                            This home page gives you quick access notifications and key metrics, and provides you with the quick links to
+                <div style={{display: this.state.showHome == true ? 'block': 'none'}}>
+                    <div className="d-flex" >
+                        <Row> <Col sm="12">
+                            <h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />
+                            <h5 className="text-primary">Welcome to the CGYCA Solution. </h5>
+                            <span className="text-default">The CGYCA Solution is an all-in-one system that tracks cadets, courses and budget information.<br />
+                                This home page gives you quick access notifications and key metrics, and provides you with the quick links to
                    core functions of the system.
                    </span>
-                    </Col>
-                    </Row>
-                </div>
-                <Divider />
-                <div>
-                    <Row>
-                        {/* <Col> */}
+                        </Col>
+                        </Row>
+                    </div>
+                    <Divider />
+                    <div>
+                        <Row>
+                            {/* <Col> */}
                             <div>
                                 <i className="fa fa-caret-down fa-lg" onClick={() => {
                                     this.setState({ notifycollapse: !this.state.notifycollapse });
@@ -91,140 +110,153 @@ class HomeComponent extends Component {
                                     </IconButton>
                                 </Badge>
                             </div>
-                                             
+
                             <Collapse isOpen={this.state.notifycollapse}>
-                            <Paper style={paperStyle} zDepth={2}>
-                                {/* <Card body>
+                                <Paper style={paperStyle} zDepth={2}>
+                                    {/* <Card body>
                                 <CardTitle>                                   
                                 </CardTitle>
                                 <CardText>         
                                                                */}
-                                <br />
-                                <Table bordered striped hover size="sm" className="border-bottom-0">
-                                    <tbody>
-                                        {this.renderList()}
-                                    </tbody>
-                                </Table>
-                                {/* </CardText>
+                                    <br />
+                                    <Table bordered striped hover size="md" width="200px" className="border-bottom-0">
+                                        <tbody>
+                                            {this.renderList()}
+                                        </tbody>
+                                    </Table>
+                                    {/* </CardText>
 
                             </Card> */}
-                            </Paper>
+                                </Paper>
                             </Collapse>
-                            
-                        {/* </Col> */}
-                    </Row>
-                    <br />
-                    <Row>
-                        <Col>
-                            <div>
-                                <i className="fa fa-caret-down fa-lg" onClick={() => {
-                                    this.setState({ indicatorscollapse: !this.state.indicatorscollapse });
-                                }} />
-                                <span className="text-default"> Key Indicators</span>
-                                <Divider />
-                            </div>
-                            <Collapse isOpen={this.state.indicatorscollapse}>
-                                <a href=""><i>View Reporting Dashboard...</i></a>
-                                <Row>
-                                   <Col sm="4">
-                                        {/* <Card body>
+
+                            {/* </Col> */}
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col>
+                                <div>
+                                    <i className="fa fa-caret-down fa-lg" onClick={() => {
+                                        this.setState({ indicatorscollapse: !this.state.indicatorscollapse });
+                                    }} />
+                                    <span className="text-default"> Key Indicators</span>
+                                    <Divider />
+                                </div>
+                                <Collapse isOpen={this.state.indicatorscollapse}>
+                                    <a href=""><i>View Reporting Dashboard...</i></a>
+                                    <Row>
+                                        <Col sm="4">
+                                            {/* <Card body>
                                             <CardText> */}
-                                             <Table bordered  size="sm" className="border-bottom-0" style={{width: '100%'}}>
-                                             <tbody> 
-                                             <tr>
-                                                 <td style={{ backgroundColor: "#93a8e0", color: "white" }} width="33%">
-                                                     Submitted <br/> Applications
-                                                     for <br/> Pending Class
-                                                     <br/><br/>
-                                                     The target number <br/> of  cadets per class <br/> is 200.
-                                                      
+                                            <Table bordered size="sm" className="border-bottom-0" style={{ width: '100%' }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ backgroundColor: "#93a8e0", color: "white" }} width="33%">
+                                                            Submitted <br /> Applications
+                                                     for <br /> Pending Class
+                                                     <br /><br />
+                                                            The target number <br /> of  cadets per class <br /> is 200.
+
                                                 </td>
-                                                <td>
-                                                    Applications submitted,<br/> 
-                                                    for 2018, Class 35<br/><br/>
-                                                    <span style={{justifyContent:'center'}}><b>195</b></span>
-                                                    <br /> <br />
-                                                    <span style={{fontSize: '10px'}}>This number does not include<br/> rejected 
+                                                        <td>
+                                                            Applications submitted,<br />
+                                                            for 2018, Class 35<br /><br />
+                                                            <span style={{ justifyContent: 'center' }}><b>195</b></span>
+                                                            <br /> <br />
+                                                            <span style={{ fontSize: '10px' }}>This number does not include<br /> rejected
                                                     applications. </span>
-                                                    <span><br/>
-                                                    <br/>
-                                                    <img src={export_excel} alt="chart" className="px-2 " style={{ float:'right'} }/>
-                                                    </span>
-                                                    </td>
-                                            </tr>
-                                           
-                                            </tbody>
+                                                            <span><br />
+                                                                <br />
+                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
                                             </Table>
                                             {/* </CardText>
                                             <Button>Go somewhere</Button>
                                         </Card> */}
-                                    </Col>
-                                    <Col sm="4">
-                                    <Table bordered  size="sm" className="border-bottom-0" style={{width: '100%'}}>
-                                             <tbody> 
-                                             <tr>
-                                                 <td style={{ backgroundColor: "#4f8acc", color: "white" }} width="33%">
-                                                     Accepted <br/> Applications
-                                                     for <br/> Pending Class
-                                                     <br/><br/>
-                                                     The target number <br/> of  cadets per class <br/> is 200.
+                                        </Col>
+                                        <Col sm="4">
+                                            <Table bordered size="sm" className="border-bottom-0" style={{ width: '100%' }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ backgroundColor: "#4f8acc", color: "white" }} width="33%">
+                                                            Accepted <br /> Applications
+                                                     for <br /> Pending Class
+                                                     <br /><br />
+                                                            The target number <br /> of  cadets per class <br /> is 200.
                                                       <br />
-                                                </td>
-                                                <td>
-                                                    Applications accepted for<br/> 
-                                                    2018, Class 35<br/><br/>
-                                                    <span style={{justifyContent:'center'}}><b>130</b></span>
-                                                    <br /> <br />
-                                                    <span style={{fontSize: '10px'}}>This applications are fully<br/> approved. 
+                                                        </td>
+                                                        <td>
+                                                            Applications accepted for<br />
+                                                            2018, Class 35<br /><br />
+                                                            <span style={{ justifyContent: 'center' }}><b>130</b></span>
+                                                            <br /> <br />
+                                                            <span style={{ fontSize: '10px' }}>This applications are fully<br /> approved.
                                                     </span>
-                                                    <span> <br/><br/>
-                                                    <img src={export_excel} alt="chart" className="px-2 " style={{ float:'right'} }/>
-                                                    </span>
-                                                    </td>
+                                                            <span> <br /><br />
+                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                            </span>
+                                                        </td>
 
-                                            </tr>
-                                            <tr>
-                                            
-                                                </tr>
-                                            </tbody>
+                                                    </tr>
+                                                    <tr>
+
+                                                    </tr>
+                                                </tbody>
                                             </Table>
-                                    </Col>
-                                    <Col sm="4">
-                                    
-                                    <Table bordered  size="sm" className="border-bottom-0" style={{width: '100%'}}>
-                                             <tbody> 
-                                             <tr>
-                                                 <td style={{ backgroundColor: "#4f8acc", color: "white",width:"100px" }} >
-                                                 
-                                                     Status of <br/> Applications
-                                                     <br/><br/>
-                                                     The metrics shows <br/> how many of the applications for the <br/>
-                                                     next class are in process, or have been accepted or
-                                                     <br/>  rejected.
+                                        </Col>
+                                        <Col sm="4">
+
+                                            <Table bordered size="sm" className="border-bottom-0" style={{ width: '100%' }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ backgroundColor: "#4f8acc", color: "white", width: "100px" }} >
+
+                                                            Status of <br /> Applications
+                                                     <br /><br />
+                                                            The metrics shows <br /> how many of the applications for the <br />
+                                                            next class are in process, or have been accepted or
+                                                     <br />  rejected.
                                                       <br />
-                                                </td>
-                                                <td style={{width: '55%'}}>
-                                                <img src={chart} height="90%"  width='100%' alt="chart" className="px-3"/>
-                                                <span> <br/>
-                                                    <img src={export_excel} alt="chart" className="px-2 " style={{ float:'right'} }/>
-                                                    </span>
-                                                    </td>   
-                                            </tr>
-                                            
-                                            </tbody>
-                                            </Table>
-                                    </Col>
-                                </Row>
-                            </Collapse>
-                        </Col>
+                                                        </td>
+                                                        <td style={{ width: '55%' }}>
+                                                            <img src={chart} height="90%" width='100%' alt="chart" className="px-3" />
+                                                            <span> <br />
+                                                                <img src={export_excel} alt="chart" className="px-2 " style={{ float: 'right' }} />
+                                                            </span>
+                                                        </td>
+                                                    </tr>
 
-                    </Row>
+                                                </tbody>
+                                            </Table>
+                                        </Col>
+                                    </Row>
+                                </Collapse>
+                            </Col>
+
+                        </Row>
+                    </div>
+
                 </div>
-
-                <div>
-
+                <div style={{ display: this.state.showApprovals == true ? 'block' : 'none' }}>
+                    <div className="d-flex" >
+                        <Row> <Col sm="12">
+                            <h5 className="text-default" style={{cursor:'pointer'}} onClick={() => {
+                                if (this.state.showHome == false)
+                                       this.setState
+                                        ({ showApprovals: !this.state.showApprovals,
+                                        showHome : !this.state.showHome })}}>Home  <i className="fa fa-arrow-circle-o-down" />&nbsp;
+                                       <span style={{fontSize:'12px'}}><i className="fa fa-chevron-right"/>Approvals</span></h5>
+                            <ApprovalsTab></ApprovalsTab>                  
+                        </Col>
+                        </Row>
+                    </div>
                 </div>
             </Container>
+
         )
     };
 }
