@@ -9,7 +9,7 @@ import { types as forgotPWDTypes } from "reducers/forgotpwdreducer";
 import { actions as forgotPWDActions } from "reducers/forgotpwdreducer";
 import * as _ from "lodash";
 import bgImg from "images/cgyca_staffandbdgt.PNG";
-import staffImg from "images/course.PNG";
+import staffImg from "images/course_cal.PNG";
 import { List, ListItem } from "material-ui/List";
 import ActionGrade from "material-ui/svg-icons/action/grade";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
