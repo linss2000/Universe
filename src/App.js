@@ -14,6 +14,8 @@ import ChangePassword from "./components/ChangePassword";
 import ReactStrapComp from "./components/ReactStrap";
 import CadetsSearch from "./components/CadetsSearch";
 import CadetInlineSearch from "./components/CadetInlineSearch";
+import Admin from "./components/Admin";
+
 
 import CadetDetails from "./components/CadetDetails";
 
@@ -57,6 +59,8 @@ const App = props => {
                 <Route path="/listitems" component={ListItems} />
                 <Route path="/cadet" component={CadetsSearch} />
                 <Route path="/cadetinline" component={CadetInlineSearch} />
+                <Route path="/admin" component={Admin} />
+                
                 
                 <Route
                   path="/cadetdetails"

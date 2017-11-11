@@ -55,7 +55,7 @@ import ApprovalsTab from "./Approvals";
 import BudgetStaff from "./BudgetStaff";
 import Reports from "./Reports";
 import Course from "./Course";
-
+import Admin from "./Admin";
 
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
@@ -222,7 +222,8 @@ export class ReactStrapComp extends Component {
                   <Row className="m-0 p-0">
                     {" "}
                     <Col sm="12">
-                    <AttribList {...this.props} />
+                    <Admin/>
+                    {/*<AttribList {...this.props} />*/}
                     </Col>
                   </Row>
                 </Container>
