@@ -10,12 +10,17 @@ import { actions as forgotPWDActions } from "reducers/forgotpwdreducer";
 import * as _ from "lodash";
 import bgImg from "images/cgyca_staffandbdgt.PNG";
 import staffImg from "images/course_cal.PNG";
+import roleImg from "images/role.png";
+import userImg from "images/user.png";
+import secImg from "images/security.png";
 import { List, ListItem } from "material-ui/List";
 import ActionGrade from "material-ui/svg-icons/action/grade";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
 import ContentDrafts from "material-ui/svg-icons/content/drafts";
 import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
+import AttribList from "./AttribTables";
+
 import Toggle from "material-ui/Toggle";
 
 import {
@@ -84,7 +89,7 @@ const styles = {
   }
 };
 
-const images = [bgImg, staffImg];
+const images = [bgImg, staffImg, roleImg, userImg, secImg];
 
 export class Admin extends Component {
   static propTypes = {};
@@ -95,20 +100,30 @@ export class Admin extends Component {
       isLoading: false,
       collapse: false,
       open: false,
-      imgIndex: 0
+      imgIndex: 0,
+      inAttrib : false
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
     this.changeImg = this.changeImg.bind(this);
+    this.showAttrib = this.showAttrib.bind(this);
   }
 
   changeImg = index => {
       debugger;
+      
     this.setState({
-      imgIndex: index
+      imgIndex: index,
+      inAttrib : false
     });
   };
 
+  showAttrib = () => {
+    this.setState({
+      inAttrib : true
+    })
+  }
+  
   handleToggle = () => {
     this.setState({
       open: !this.state.open
@@ -153,6 +168,14 @@ export class Admin extends Component {
                       onClick={() => {
                           debugger;
                         this.changeImg(1);
+                      }}
+                    />
+                    <ListItem
+                      primaryText="Attributes"
+                      leftIcon={<ContentSend />}
+                      onClick={() => {
+                          debugger;
+                        this.showAttrib();
                       }}
                     />
                     <ListItem
@@ -222,14 +245,26 @@ export class Admin extends Component {
                     <ListItem
                       primaryText="Site Setup and Maintenance"
                       leftIcon={<ContentSend />}
+                      onClick={() => {
+                        debugger;
+                      this.changeImg(4);
+                    }}
                     />
                     <ListItem
                       primaryText="Role Maintenance"
                       leftIcon={<ContentDrafts />}
+                      onClick={() => {
+                        debugger;
+                      this.changeImg(2);
+                    }}
                     />
                     <ListItem
                       primaryText="User Maintenance"
                       leftIcon={<ContentDrafts />}
+                      onClick={() => {
+                        debugger;
+                      this.changeImg(3);
+                    }}
                     />
                   </List>
                 </div>
@@ -271,12 +306,15 @@ export class Admin extends Component {
                   alt="Card image cap"
                 />
                 */}
+                {!this.state.inAttrib ?
                 <img
                   width="100%"
                   height="100%"
                   src={images[this.state.imgIndex]}
                   alt="Card image cap"
-                />
+                /> :
+                <AttribList {...this.props} />
+                }
               </Card>
             </Col>
           </Row>
