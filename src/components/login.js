@@ -42,7 +42,8 @@ const styles = {
     backgroundImage: `url(${bgImg})`,
     backgroundSize: "100%",
     backgroundPosition:"center",
-    backgroundRepeat:"no-repeat"
+    backgroundRepeat:"no-repeat",
+    backgroundColor: "#51b8e1"
   }
 };
 

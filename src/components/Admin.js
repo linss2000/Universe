@@ -261,7 +261,7 @@ export class Admin extends Component {
             </Col>
             */}
             <Col sm="6">
-              <Card>
+              <Card style={{ width: 1000, overflow: "hidden", margin: "2px" }}>
                 {/*
                 <CardImg                  
                   width="100%"
