@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReportsImg from 'images/reports.PNG'
+import ReportsImg from 'images/reportsnew.png'
 
 import {
     Container,
