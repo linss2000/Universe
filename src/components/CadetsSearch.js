@@ -592,10 +592,9 @@ export class CadetsSearch extends Component {
                     </thead>
                     <tbody>
                       {this.state.pageOfItems.map((row, index) => (
-                        <tr key={index}>
+                        <tr key={index}  onClick={() => this.showDetails(row)}>
                           <td
-                            style={styles.link}
-                            onClick={() => this.showDetails(row)}
+                            style={styles.link}                           
                           >
                             <i className="fa fa-ellipsis-v fa-fw" />
                           </td>
@@ -713,7 +712,7 @@ export class CadetsSearch extends Component {
               </Row>
               <Row className="m-0 p-0">
                 <Col sm="12">
-                  <CadetDetails cadetRow={this.selectedCadetRow} />
+                  <CadetDetails cadetRow={this.selectedCadetRow} closeDetails={()=>this.setState({ inDetailsTab: false, activeTab: "1" })} />
                 </Col>
               </Row>
             </TabPane>

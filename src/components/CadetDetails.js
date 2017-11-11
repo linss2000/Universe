@@ -335,12 +335,12 @@ export class CadetDetails extends Component {
           fluid
           style={{
             overflow: "hidden",
-            margin: "5px"
+            margin: "1px"
           }}
         >
           <Row>
             <Col sm="12">
-              <CardGroup style={{ height: "200px" }}>
+              <CardGroup style={{ height: "160px" }}>
                 <Card>
                   <CardImg
                     top
@@ -459,7 +459,7 @@ export class CadetDetails extends Component {
           </Row>
           <Row>
             <Col sm="12">
-              <CardGroup style={{ height: "200px" }}>
+              <CardGroup style={{ height: "150px" }}>
                 <Card>
                   <CardImg
                     top
@@ -469,6 +469,14 @@ export class CadetDetails extends Component {
                 </Card>
               </CardGroup>
             </Col>
+          </Row>
+          <Row>
+          <Col sm="12">
+            <div  className="float-right">
+              <Button size="sm" color="secondary" onClick={()=>this.props.closeDetails()}>Save</Button> {" "}
+              <Button size="sm" color="secondary" onClick={()=>this.props.closeDetails()}>Cancel</Button>
+            </div>
+          </Col>
           </Row>
         </Container>
       </div>
