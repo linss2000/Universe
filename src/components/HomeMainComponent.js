@@ -31,8 +31,8 @@ import {
 
 
 const paperStyle = {
-    height: "180px",
-    width: "100%",
+    height: "130px",
+    width: "90%",
     display: "flex"
 };
 const styles = {
@@ -51,7 +51,8 @@ class HomeComponent extends Component {
             notifycollapse: true,
             indicatorscollapse: true,
             showApprovals: false,
-            showHome: true
+            showHome: true,
+            searchCadet : true
 
         };
         // this.onClickAction = this.onClickAction.bind(this);
@@ -75,10 +76,10 @@ class HomeComponent extends Component {
         return this.props.notificationState.map((notification, index) => {
             return (
                 <tr key={index} >
-                    <td><b>{notification.total_ntf_cnt}</b></td>
-                    <td >{notification.notify_type}</td>
-                    <td>{notification.notify_message}</td>
-                    <td ><label  style={{cursor:'pointer',textDecorationLine:'underline',color:'#4f8acc' }} onClick={() => {
+                    <td style={{fontSize:"13px"}}><b>{notification.total_ntf_cnt}</b></td>
+                    <td style={{fontSize:"13px"}} >{notification.notify_type}</td>
+                    <td style={{fontSize:"13px"}}>{notification.notify_message}</td>
+                    <td style={{fontSize:"13px"}} ><label  style={{cursor:'pointer',textDecorationLine:'underline',color:'#4f8acc' }} onClick={() => {
                         if (index == 1){
                                         this.setState
                                         ({ showApprovals: !this.state.showApprovals,
@@ -104,14 +105,9 @@ class HomeComponent extends Component {
                         </Row>
                     </div>
                     <Divider />
-                    <Row>
-                            <Col sm="12">
-                                <CadetInlineSearch callParentSearch={this.cadetSearch}></CadetInlineSearch>
-                            </Col>
-                        </Row>
-                    <div>
+                     <div>
                         <Row>
-                            {/* <Col> */}
+                            <Col>
                             <div>
                                 <i className="fa fa-caret-down fa-lg" onClick={() => {
                                     this.setState({ notifycollapse: !this.state.notifycollapse });
@@ -128,27 +124,18 @@ class HomeComponent extends Component {
                             </div>
 
                             <Collapse isOpen={this.state.notifycollapse}>
-                                <Paper style={paperStyle} zDepth={2}>
-                                    {/* <Card body>
-                                <CardTitle>                                   
-                                </CardTitle>
-                                <CardText>         
-                                                               */}
-                                    <br />
-                                    <Table bordered striped hover size="md" width="200px" className="border-bottom-0">
+                                <Paper style={paperStyle} zDepth={1}>
+                                      <br />
+                                    <Table bordered striped hover size="sm" className="border-bottom-0">
                                         <tbody>
                                             {this.renderList()}
                                         </tbody>
-                                    </Table>
-                                    {/* </CardText>
-
-                            </Card> */}
+                                    </Table>                                    
                                 </Paper>
                             </Collapse>
-
-                            {/* </Col> */}
+                            </Col>
                         </Row>
-                        <br />
+                        <br/>
                         <Row>
                             <Col>
                                 <div>
@@ -272,27 +259,46 @@ class HomeComponent extends Component {
                             </Col>
 
                         </Row>
-                        
+                        <br/>
+                        <Row>
+                            <Col>
+                            <div>
+                                <i className="fa fa-caret-down fa-lg" onClick={() => {
+                                    this.setState({ searchCadet: !this.state.searchCadet });
+                                }} />
+                                <span> Search for a cadet or a staff member </span>
+                                
+                            </div>
+                            <Collapse isOpen={this.state.searchCadet}>
+                            <Table bordered size="sm" style={{height:'200px', overflow:"auto"}} className="border-bottom-0" >
+                                        <tbody>
+                                      <tr><td>
+                                        <CadetInlineSearch callParentSearch={this.cadetSearch}></CadetInlineSearch>
+                                    </td></tr>
+                                </tbody>
+                                </Table>
+                        </Collapse>
+                            </Col>
+                        </Row>
                     </div>
 
                 </div>
                 <div style={{ display: this.state.showApprovals == true ? 'block' : 'none' }}>
                     <div className="d-flex" >
                         <Row> <Col sm="12">
-                        <div style={{float:'right', margin:'55px'}}>
+                        {/* <div > */}
                     <span
-                      className="fa-stack"
-                      style={styles.link}
+                      className="fa-stack" style={{float:'right', margin:'55px',cursor:'pointer'}}
                       onClick={() => {
                                 if (this.state.showHome == false)
                                        this.setState
                                         ({ showApprovals: !this.state.showApprovals,
                                         showHome : !this.state.showHome })}}                     
                     >
-                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-square-o fa-stack-2x"  />
                       <i className="fa fa-times fa-stack-1x" />
                     </span>
-                                     </div>             
+                                     {/* </div>              */}
                                      
                             {/* <h5 className="text-default" style={{cursor:'pointer'}} onClick={() => {
                                 if (this.state.showHome == false)
