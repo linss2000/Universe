@@ -130,11 +130,11 @@ export class Admin extends Component {
       <div style={styles.container}>
         <Container
           fluid
-          style={{ overflow: "hidden", margin: "5px" }}
+          style={{ overflow: "hidden", margin: "1px" }}
           //className="d-flex align-items-start"
         >
           <Row>
-            <Col sm="3">
+            <Col sm="2">
               <div>
                 <div>
                   <List>
@@ -260,7 +260,7 @@ export class Admin extends Component {
               </Collapse>
             </Col>
             */}
-            <Col sm="6">
+            <Col sm="10">
               <Card style={{ width: 1000, overflow: "hidden", margin: "2px" }}>
                 {/*
                 <CardImg                  
