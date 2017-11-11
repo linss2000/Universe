@@ -67,9 +67,15 @@ const tabStyles = {
 };
 
 const paperStyle = {
+<<<<<<< HEAD
   height: "100px",
   width: "98%",
   margin: 15
+=======
+  height: "80px",
+  width: "99.2%",
+  margin: 5,
+>>>>>>> e74d2f61f5bedb4dd946719c297b0c4d733691a9
   // textAlign: "left",
   // display: "flex",
   // justifyContent: "left"
@@ -136,8 +142,9 @@ export class ReactStrapComp extends Component {
     return (
       <div className="mh-100 mw-100">
         <Card>
-          <Paper style={paperStyle} zDepth={5}>
-            <CadetHeader />
+
+          <Paper style={paperStyle} zDepth={1} >
+            <CadetHeader></CadetHeader>
           </Paper>
 
           <Tabs value={this.state.activeTab} onChange={this.handleChange}>

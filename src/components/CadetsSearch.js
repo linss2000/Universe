@@ -356,9 +356,11 @@ export class CadetsSearch extends Component {
       <div>
         <Container
           fluid
-          style={{
-            overflow: "hidden",
-            margin: "20px"
+           style={{
+                        overflow: "hidden",
+                        marginTop: "20px",
+                        marginLeft: "-10px",
+                        marginRight: "20px", 
           }}
         >
           <Nav tabs className="m-0 p-0">
