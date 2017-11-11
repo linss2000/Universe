@@ -69,9 +69,9 @@ const tabStyles = {
  
 
 const paperStyle = {
-  height: "100px",
-  width: "98%",
-  margin: 15,
+  height: "80px",
+  width: "99.2%",
+  margin: 5,
   // textAlign: "left",
   // display: "flex",
   // justifyContent: "left"
@@ -140,7 +140,7 @@ export class ReactStrapComp extends Component {
        
         <Card>
 
-          <Paper style={paperStyle} zDepth={5} >
+          <Paper style={paperStyle} zDepth={1} >
             <CadetHeader></CadetHeader>
           </Paper>
           
