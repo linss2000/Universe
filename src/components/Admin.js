@@ -105,7 +105,9 @@ export class Admin extends Component {
       open: false,
       imgIndex: 0,
       inAttrib : false,
-      slideOpen: true  
+      slideOpen: true  ,
+      smColMenu:"2",
+      smColForm:"10"
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -146,7 +148,24 @@ export class Admin extends Component {
     debugger
   };
  handleClose = () => {
-   this.setState({slideOpen: !this.state.slideOpen})
+    
+debugger
+    if(!this.state.slideOpen)
+    {
+   this.setState({
+     slideOpen: !this.state.slideOpen,     
+      smColMenu:"0",
+      smColForm:"12"
+    })
+    }
+    else
+      {
+   this.setState({
+     slideOpen: !this.state.slideOpen,     
+       smColMenu:"2",
+      smColForm:"10"
+    })
+      }
  }
   componentDidUpdate(prevProps, prevState) {
     debugger;
@@ -157,11 +176,17 @@ export class Admin extends Component {
     return (
       
      <div>
-             <AppBar style={{height:'50px ',marginLeft:"-20px",    backgroundColor: 'lightgray',color:'black'
+     <Row>
+          <Col sm="12">
+             <AppBar style={{height:'50px',marginLeft:"-20px",width:'100%',  backgroundColor: 'lightgray',color:'black'
 }}  onClick={this.handleClose } />
+          </Col>
+
+          </Row>
                           
           <Row>
-          <Col sm="2">
+          <Col sm={this.state.smColMenu}>
+          
                    <Drawer open={this.state.slideOpen} containerStyle={styles.absolute} overlayStyle={styles.absolute}>
         
                   <List>
@@ -310,7 +335,7 @@ export class Admin extends Component {
               </Collapse>
             </Col>
             */}
-          <Col sm="10">
+          <Col sm={this.state.smColForm}>
             
               <Card style={{ width: "100%", overflow: "hidden", marginLeft: "2px" }}>
                 {/*
