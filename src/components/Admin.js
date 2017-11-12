@@ -106,8 +106,8 @@ export class Admin extends Component {
       imgIndex: 0,
       inAttrib : false,
       slideOpen: true  ,
-      smColMenu:"2",
-      smColForm:"10"
+      smColMenu:"3",
+      smColForm:"9"
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -150,12 +150,12 @@ export class Admin extends Component {
  handleClose = () => {
     
 debugger
-    if(!this.state.slideOpen)
+        if(!this.state.slideOpen)
     {
    this.setState({
      slideOpen: true,     
-      smColMenu:"2",
-      smColForm:"10"
+      smColMenu:"3",
+      smColForm:"9"
     })
     }
     else
@@ -165,7 +165,7 @@ debugger
        smColMenu:"0",
       smColForm:"12"
     })
-      }
+ }
  }
   componentDidUpdate(prevProps, prevState) {
     debugger;
@@ -173,6 +173,7 @@ debugger
   }
 
   render() {
+    debugger
     return (
       
      <div>
