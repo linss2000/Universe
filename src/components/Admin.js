@@ -153,17 +153,17 @@ debugger
     if(!this.state.slideOpen)
     {
    this.setState({
-     slideOpen: !this.state.slideOpen,     
-      smColMenu:"0",
-      smColForm:"12"
+     slideOpen: true,     
+      smColMenu:"2",
+      smColForm:"10"
     })
     }
     else
       {
    this.setState({
-     slideOpen: !this.state.slideOpen,     
-       smColMenu:"2",
-      smColForm:"10"
+     slideOpen: false,     
+       smColMenu:"0",
+      smColForm:"12"
     })
       }
  }

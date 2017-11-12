@@ -171,7 +171,7 @@ class HomeComponent extends Component {
                                                             <span><br />
                                                                 <br />
                                                                 <a
-                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 href={"http://hvs.selfip.net:3003/cadetexcel"}
                                                                  download={"test.xlsx"}
                                                                  >
                                                                  <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
@@ -207,7 +207,7 @@ class HomeComponent extends Component {
                                                     </span>
                                                             <span> <br /><br />
                                                             <a
-                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 href={"http://hvs.selfip.net:3003/cadetexcel"}
                                                                  download={"test.xlsx"}
                                                                  >
                                                                  <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
@@ -241,7 +241,7 @@ class HomeComponent extends Component {
                                                             <img src={chart} height="90%" width='100%' alt="chart" className="px-3" />
                                                             <span> <br />
                                                             <a
-                                                                 href={"http://localhost:3003/cadetexcel"}
+                                                                 href={"http://hvs.selfip.net:3003/cadetexcel"}
                                                                  download={"test.xlsx"}
                                                                  >
                                                                  <img src={export_excel} alt="chart" className="px-2" style={{ float: 'right' }} />
