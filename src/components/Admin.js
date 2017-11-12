@@ -20,9 +20,11 @@ import ContentDrafts from "material-ui/svg-icons/content/drafts";
 import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
 import AttribList from "./AttribTables";
-
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from "material-ui/Toggle";
-
+import AppBar from 'material-ui/AppBar';
 import {
   Table,
   ListGroup,
@@ -70,7 +72,7 @@ import {
 } from "reactstrap";
 
 const styles = {
-  margin: 12,
+  //margin: 12,
   refresh: {
     display: "inline-block",
     position: "relative"
@@ -81,12 +83,13 @@ const styles = {
     margin: "0px",
     width: "100%",
     height: "100vh",
-    padding: "1px"
+    padding: "1px",
     //backgroundImage: `url(${bgImg})`,
     //backgroundSize: "100%",
     //backgroundPosition: "center",
     //backgroundRepeat: "no-repeat"
-  }
+  },
+  absolute: { position: 'absolute' }
 };
 
 const images = [bgImg, staffImg, roleImg, userImg, secImg];
@@ -101,7 +104,8 @@ export class Admin extends Component {
       collapse: false,
       open: false,
       imgIndex: 0,
-      inAttrib : false
+      inAttrib : false,
+      slideOpen: true  
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -135,25 +139,34 @@ export class Admin extends Component {
       open: item.state.open
     });
   };
-
+ handleSlideToggle = () => {
+    this.setState({
+      slideOpen: false
+    });
+    debugger
+  };
+ handleClose = () => {
+   this.setState({slideOpen: !this.state.slideOpen})
+ }
   componentDidUpdate(prevProps, prevState) {
     debugger;
+    //this.state.slideOpen=!prevState.slideOpen
   }
 
   render() {
     return (
-      <div style={styles.container}>
-        <Container
-          fluid
-          style={{ overflow: "hidden", margin: "1px" }}
-          //className="d-flex align-items-start"
-        >
+      
+     <div>
+             <AppBar style={{height:'50px ',marginLeft:"-20px",    backgroundColor: 'lightgray',color:'black'
+}}  onClick={this.handleClose } />
+                          
           <Row>
-            <Col sm="2">
-              <div>
-                <div>
+          <Col sm="2">
+                   <Drawer open={this.state.slideOpen} containerStyle={styles.absolute} overlayStyle={styles.absolute}>
+        
                   <List>
                     <h6>Field Maintenance </h6>
+                 
                     <ListItem
                       primaryText="Academy or State Specific"
                       leftIcon={<ContentSend />}
@@ -230,6 +243,7 @@ export class Admin extends Component {
                       ]}
                     />
                   </List>
+                  <List>
                   <ListItem
                     primaryText="Course Scheduling Fields"
                     leftIcon={<ContentDrafts />}
@@ -238,8 +252,8 @@ export class Admin extends Component {
                     primaryText="Approvals Fields"
                     leftIcon={<ContentDrafts />}
                   />
-                </div>
-                <div>
+                  </List>
+                
                   <List>
                     <h6>Site and User Maintenance </h6>
                     <ListItem
@@ -267,9 +281,10 @@ export class Admin extends Component {
                     }}
                     />
                   </List>
-                </div>
-              </div>
-            </Col>
+        </Drawer>
+                  
+                
+               </Col>   
             {/* 
             <Col sm="3">
               <div>
@@ -295,8 +310,9 @@ export class Admin extends Component {
               </Collapse>
             </Col>
             */}
-            <Col sm="10">
-              <Card style={{ width: 1000, overflow: "hidden", margin: "2px" }}>
+          <Col sm="10">
+            
+              <Card style={{ width: "100%", overflow: "hidden", marginLeft: "2px" }}>
                 {/*
                 <CardImg                  
                   width="100%"
@@ -306,6 +322,7 @@ export class Admin extends Component {
                   alt="Card image cap"
                 />
                 */}
+                
                 {!this.state.inAttrib ?
                 <img
                   width="100%"
@@ -316,10 +333,10 @@ export class Admin extends Component {
                 <AttribList {...this.props} />
                 }
               </Card>
-            </Col>
+          </Col>
           </Row>
-        </Container>
-      </div>
+         </div>
+     
     );
   }
 }

@@ -224,7 +224,8 @@ export class ReactStrapComp extends Component {
                     fluid
                     style={{
                       overflow: "hidden",
-                      margin: "2px"
+                      margin: "2px",
+                      position:"relative"
                     }}
                   >
                     {/* <Row className="m-0 p-0">                            
@@ -235,7 +236,7 @@ export class ReactStrapComp extends Component {
                       </h4>
                     </Col>
                   </Row> */}
-                    <Row className="m-0 p-0">
+                    <Row>
                       {" "}
                       <Col sm="12">
                         <Admin />
