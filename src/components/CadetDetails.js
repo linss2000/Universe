@@ -40,7 +40,8 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import clientpic from "images/cadet_photo_square.PNG";
+import clientpic from "images/cadet_generic.png";
+import cDetail from "images/cDetail.png";
 import bottompic from "images/cadet_details_botframe.png";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
@@ -57,7 +58,11 @@ import {
   InputGroupButton,
   Popover,
   PopoverHeader,
-  PopoverBody
+  PopoverBody,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 const styles = {
@@ -130,8 +135,11 @@ export class CadetDetails extends Component {
       searchCol: "hv_cadet_name",
       pageSize: 10,
       dropdownOpen: false,
-      popoverOpen: false
+      popoverOpen: false,
+      modal: false
     };
+
+   
 
     this.tableID = 0;
     this.newUpdateValue = "";
@@ -146,11 +154,18 @@ export class CadetDetails extends Component {
     this.toggle = this.toggle.bind(this);
     this.onDropDownItemClick = this.onDropDownItemClick.bind(this);
     this.clickedItem = this.clickedItem.bind(this);
-
+    this.modalToggle = this.modalToggle.bind(this);
     //this.newAttribVal = "";
   }
 
   debouncedSearch = _.debounce(this._onFilterChange, 500);
+
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
 
   setFilterValue = e => {
     //return;
@@ -328,14 +343,20 @@ export class CadetDetails extends Component {
     return className;
   };
 
+  showReport = () => {
+    debugger;
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
   render() {
     return (
-      <div style={{height:"100%", width: "100%"}}>
+      <div style={{ height: "100%", width: "100%" }}>
         <Container
           fluid
           style={{
             overflow: "hidden",
-            margin: "1px",            
+            margin: "1px"
           }}
         >
           <Row>
@@ -344,11 +365,12 @@ export class CadetDetails extends Component {
                 <Card>
                   <CardImg
                     top
-                    style={{ width: "132px", height: "147px" }}
+                    //style={{ width: "132px", height: "147px" }}
                     src={clientpic}
+                    width="100%"
                   />
                 </Card>
-                <Card>
+                <Card className="m-0 p-0">
                   <CardBody>
                     <Form>
                       <FormGroup row className="m-0 p-0">
@@ -422,6 +444,20 @@ export class CadetDetails extends Component {
                           </div>
                         </Col>
                       </FormGroup>
+                      <FormGroup row className="m-0 p-0">
+                        <Col sm={12}>
+                          <Label
+                            style={{
+                              cursor: "pointer",
+                              color: "blue",
+                              textDecoration: "underline"
+                            }}
+                            onClick={() => this.showReport()}
+                          >
+                            Cadet Progress report
+                          </Label>
+                        </Col>
+                      </FormGroup>
                     </Form>
                   </CardBody>
                 </Card>
@@ -461,23 +497,49 @@ export class CadetDetails extends Component {
             <Col sm="12">
               <CardGroup style={{ height: "400px" }}>
                 <Card>
-                  <CardImg
-                    top
-                    width="100%"
-                    src={bottompic}
-                  />
+                  <CardImg top width="100%" src={bottompic} />
                 </Card>
               </CardGroup>
             </Col>
           </Row>
           <Row>
-          <Col sm="12">
-            <div  className="float-right">
-              <Button size="sm" color="secondary" onClick={()=>this.props.closeDetails()}>Save</Button> {" "}
-              <Button size="sm" color="secondary" onClick={()=>this.props.closeDetails()}>Cancel</Button>
-            </div>
-          </Col>
+            <Col sm="12">
+              <div className="float-right">
+                <Button
+                  size="sm"
+                  color="secondary"
+                  onClick={() => this.props.closeDetails()}
+                >
+                  Save
+                </Button>{" "}
+                {" "}
+                <Button
+                  size="sm"
+                  color="secondary"
+                  onClick={() => this.props.closeDetails()}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Col>
           </Row>
+          <Modal size="lg"
+            isOpen={this.state.modal}
+            toggle={this.modalToggle}           
+          >
+            <ModalHeader toggle={this.modalToggle}>Cadet Progress Report</ModalHeader>
+            <ModalBody>
+             <img style={{width:"100%"}} src={cDetail} />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={this.modalToggle}>
+               Close
+              </Button>{" "}
+              <Button color="secondary" onClick={this.modalToggle}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
         </Container>
       </div>
     );
