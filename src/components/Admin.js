@@ -103,7 +103,7 @@ const paperStyle = {
 };
 
 const listStyle = {
-  fontSize:'13px',
+  fontSize:'12px',
   fontFamily:'Arial',
   fontStyle:'bold',
   height:'40px',

@@ -418,7 +418,7 @@ class HomeComponent extends Component {
                 {/* <div > */}
                 <span
                   className="fa-stack"
-                  style={{ float: "right", margin: "55px", cursor: "pointer" }}
+                  style={{ float: "right", cursor: "pointer" }}
                   onClick={() => {
                     if (this.state.showHome == false)
                       this.setState({
