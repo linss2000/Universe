@@ -63,7 +63,9 @@ import AttribList from "./AttribTables";
 import "App.css";
 
 const tabStyles = {
-  backgroundColor: "#1b3039"
+    backgroundColor: "#D3D3D3",
+    color:"black"
+
 };
 
 const styles = {
@@ -243,7 +245,7 @@ export class ReactStrapComp extends Component {
                     <Row>
                       {" "}
                       <Col sm="12">
-                        <Admin />
+                        <Admin/>
                         {/*<AttribList {...this.props} />*/}
                       </Col>
                     </Row>
