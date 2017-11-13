@@ -20,11 +20,11 @@ import ContentDrafts from "material-ui/svg-icons/content/drafts";
 import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
 import AttribList from "./AttribTables";
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
+import Drawer from "material-ui/Drawer";
+import MenuItem from "material-ui/MenuItem";
+import RaisedButton from "material-ui/RaisedButton";
 import Toggle from "material-ui/Toggle";
-import AppBar from 'material-ui/AppBar';
+import AppBar from "material-ui/AppBar";
 import {
   Table,
   ListGroup,
@@ -83,13 +83,13 @@ const styles = {
     margin: "0px",
     width: "100%",
     height: "100vh",
-    padding: "1px",
+    padding: "1px"
     //backgroundImage: `url(${bgImg})`,
     //backgroundSize: "100%",
     //backgroundPosition: "center",
     //backgroundRepeat: "no-repeat"
   },
-  absolute: { position: 'absolute' }
+  absolute: { position: "absolute" }
 };
 
 const images = [bgImg, staffImg, roleImg, userImg, secImg];
@@ -104,10 +104,10 @@ export class Admin extends Component {
       collapse: false,
       open: false,
       imgIndex: 0,
-      inAttrib : false,
-      slideOpen: true  ,
-      smColMenu:"2",
-      smColForm:"10"
+      inAttrib: false,
+      slideOpen: true,
+      smColMenu: "2",
+      smColForm: "10"
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -116,20 +116,20 @@ export class Admin extends Component {
   }
 
   changeImg = index => {
-      debugger;
-      
+    debugger;
+
     this.setState({
       imgIndex: index,
-      inAttrib : false
+      inAttrib: false
     });
   };
 
   showAttrib = () => {
     this.setState({
-      inAttrib : true
-    })
-  }
-  
+      inAttrib: true
+    });
+  };
+
   handleToggle = () => {
     this.setState({
       open: !this.state.open
@@ -141,176 +141,139 @@ export class Admin extends Component {
       open: item.state.open
     });
   };
- handleSlideToggle = () => {
+  handleSlideToggle = () => {
     this.setState({
       slideOpen: false
     });
-    debugger
+    debugger;
   };
- handleClose = () => {
-    
-debugger
-    if(!this.state.slideOpen)
-    {
-   this.setState({
-     slideOpen: true,     
-      smColMenu:"2",
-      smColForm:"10"
-    })
+  handleClose = () => {
+    debugger;
+    if (!this.state.slideOpen) {
+      this.setState({
+        slideOpen: true,
+        smColMenu: "2",
+        smColForm: "10"
+      });
+    } else {
+      this.setState({
+        slideOpen: false,
+        smColMenu: "0",
+        smColForm: "12"
+      });
     }
-    else
-      {
-   this.setState({
-     slideOpen: false,     
-       smColMenu:"0",
-      smColForm:"12"
-    })
-      }
- }
+  };
   componentDidUpdate(prevProps, prevState) {
     debugger;
     //this.state.slideOpen=!prevState.slideOpen
+    /*
+    <Drawer
+              open={this.state.slideOpen}
+              containerStyle={styles.absolute}
+              overlayStyle={styles.absolute}
+            >
+            */
   }
 
   render() {
     return (
-      
-     <div>
-     <Row>
+      <div>
+        {/*
+        <Row>
           <Col sm="12">
-             <AppBar style={{height:'50px',marginLeft:"-20px",width:'100%',  backgroundColor: 'lightgray',color:'black'
-}}  onClick={this.handleClose } />
+            <AppBar
+              style={{
+                height: "50px",
+                marginLeft: "-20px",
+                width: "100%",
+                backgroundColor: "lightgray",
+                color: "black"
+              }}
+              onClick={this.handleClose}
+            />
           </Col>
-
-          </Row>
-                          
-          <Row>
+        </Row>
+            */}
+        <Row>
           <Col sm={this.state.smColMenu}>
-          
-                   <Drawer open={this.state.slideOpen} containerStyle={styles.absolute} overlayStyle={styles.absolute}>
-        
-                  <List>
-                    <h6>Field Maintenance </h6>
-                 
-                    <ListItem
-                      primaryText="Academy or State Specific"
-                      leftIcon={<ContentSend />}
-                      onClick={() => {
-                          debugger;
-                        this.changeImg(0);
-                      }}
-                    />
-                    <ListItem
-                      primaryText="Drafts"
-                      leftIcon={<ContentDrafts />}
-                      onClick={() => {
-                          debugger;
-                        this.changeImg(1);
-                      }}
-                    />
-                    <ListItem
-                      primaryText="Attributes"
-                      leftIcon={<ContentSend />}
-                      onClick={() => {
-                          debugger;
-                        this.showAttrib();
-                      }}
-                    />
-                    <ListItem
-                      primaryText="Cadet and Mentor fields"
-                      leftIcon={<ContentInbox />}
-                      initiallyOpen={false}
-                      primaryTogglesNestedList={true}
-                      nestedItems={[
-                        <ListItem
-                          key={1}
-                          primaryText="Cadet Characterstics"
-                          leftIcon={<ActionGrade />}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="Cadet Medical"
-                          leftIcon={<ContentSend />}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="Cadet Residential"
-                          leftIcon={<ContentSend />}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="Cadet Non_residential"
-                          leftIcon={<ContentSend />}
-                        />
-                      ]}
-                    />
-                    <ListItem
-                      primaryText="Staff and Budget fields"
-                      leftIcon={<ContentInbox />}
-                      initiallyOpen={true}
-                      primaryTogglesNestedList={true}
-                      nestedItems={[
-                        <ListItem
-                          key={1}
-                          primaryText="Staff Members"
-                          leftIcon={<ActionGrade />}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="People Organization"
-                          leftIcon={<ContentSend />}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="Budget Items"
-                          leftIcon={<ContentSend />}
-                        />
-                      ]}
-                    />
-                  </List>
-                  <List>
-                  <ListItem
-                    primaryText="Course Scheduling Fields"
-                    leftIcon={<ContentDrafts />}
-                  />
-                  <ListItem
-                    primaryText="Approvals Fields"
-                    leftIcon={<ContentDrafts />}
-                  />
-                  </List>
-                
-                  <List>
-                    <h6>Site and User Maintenance </h6>
-                    <ListItem
-                      primaryText="Site Setup and Maintenance"
-                      leftIcon={<ContentSend />}
-                      onClick={() => {
-                        debugger;
-                      this.changeImg(4);
-                    }}
-                    />
-                    <ListItem
-                      primaryText="Role Maintenance"
-                      leftIcon={<ContentDrafts />}
-                      onClick={() => {
-                        debugger;
-                      this.changeImg(2);
-                    }}
-                    />
-                    <ListItem
-                      primaryText="User Maintenance"
-                      leftIcon={<ContentDrafts />}
-                      onClick={() => {
-                        debugger;
-                      this.changeImg(3);
-                    }}
-                    />
-                  </List>
-        </Drawer>
-                  
-                
-               </Col>   
-            {/* 
+            
+              <List style={{ lineHeight: "0.85" }}>
+                <h6>Field Maintenance </h6>
+
+                <ListItem
+                  primaryText="Academy or State Specific"
+                  onClick={() => {
+                    debugger;
+                    this.changeImg(0);
+                  }}
+                />
+                <ListItem
+                  primaryText="Drafts"
+                  onClick={() => {
+                    debugger;
+                    this.changeImg(1);
+                  }}
+                />
+                <ListItem
+                  primaryText="Attributes"
+                  onClick={() => {
+                    debugger;
+                    this.showAttrib();
+                  }}
+                />
+                <ListItem
+                  primaryText="Cadet and Mentor fields"
+                  initiallyOpen={false}
+                  primaryTogglesNestedList={true}
+                  nestedItems={[
+                    <ListItem key={1} primaryText="Cadet Characterstics" />,
+                    <ListItem key={2} primaryText="Cadet Medical" />,
+                    <ListItem key={2} primaryText="Cadet Residential" />,
+                    <ListItem key={2} primaryText="Cadet Non_residential" />
+                  ]}
+                />
+                <ListItem
+                  primaryText="Staff and Budget fields"
+                  initiallyOpen={false}
+                  primaryTogglesNestedList={true}
+                  nestedItems={[
+                    <ListItem key={1} primaryText="Staff Members" />,
+                    <ListItem key={2} primaryText="People Organization" />,
+                    <ListItem key={2} primaryText="Budget Items" />
+                  ]}
+                />
+              </List>
+              <List>
+                <ListItem primaryText="Course Scheduling Fields" />
+                <ListItem primaryText="Approvals Fields" />
+              </List>
+
+              <List>
+                <h6>Site and User Maintenance </h6>
+                <ListItem
+                  primaryText="Site Setup and Maintenance"
+                  onClick={() => {
+                    debugger;
+                    this.changeImg(4);
+                  }}
+                />
+                <ListItem
+                  primaryText="Role Maintenance"
+                  onClick={() => {
+                    debugger;
+                    this.changeImg(2);
+                  }}
+                />
+                <ListItem
+                  primaryText="User Maintenance"
+                  onClick={() => {
+                    debugger;
+                    this.changeImg(3);
+                  }}
+                />
+              </List>           
+          </Col>
+          {/* 
             <Col sm="3">
               <div>
                 <i
@@ -336,9 +299,10 @@ debugger
             </Col>
             */}
           <Col sm={this.state.smColForm}>
-            
-              <Card style={{ width: "100%", overflow: "hidden", marginLeft: "2px" }}>
-                {/*
+            <Card
+              style={{ width: "100%", overflow: "hidden", marginLeft: "2px" }}
+            >
+              {/*
                 <CardImg                  
                   width="100%"
                   height="100%"
@@ -347,26 +311,28 @@ debugger
                   alt="Card image cap"
                 />
                 */}
-                
-                {!this.state.inAttrib ?
+
+              {!this.state.inAttrib ? (
                 <img
                   width="100%"
                   height="100%"
                   src={images[this.state.imgIndex]}
                   alt="Card image cap"
-                /> :
+                />
+              ) : (
                 <AttribList {...this.props} />
-                }
-              </Card>
+              )}
+            </Card>
           </Col>
-          </Row>
-         </div>
-     
+        </Row>
+      </div>
     );
   }
 }
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => {
+  return {};
+};
 
 const mapDispatchToProps = {};
 

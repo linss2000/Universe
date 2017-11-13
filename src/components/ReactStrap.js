@@ -66,10 +66,30 @@ const tabStyles = {
   backgroundColor: "#1b3039"
 };
 
+const styles = {
+  margin: 12,
+  refresh: {
+    display: "inline-block",
+    position: "relative"
+  },
+
+  container: {
+    overflow: "hidden",
+    margin: "0px",
+    width: "100vw",
+    height: "99vh",
+    padding: "1px"
+    //backgroundImage: `url(${bgImg})`,
+    // backgroundSize: "100%",
+    // backgroundPosition:"center",
+    // backgroundRepeat:"no-repeat",
+    // backgroundColor: "#51b8e1"
+  }
+};
 const paperStyle = {
   height: "80px",
   width: "99.2%",
-  margin: 5,
+  margin: 5
   // textAlign: "left",
   // display: "flex",
   // justifyContent: "left"
@@ -134,25 +154,24 @@ export class ReactStrapComp extends Component {
 
   render() {
     return (
-      <div className="mh-100 mw-100">
-        <Card>
-
-          <Paper style={paperStyle} zDepth={1} >
-            <CadetHeader></CadetHeader>
+      <div style={styles.container}>
+        <Card style={{ height: "100%", width: "100%" }}>
+          <Paper style={paperStyle} zDepth={1}>
+            <CadetHeader />
           </Paper>
 
-          <Tabs value={this.state.activeTab} onChange={this.handleChange}>
+          <Tabs
+            value={this.state.activeTab}
+            onChange={this.handleChange}
+            style={{ height: "100%", width: "100%" }}
+          >
             <Tab
               style={tabStyles}
               label="Home"
               value="0"
               icon={<FontIcon className="fa fa-home" />}
             >
-              <div>
-                <p>
-                  <HomeComponent callParentSearch={this.cadetSearch} />
-                </p>
-              </div>
+              <HomeComponent callParentSearch={this.cadetSearch} />
             </Tab>
             <Tab
               style={tabStyles}
@@ -160,7 +179,7 @@ export class ReactStrapComp extends Component {
               value="1"
               icon={<FontIcon className="fa fa-home" />}
             >
-              <div>
+              <div style={{ height: "100%", width: "100%" }}>
                 <CadetsSearch cadetName={this.state.cadetName} />
               </div>
             </Tab>
@@ -170,11 +189,7 @@ export class ReactStrapComp extends Component {
               value="2"
               icon={<FontIcon className="fa fa-users" />}
             >
-              <div>
-                <p>
-                  <BudgetStaff />
-                </p>
-              </div>
+              <BudgetStaff />
             </Tab>
             <Tab
               style={tabStyles}
@@ -182,11 +197,7 @@ export class ReactStrapComp extends Component {
               value="3"
               icon={<FontIcon className="fa fa-calendar" />}
             >
-              <div>
-                <p>
-                  <Course />
-                </p>
-              </div>
+              <Course />
             </Tab>
             <Tab
               style={tabStyles}
@@ -194,11 +205,7 @@ export class ReactStrapComp extends Component {
               value="4"
               icon={<FontIcon className="fa fa-check-circle" />}
             >
-              <div>
-                <p>
-                  <ApprovalsTab />
-                </p>
-              </div>
+              <ApprovalsTab />
             </Tab>{" "}
             <Tab
               style={tabStyles}
@@ -206,11 +213,7 @@ export class ReactStrapComp extends Component {
               value="5"
               icon={<FontIcon className="fa fa-line-chart" />}
             >
-              <div>
-                <p>
-                  <Reports />
-                </p>
-              </div>
+              <Reports />
             </Tab>{" "}
             <Tab
               style={tabStyles}
@@ -225,7 +228,7 @@ export class ReactStrapComp extends Component {
                     style={{
                       overflow: "hidden",
                       margin: "2px",
-                      position:"relative"
+                      position: "relative"
                     }}
                   >
                     {/* <Row className="m-0 p-0">                            

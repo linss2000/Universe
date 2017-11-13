@@ -353,7 +353,7 @@ export class CadetsSearch extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{height:"100%", width: "100%"}}>
         <Container
           fluid
            style={{
@@ -361,6 +361,7 @@ export class CadetsSearch extends Component {
                         marginTop: "20px",
                         marginLeft: "-10px",
                         marginRight: "20px", 
+                        height:"100%"
           }}
         >
           <Nav tabs className="m-0 p-0">

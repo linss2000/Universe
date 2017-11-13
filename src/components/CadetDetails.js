@@ -330,12 +330,12 @@ export class CadetDetails extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{height:"100%", width: "100%"}}>
         <Container
           fluid
           style={{
             overflow: "hidden",
-            margin: "1px"
+            margin: "1px",            
           }}
         >
           <Row>
@@ -459,7 +459,7 @@ export class CadetDetails extends Component {
           </Row>
           <Row>
             <Col sm="12">
-              <CardGroup style={{ height: "150px" }}>
+              <CardGroup style={{ height: "400px" }}>
                 <Card>
                   <CardImg
                     top

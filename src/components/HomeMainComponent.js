@@ -91,7 +91,7 @@ class HomeComponent extends Component {
 
     render() {
         return (
-            <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
+            <Container fluid style={{ width: 1024, overflow: "hidden", margin: "10px" }} >
                 <div style={{display: this.state.showHome == true ? 'block': 'none'}}>
                     <div className="d-flex" >
                         <Row className="m-1 p-1"> <Col sm="12">
@@ -122,7 +122,6 @@ class HomeComponent extends Component {
                                     </IconButton>
                                 </Badge>
                             </div>
-
                             <Collapse isOpen={this.state.notifycollapse}>
                                 <Paper style={paperStyle} zDepth={1}>
                                       <br />

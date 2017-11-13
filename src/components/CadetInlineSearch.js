@@ -185,9 +185,9 @@ class CadetInlineSearch extends Component {
     debugger;
     this.inputSearch = e.target;
     if (_.trim(e.target.value) != "") {
-      this.setState({ popoverOpen: true });
+      this.setState({ popoverOpen: true , inputSearch : e.target.value});
     } else {
-      this.setState({ popoverOpen: false });
+      this.setState({ popoverOpen: false, inputSearch : "" });
     }
     //this.setState({ popoverOpen: !this.state.popoverOpen });
     this.filterValue = e.target.value;
@@ -219,7 +219,8 @@ class CadetInlineSearch extends Component {
     sortedCol: "hv_universal_i",
     pageSize: 10,
     dropdownOpen: false,
-    popoverOpen: false
+    popoverOpen: false,
+    inputSearch : ""
   };
 
   onChangePage = pageOfItems => {
@@ -470,12 +471,16 @@ class CadetInlineSearch extends Component {
                   display: "inline-block",
                   zIndex: "100",
                   lineHeight: "0.85",
-                  width: "51%",
+                  width: "70%",
                   maxHeight: "200px",
+                  minHeight: "200px",
                   height: "auto",
                   overflowX: "hidden",
                   overflowY: "scroll",
-                  border: "1px solid grey"
+                  border: "1px solid grey",
+                  marginTop: "-240px"
+                  //marginTop:(this.state.pageOfItems.length == 0 ? "-60px" :
+                  //(this.state.pageOfItems.length >= 7)? "-240px" : (-1 * this.state.pageOfItems.length * 40) + "px")
                 }}
               >
                 <TypeAhead container={"typeAheadDiv1"}>
@@ -485,7 +490,7 @@ class CadetInlineSearch extends Component {
                         <ListGroupItem
                           style={styles.link}
                           key={index}
-                          className="m-1 p-1 border-0"
+                          className="m-1 p-1 border-0"                          
                           onClick={e => {
                             this.clickedItem(row, e);
                           }}
@@ -498,7 +503,7 @@ class CadetInlineSearch extends Component {
                     ) : (
                       <ListGroupItem
                         style={styles.link}
-                        key={-1}
+                        key={-1}                       
                         className="m-1 p-1 border-0"                       
                       >
                         <div className="d-flex justify-content-end">
