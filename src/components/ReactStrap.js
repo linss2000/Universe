@@ -74,7 +74,8 @@ const styles = {
   },
 
   container: {
-    overflow: "hidden",
+    overflowX: "hidden",
+    overflowY: "auto",
     margin: "0px",
     width: "100vw",
     height: "99vh",
