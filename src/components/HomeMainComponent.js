@@ -411,7 +411,7 @@ class HomeComponent extends Component {
             display: this.state.showApprovals == true ? "block" : "none"
           }}
         >
-          <div className="d-flex">
+          <div>
             <Row>
               {" "}
               <Col sm="12">
