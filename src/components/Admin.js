@@ -196,9 +196,9 @@ export class Admin extends Component {
         </Row>
             */}
         <Row>
-          <Col sm={this.state.smColMenu}>
+          <Col sm={this.state.smColMenu} style={{overflowY:"auto", overflowX:"hidden"}}>
             
-              <List style={{ lineHeight: "0.85" }}>
+              <List>
                 <h6>Field Maintenance </h6>
 
                 <ListItem
