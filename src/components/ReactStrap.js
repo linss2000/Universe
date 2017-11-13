@@ -242,7 +242,7 @@ export class ReactStrapComp extends Component {
                     <Row>
                       {" "}
                       <Col sm="12">
-                        <Admin />
+                        <Admin/>
                         {/*<AttribList {...this.props} />*/}
                       </Col>
                     </Row>
