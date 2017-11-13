@@ -21,8 +21,10 @@ import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
 import AttribList from "./AttribTables";
 import Drawer from "material-ui/Drawer";
+import Paper from "material-ui/Paper";
 import MenuItem from "material-ui/MenuItem";
 import RaisedButton from "material-ui/RaisedButton";
+import Divider from "material-ui/Divider";
 import Toggle from "material-ui/Toggle";
 import AppBar from "material-ui/AppBar";
 import {
@@ -73,6 +75,9 @@ import {
 
 const styles = {
   //margin: 12,
+  link: {
+    cursor: "pointer"
+  },
   refresh: {
     display: "inline-block",
     position: "relative"
@@ -91,7 +96,19 @@ const styles = {
   },
   absolute: { position: "absolute" }
 };
+const paperStyle = {
+  // height: "130px",
+  width: "100%",
+  display: "flex"
+};
 
+const listStyle = {
+  fontSize:'13.5px',
+  fontFamily:'Arial',
+  fontStyle:'bold',
+  height:'40px',
+  margin:'2px'
+}
 const images = [bgImg, staffImg, roleImg, userImg, secImg];
 
 export class Admin extends Component {
@@ -107,7 +124,9 @@ export class Admin extends Component {
       inAttrib: false,
       slideOpen: true,
       smColMenu: "2",
-      smColForm: "10"
+      smColForm: "10",
+      showFieldMenu : true,
+      showmaintainMenu : true
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -195,84 +214,114 @@ export class Admin extends Component {
           </Col>
         </Row>
             */}
-        <Row>
-          <Col sm={this.state.smColMenu} style={{overflowY:"auto", overflowX:"hidden"}}>
-            
-              <List>
-                <h6>Field Maintenance </h6>
-
-                <ListItem
+          
+        <Row style={{fontSize:'11px',fontStyle:'normal'}}>
+          <Col sm={this.state.smColMenu} style={{overflowY:"auto", overflowX:"hidden",backgroundColor :'#ecf0f6'}}>
+          {/* <Collapse> */}
+         
+              <List style={{backgroundColor : '#ecf0f6'}}>
+              <i
+                    className="fa fa-caret-down"
+                    onClick={() => {
+                      this.setState({
+                        showFieldMenu: !this.state.showFieldMenu
+                      });
+                    }}
+                  />
+                  <span style={{fontSize:'15px',fontFamily:'Arial',fontStyle:'bold'}}> Field Maintenance  </span>
+                <Divider />
+                <Collapse isOpen={this.state.showFieldMenu}>
+                <ListItem style={listStyle}
                   primaryText="Academy or State Specific"
                   onClick={() => {
                     debugger;
                     this.changeImg(0);
                   }}
                 />
-                <ListItem
+                <ListItem style={listStyle}
                   primaryText="Drafts"
                   onClick={() => {
                     debugger;
                     this.changeImg(1);
                   }}
                 />
-                <ListItem
+                <ListItem style={listStyle}
                   primaryText="Attributes"
                   onClick={() => {
                     debugger;
                     this.showAttrib();
                   }}
                 />
-                <ListItem
+                <ListItem style={listStyle}
                   primaryText="Cadet and Mentor fields"
                   initiallyOpen={false}
                   primaryTogglesNestedList={true}
                   nestedItems={[
-                    <ListItem key={1} primaryText="Cadet Characterstics" />,
-                    <ListItem key={2} primaryText="Cadet Medical" />,
-                    <ListItem key={2} primaryText="Cadet Residential" />,
-                    <ListItem key={2} primaryText="Cadet Non_residential" />
+                    <ListItem style={listStyle} key={1} primaryText="Cadet Characterstics" />,
+                    <ListItem style={listStyle} key={2} primaryText="Cadet Medical" />,
+                    <ListItem style={listStyle} key={2} primaryText="Cadet Residential" />,
+                    <ListItem  style={listStyle} key={2} primaryText="Cadet Non_residential" />
                   ]}
                 />
-                <ListItem
+                <ListItem style={listStyle}
                   primaryText="Staff and Budget fields"
                   initiallyOpen={false}
                   primaryTogglesNestedList={true}
                   nestedItems={[
-                    <ListItem key={1} primaryText="Staff Members" />,
-                    <ListItem key={2} primaryText="People Organization" />,
-                    <ListItem key={2} primaryText="Budget Items" />
+                    <ListItem style={listStyle} key={1} primaryText="Staff Members" />,
+                    <ListItem style={listStyle}  key={2} primaryText="People Organization" />,
+                    <ListItem  style={listStyle}key={2} primaryText="Budget Items" />
                   ]}
                 />
-              </List>
-              <List>
-                <ListItem primaryText="Course Scheduling Fields" />
-                <ListItem primaryText="Approvals Fields" />
+                
+              
+                <ListItem  style={listStyle} primaryText="Course Scheduling Fields" />
+                <ListItem style={listStyle} primaryText="Approvals Fields" />
+                
+                </Collapse>
               </List>
 
-              <List>
-                <h6>Site and User Maintenance </h6>
-                <ListItem
+                 
+               
+              <List  style={{backgroundColor : '#ecf0f6'}}>
+              <i
+                    className="fa fa-caret-down"
+                    onClick={() => {
+                      this.setState({
+                        showmaintainMenu: !this.state.showmaintainMenu
+                      });
+                    }}
+                  />
+                  <span style={{fontSize:'15px',fontFamily:'Arial',fontStyle:'bold'}}> Site and User Maintenance  </span>
+                <Divider />
+                <Collapse isOpen= {this.state.showmaintainMenu}>
+              <ListItem style={listStyle}
                   primaryText="Site Setup and Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(4);
                   }}
                 />
-                <ListItem
+                
+                <ListItem style={listStyle}
                   primaryText="Role Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(2);
                   }}
                 />
-                <ListItem
+                <ListItem  style={listStyle}
                   primaryText="User Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(3);
                   }}
                 />
-              </List>           
+                </Collapse>
+              </List> 
+              {/* </Paper>    */}
+              {/* </Collapse> */}
+                   
           </Col>
           {/* 
             <Col sm="3">
@@ -327,6 +376,7 @@ export class Admin extends Component {
           </Col>
         </Row>
       </div>
+      
     );
   }
 }
