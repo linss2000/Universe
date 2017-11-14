@@ -411,14 +411,14 @@ class HomeComponent extends Component {
             display: this.state.showApprovals == true ? "block" : "none"
           }}
         >
-          <div className="d-flex">
+          <div>
             <Row>
               {" "}
               <Col sm="12">
                 {/* <div > */}
                 <span
                   className="fa-stack"
-                  style={{ float: "right", margin: "55px", cursor: "pointer" }}
+                  style={{ float: "right", cursor: "pointer" }}
                   onClick={() => {
                     if (this.state.showHome == false)
                       this.setState({

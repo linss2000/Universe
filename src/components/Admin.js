@@ -103,12 +103,21 @@ const paperStyle = {
 };
 
 const listStyle = {
+<<<<<<< HEAD
   fontSize: "12px",
   fontFamily: "Arial",
   fontStyle: "bold",
   height: "40px",
   margin: "2px"
 };
+=======
+  fontSize:'12px',
+  fontFamily:'Arial',
+  fontStyle:'bold',
+  height:'40px',
+  margin:'2px'
+}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
 const images = [bgImg, staffImg, roleImg, userImg, secImg];
 
 export class Admin extends Component {
@@ -125,9 +134,14 @@ export class Admin extends Component {
       slideOpen: true,
       smColMenu: "2",
       smColForm: "10",
+<<<<<<< HEAD
       showFieldMenu: true,
       showmaintainMenu: true,
       tableTag: "Academy or State Specific Fields"
+=======
+      showFieldMenu : true,
+      showmaintainMenu : true
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -216,6 +230,7 @@ export class Admin extends Component {
           </Col>
         </Row>
             */}
+<<<<<<< HEAD
 
         <Row style={{ fontSize: "11px", fontStyle: "normal" }}>
           <Col
@@ -251,6 +266,26 @@ export class Admin extends Component {
               <Collapse isOpen={this.state.showFieldMenu}>
                 <ListItem
                   style={listStyle}
+=======
+          
+        <Row style={{fontSize:'11px',fontStyle:'normal'}}>
+          <Col sm={this.state.smColMenu} style={{overflowY:"auto", overflowX:"hidden",backgroundColor :'#ecf0f6'}}>
+          {/* <Collapse> */}
+         
+              <List style={{backgroundColor : '#ecf0f6'}}>
+              <i
+                    className="fa fa-caret-down"
+                    onClick={() => {
+                      this.setState({
+                        showFieldMenu: !this.state.showFieldMenu
+                      });
+                    }}
+                  />
+                  <span style={{fontSize:'15px',fontFamily:'Arial',fontStyle:'bold'}}> Field Maintenance  </span>
+                <Divider />
+                <Collapse isOpen={this.state.showFieldMenu}>
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Academy or State Specific"
                   onClick={() => {                   
                     this.setState({
@@ -259,28 +294,41 @@ export class Admin extends Component {
                     });                    
                   }}
                 />
+<<<<<<< HEAD
                 <ListItem
                   style={listStyle}
+=======
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Drafts"
                   onClick={() => {
                     debugger;
                     this.changeImg(1);
                   }}
                 />
+<<<<<<< HEAD
                 <ListItem
                   style={listStyle}
+=======
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Attributes"
                   onClick={() => {
                     debugger;
                     this.showAttrib();
                   }}
                 />
+<<<<<<< HEAD
                 <ListItem
                   style={listStyle}
+=======
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Cadet and Mentor fields"
                   initiallyOpen={false}
                   primaryTogglesNestedList={true}
                   nestedItems={[
+<<<<<<< HEAD
                     <ListItem
                       style={listStyle}
                       key={1}
@@ -329,10 +377,20 @@ export class Admin extends Component {
                 />
                 <ListItem
                   style={listStyle}
+=======
+                    <ListItem style={listStyle} key={1} primaryText="Cadet Characterstics" />,
+                    <ListItem style={listStyle} key={2} primaryText="Cadet Medical" />,
+                    <ListItem style={listStyle} key={2} primaryText="Cadet Residential" />,
+                    <ListItem  style={listStyle} key={2} primaryText="Cadet Non_residential" />
+                  ]}
+                />
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Staff and Budget fields"
                   initiallyOpen={false}
                   primaryTogglesNestedList={true}
                   nestedItems={[
+<<<<<<< HEAD
                     <ListItem
                       style={listStyle}
                       key={1}
@@ -382,33 +440,80 @@ export class Admin extends Component {
               <Collapse isOpen={this.state.showmaintainMenu}>
                 <ListItem
                   style={listStyle}
+=======
+                    <ListItem style={listStyle} key={1} primaryText="Staff Members" />,
+                    <ListItem style={listStyle}  key={2} primaryText="People Organization" />,
+                    <ListItem  style={listStyle}key={2} primaryText="Budget Items" />
+                  ]}
+                />
+                
+              
+                <ListItem  style={listStyle} primaryText="Course Scheduling Fields" />
+                <ListItem style={listStyle} primaryText="Approvals Fields" />
+                
+                </Collapse>
+              </List>
+
+                 
+               
+              <List  style={{backgroundColor : '#ecf0f6'}}>
+              <i
+                    className="fa fa-caret-down"
+                    onClick={() => {
+                      this.setState({
+                        showmaintainMenu: !this.state.showmaintainMenu
+                      });
+                    }}
+                  />
+                  <span style={{fontSize:'15px',fontFamily:'Arial',fontStyle:'bold'}}> Site and User Maintenance  </span>
+                <Divider />
+                <Collapse isOpen= {this.state.showmaintainMenu}>
+              <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Site Setup and Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(4);
                   }}
                 />
+<<<<<<< HEAD
 
                 <ListItem
                   style={listStyle}
+=======
+                
+                <ListItem style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="Role Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(2);
                   }}
                 />
+<<<<<<< HEAD
                 <ListItem
                   style={listStyle}
+=======
+                <ListItem  style={listStyle}
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
                   primaryText="User Maintenance"
                   onClick={() => {
                     debugger;
                     this.changeImg(3);
                   }}
                 />
+<<<<<<< HEAD
               </Collapse>
             </List>
             {/* </Paper>    */}
             {/* </Collapse> */}
+=======
+                </Collapse>
+              </List> 
+              {/* </Paper>    */}
+              {/* </Collapse> */}
+                   
+>>>>>>> 24078c1ce700dc824d7937333729dd8869770f97
           </Col>
           {/* 
             <Col sm="3">
@@ -463,6 +568,7 @@ export class Admin extends Component {
           </Col>
         </Row>
       </div>
+      
     );
   }
 }
