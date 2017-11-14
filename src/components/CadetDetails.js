@@ -356,12 +356,12 @@ export class CadetDetails extends Component {
           fluid
           style={{
             overflow: "hidden",
-            margin: "1px"
+            margin: "0px"
           }}
         >
           <Row>
             <Col sm="12">
-              <CardGroup style={{ height: "160px" }}>
+              <CardGroup style={{ height: "152px" }}>
                 <Card>
                   <CardImg
                     top
@@ -372,7 +372,7 @@ export class CadetDetails extends Component {
                 </Card>
                 <Card className="m-0 p-0">
                   <CardBody>
-                    <Form>
+                    <Form className="m-0 p-0">
                       <FormGroup row className="m-0 p-0">
                         <Col sm={4}>
                           <Label>
