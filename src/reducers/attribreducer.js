@@ -43,7 +43,7 @@ export const types = {
   };
   
   export const actions = {
-    getAttribTables: (payload) => ({ type: types.FETCH_TABLES_REQUEST, payload }),
+    getAttribTables: (payload) => ({ type: types.FETCH_TABLES_REQUEST, tableTag : payload.tableTag }),
     insertAttribTables: (payload) => ({ type: types.INSERT_REQUEST, payload }),
     updateAttribTables: (payload) => ({ type: types.UPDATE_REQUEST, payload }),
     deleteAttribTables: (payload) => ({ type: types.DELETE_REQUEST, payload })

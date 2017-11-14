@@ -63,6 +63,17 @@ class AttribList extends Component {
   componentWillReceiveProps(nextProps) {
     debugger;
     console.log(nextProps);
+    if (
+      this.props.tableTag != nextProps.tableTag &&
+      nextProps.tableTag !== ""
+    ) {
+      //alert("in Tables")
+      this.setState({ inDetailsTab: false, activeTab: "1" });
+      this.props.getAttribTables({
+        type: attribTypes.FETCH_TABLES_REQUEST,
+        tableTag: nextProps.tableTag ? nextProps.tableTag : ""
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -82,11 +93,12 @@ class AttribList extends Component {
 
   componentDidMount() {
     debugger;
-    if (this.props) {
+
+    if (this.props.tableTag) {
       //alert("in Tables")
       this.props.getAttribTables({
         type: attribTypes.FETCH_TABLES_REQUEST,
-        payload: {}
+        tableTag: this.props.tableTag ? this.props.tableTag : ""
       });
     }
   }
@@ -115,7 +127,7 @@ class AttribList extends Component {
       hv_table_i: 1,
       inDetailsTab: false,
       activeTab: "1",
-      tableName : ""
+      tableName: ""
     };
   }
 
@@ -127,7 +139,7 @@ class AttribList extends Component {
       hv_table_i: row.hv_table_i,
       inDetailsTab: true,
       activeTab: "2",
-      tableName : row.hv_table_name,
+      tableName: row.hv_table_name
     });
     //this.attribTable.renderData(row.hv_table_i);
     //this.props.history.push("/attribtable", { params: row });
@@ -140,6 +152,76 @@ class AttribList extends Component {
       });
     }
   };
+
+  renderTables(Items) {    
+    return(
+      <Row className="p-0 mt-1">
+      <Col sm="4">      
+        <ListGroup>
+          {Items.map((row, index) => (
+            (index < 6 ?
+            <ListGroupItem className="border-0"
+              style={{
+                cursor: "pointer"
+              }}
+              key={index}
+              onClick={() => {
+                this.itemClick(row);
+              }}
+            >
+              {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
+            </ListGroupItem>
+            : null
+            )
+          ))
+        }
+        </ListGroup>
+      </Col>
+      <Col sm="4">      
+        <ListGroup>
+          {Items.map((row, index) => (
+            (index >= 6 && index < 12 ?
+            <ListGroupItem  className="border-0"
+              style={{
+                cursor: "pointer"
+              }}
+              key={index}
+              onClick={() => {
+                this.itemClick(row);
+              }}
+            >
+              {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
+            </ListGroupItem>
+            : null
+            )
+          ))
+        }
+        </ListGroup>
+      </Col>
+      <Col sm="4">      
+        <ListGroup>
+          {Items.map((row, index) => (
+            (index >= 12 && index < 17 ?
+            <ListGroupItem  className="border-0"
+              style={{
+                cursor: "pointer"
+              }}
+              key={index}
+              onClick={() => {
+                this.itemClick(row);
+              }}
+            >
+              {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
+            </ListGroupItem>
+            : null
+            )
+          ))
+        }
+        </ListGroup>
+      </Col>
+    </Row>    
+    )
+  }
 
   render() {
     return (
@@ -163,7 +245,10 @@ class AttribList extends Component {
                     this.toggle("1");
                   }}
                 >
-                  <i className="fa fa-home" /> Attribute Tables
+                  <i className="fa fa-home" />{" "}
+                  {this.props.tableName
+                    ? this.props.tableName
+                    : "Attribute Tables"}
                 </NavLink>
               </NavItem>
             )}
@@ -178,7 +263,8 @@ class AttribList extends Component {
                     this.toggle("2");
                   }}
                 >
-                  <i className="fa fa-podcast" /> Atrribute
+                  <i className="fa fa-podcast" />{" "}
+                  {this.props.tableName ? this.props.tableName : "Attribute"}
                 </NavLink>
               </NavItem>
             )}
@@ -186,10 +272,12 @@ class AttribList extends Component {
 
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
+              {/*
               <Row className="p-0 mt-1">
                 <Col sm="12">
                   <ListGroup>
                     {this.props.attribState.items.map((row, index) => (
+                     
                       <ListGroupItem
                         style={{
                           cursor: "pointer"
@@ -201,16 +289,43 @@ class AttribList extends Component {
                       >
                         {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
                       </ListGroupItem>
+                     
                     ))}
                   </ListGroup>
                 </Col>
               </Row>
+               */}
+              {this.props.attribState.items.length < 6 ? (
+                <Row className="p-0 mt-1">
+                  <Col sm="4">
+                    <ListGroup>
+                      {this.props.attribState.items.map((row, index) => (
+                        <ListGroupItem  className="border-0"
+                          style={{
+                            cursor: "pointer"
+                          }}
+                          key={index}
+                          onClick={() => {
+                            this.itemClick(row);
+                          }}
+                        >
+                          {row.hv_table_name} <Badge pill>{row.hv_count}</Badge>
+                        </ListGroupItem>
+                      ))}
+                    </ListGroup>
+                  </Col>
+                </Row>
+              ) : (
+                this.renderTables(this.props.attribState.items)
+              )}
             </TabPane>
 
             <TabPane tabId="2">
               <Row className="mt-2 mb-0 p-0">
                 <Col sm="12">
-                 <div className="float-left"><h6>{this.state.tableName}</h6></div>
+                  <div className="float-left">
+                    <h6>{this.state.tableName}</h6>
+                  </div>
                   <div className="float-right">
                     <span
                       className="fa-stack"
@@ -229,7 +344,13 @@ class AttribList extends Component {
               </Row>
               <Row className="m-0 p-0">
                 <Col sm="12">
-                  <AttribTable ref={instance => { this.attribTable = instance; }} hv_table_i={this.state.hv_table_i} />
+                  <AttribTable
+                    ref={instance => {
+                      this.attribTable = instance;
+                    }}
+                    hv_table_i={this.state.hv_table_i}
+                    tableName={this.props.tableName}
+                  />
                 </Col>
               </Row>
             </TabPane>
