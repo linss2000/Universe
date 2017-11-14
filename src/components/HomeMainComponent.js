@@ -160,8 +160,10 @@ class HomeComponent extends Component {
                   </Badge>
                 </div>
                 <Collapse isOpen={this.state.notifycollapse}>
+                <Row><Col sm="12">
                   <Paper style={paperStyle} zDepth={1}>
                     <br />
+                    
                     <Table
                       bordered
                       striped
@@ -172,6 +174,7 @@ class HomeComponent extends Component {
                       <tbody>{this.renderList()}</tbody>
                     </Table>
                   </Paper>
+                  </Col></Row>
                 </Collapse>
               </Col>
             </Row>
@@ -388,7 +391,7 @@ class HomeComponent extends Component {
                   <Table
                     bordered
                     size="sm"
-                    style={{ height: "55px", overflow: "auto" }}
+                    style={{ height: "200px", overflow: "auto" }}
                     className="border-bottom-0"
                   >
                     <tbody>
