@@ -80,9 +80,9 @@ const styles = {
     overflowX: "hidden",
     overflowY: "scroll",
     margin: "0px",
-    width: "100vw",
+    width: "98vw",
     height: "99vh",
-    padding: "1px"
+    padding: "0px"
     //backgroundImage: `url(${bgImg})`,
     // backgroundSize: "100%",
     // backgroundPosition:"center",
@@ -159,9 +159,7 @@ console.log(props)
 
   render() {
     return (
-      <Scrollbars  autoHeight
-      autoHeightMin={400}
-      autoHeightMax={900}>>
+  
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
@@ -261,7 +259,7 @@ console.log(props)
           </Tabs>
         </Card>
       </div>
-      </Scrollbars>
+     
     );
   }
 }
