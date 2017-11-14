@@ -158,10 +158,20 @@ export class ForgotPassword extends Component {
                   />
                 </InputGroup>
                 <br />
-                <Button color="primary" block onClick={this.reqPassword}>
-                  {" "}
-                  Request new password
-                </Button>
+                <div className="float-right">
+                  <Button
+                    color="secondary"
+                    onClick={() => this.props.history.push("/login")}
+                  >
+                    Cancel
+                  </Button>
+                  {"  "}
+                  <Button color="primary" onClick={this.reqPassword}>
+                    {" "}
+                    Request new password
+                  </Button>
+                </div>
+                <br />
                 {this.state.isLoading ? (
                   <div className="py-2 mx-auto">
                     <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
