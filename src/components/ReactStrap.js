@@ -19,6 +19,7 @@ import FontIcon from "material-ui/FontIcon";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
 import { Tabs, Tab } from "material-ui/Tabs";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import {
   blue300,
@@ -86,9 +87,9 @@ const styles = {
     overflowX: "hidden",
     overflowY: "scroll",
     margin: "0px",
-    width: "100vw",
+    width: "98vw",
     height: "99vh",
-    padding: "1px"
+    padding: "0px"
     //backgroundImage: `url(${bgImg})`,
     // backgroundSize: "100%",
     // backgroundPosition:"center",
@@ -169,6 +170,7 @@ console.log(props)
   render() {
    
     return (
+  
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
@@ -261,6 +263,7 @@ console.log(props)
           </Tabs>
         </Card>
       </div>
+     
     );
   }
 }
