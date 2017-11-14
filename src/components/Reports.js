@@ -437,7 +437,7 @@ Click on a report to export the report date to Excel.
                         
                             <Row>
                                 <Col sm="12">
-                                    <CardImg style={{ width: "100%", height: "100%" }} src={reportsLibrary} />
+                                    <CardImg style={{ width: "80%", height: "100%" }} src={reportsLibrary} />
 
                                 </Col>
                             </Row>
@@ -455,7 +455,7 @@ Select the fields and criteria for your report and click on a report to export t
                         
                             <Row>
                                 <Col sm="12">
-                                    <CardImg style={{ width: "100%", height: "100%" }} src={reportsAdHoc} />
+                                    <CardImg style={{ width: "90%", height: "100%" }} src={reportsAdHoc} />
 
                                 </Col>
                             </Row>
