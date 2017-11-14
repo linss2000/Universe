@@ -22,13 +22,13 @@ import {
   
   const attribApi = {
     
-    getAttribTables(userData) {
+    getAttribTables(tableTag) {
       debugger;
       //console.log(userData.user);
       //console.log(userData.password);
       //alert("Before call")
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/db/", {
+      return fetch("http://hvs.selfip.net:3003/getTables/", {
         //return fetch("http://localhost:3003/db/", {
         method: "POST",
         headers: {
@@ -36,6 +36,7 @@ import {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          tableTag : tableTag
         })
       })
         .then(statusHelper)
@@ -56,12 +57,12 @@ import {
     return response;
   }
   
-  function* getAttribTables(userData) {
+  function* getAttribTables(tableTag) {
     debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: attribTypes.LOGIN_REQUEST, isLoading: false })
-      const resultObj = yield call(attribApi.getAttribTables, userData.payload);
+      const resultObj = yield call(attribApi.getAttribTables, tableTag);
   
       debugger;
       if (resultObj.response && !resultObj.response.ok) {
@@ -103,33 +104,6 @@ import {
     }
   }
   
-  function* loadTO(userData) {
-    debugger;
-    try {
-      //yield call(delay, 5000)
-      console.log("saga s" + userData.token);
-      //console.log(userData.password)
-      //yield put({ type: "ITEMS_IS_LOADING", isLoading: false })
-      const resultObj = yield call(attribApi.loadTO, userData);
-      debugger;
-      console.log(resultObj);
-      if (resultObj !== null && resultObj !== undefined) {
-        sessionStorage.setItem("token", JSON.parse(resultObj).token);
-        //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).message })
-        yield put({
-          type: "LOGIN_STATUS",
-          message: JSON.parse(resultObj).message
-        });
-      } else {
-        //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).message })
-        yield put({ type: "LOGIN_STATUS", message: "Unauthorized" });
-      }
-    } finally {
-      debugger;
-      if (yield cancelled())
-        yield put({ type: "LOGIN_STATUS", message: "Task Cancelled" });
-    }
-  }
   
   export function* handleRequest(action) {
     debugger;
@@ -143,7 +117,7 @@ import {
         case attribTypes.FETCH_TABLES_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
           debugger;
-          const fetchTask = yield fork(getAttribTables, action.payload);
+          const fetchTask = yield fork(getAttribTables, action.tableTag);
           debugger;
           break;
         }

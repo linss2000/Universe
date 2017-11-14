@@ -388,7 +388,7 @@ class HomeComponent extends Component {
                   <Table
                     bordered
                     size="sm"
-                    style={{ height: "200px", overflow: "auto" }}
+                    style={{ height: "55px", overflow: "auto" }}
                     className="border-bottom-0"
                   >
                     <tbody>

@@ -30,7 +30,7 @@ import Avatar from 'material-ui/Avatar';
    componentDidMount() {
     debugger;
     //alert(this.props.location.state.params.hv_table_i)
-
+    //alert(this.props.name)
     this.props.renderHeader({
       type: headerActions.renderHeader,
       loadheader: { 

@@ -531,11 +531,8 @@ export class CadetDetails extends Component {
             <ModalBody>
              <img style={{width:"100%"}} src={cDetail} />
             </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={this.modalToggle}>
-               Close
-              </Button>{" "}
-              <Button color="secondary" onClick={this.modalToggle}>
+            <ModalFooter>            
+              <Button color= "secondary" onClick={this.modalToggle}>
                 Cancel
               </Button>
             </ModalFooter>

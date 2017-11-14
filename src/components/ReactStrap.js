@@ -77,7 +77,7 @@ const styles = {
 
   container: {
     overflowX: "hidden",
-    overflowY: "auto",
+    overflowY: "scroll",
     margin: "0px",
     width: "100vw",
     height: "99vh",
@@ -111,7 +111,8 @@ export class ReactStrapComp extends Component {
   }
   constructor(props) {
     super(props);
-
+console.log("************")
+console.log(props)
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: "1",
@@ -160,7 +161,7 @@ export class ReactStrapComp extends Component {
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
-            <CadetHeader />
+            <CadetHeader name={this.props.name}/>
           </Paper>
 
           <Tabs
@@ -260,7 +261,13 @@ export class ReactStrapComp extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+  //debugger;
+  //alert(state.authState.name)
+  return {    
+    name: state.authState.name
+  };
+};
 
 const mapDispatchToProps = {};
 
