@@ -170,13 +170,13 @@ export class ForgotPassword extends Component {
                     {" "}
                     Request new password
                   </Button>
+                  <br />
+                  {this.state.isLoading ? (
+                    <div className="vw100 py-2">
+                      <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
+                    </div>
+                  ) : null}
                 </div>
-                <br />
-                {this.state.isLoading ? (
-                  <div className="py-2 mx-auto">
-                    <i class="fa fa-spinner fa-spin fa-2x fa-fw" />
-                  </div>
-                ) : null}
               </CardBody>
             </Card>{" "}
             {/*
