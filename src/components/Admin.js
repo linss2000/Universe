@@ -258,15 +258,7 @@ export class Admin extends Component {
                       tableTag: "Academy or State Specific Fields"
                     });                    
                   }}
-                />
-                <ListItem
-                  style={listStyle}
-                  primaryText="Drafts"
-                  onClick={() => {
-                    debugger;
-                    this.changeImg(1);
-                  }}
-                />                
+                />                       
                 <ListItem
                   style={listStyle}
                   primaryText="Cadet and Mentor fields"

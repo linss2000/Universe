@@ -19,6 +19,7 @@ import FontIcon from "material-ui/FontIcon";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
 import { Tabs, Tab } from "material-ui/Tabs";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import {
   blue300,
@@ -158,6 +159,9 @@ console.log(props)
 
   render() {
     return (
+      <Scrollbars  autoHeight
+      autoHeightMin={400}
+      autoHeightMax={900}>>
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
@@ -257,6 +261,7 @@ console.log(props)
           </Tabs>
         </Card>
       </div>
+      </Scrollbars>
     );
   }
 }

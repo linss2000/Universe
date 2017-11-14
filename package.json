@@ -25,6 +25,7 @@
     "react-addons-transition-group": "^15.6.2",
     "react-bootstrap-table": "^4.0.6",
     "react-bootstrap-typeahead": "^2.0.0-alpha.3",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.0.0",
     "react-fontawesome": "^1.6.1",
     "react-redux": "^4.4.8",
