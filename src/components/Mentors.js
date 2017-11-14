@@ -37,12 +37,11 @@ import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import * as _ from "lodash";
 import { bindActionCreators } from "redux";
-import { types as cadetSearchTypes } from "reducers/cadetsearchreducer";
-import { actions as cadetSearchActions } from "reducers/cadetsearchreducer";
+import { types as mentorTypes } from "reducers/mentorreducer";
+import { actions as mentorActions } from "reducers/mentorreducer";
 
 import HVSPagination from "customComponents/pagination";
 import CadetDetails from "./CadetDetails";
-import Mentors from "./Mentors"
 import {
   Input,
   InputGroup,
@@ -59,7 +58,7 @@ const styles = {
   }
 };
 
-export class CadetsSearch extends Component {
+export class Mentors extends Component {
   static propTypes = {
     //name: PropTypes.string.isRequired
   };
@@ -86,14 +85,14 @@ export class CadetsSearch extends Component {
         /*
         
         this.props.getCadets({
-            type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+            type: mentorTypes.FETCH_TABLES_REQUEST,
             cname: nextProps.cadetName
           });
           */
     }
     
-    if (nextProps.cadetSearchState.items) {
-      this.items = nextProps.cadetSearchState.items;
+    if (nextProps.mentorState.items) {
+      this.items = nextProps.mentorState.items;
     }
     //this.setState({pageOfItems: this.props.attribTableState.items});
     //console.log("nextProps ");
@@ -114,9 +113,8 @@ export class CadetsSearch extends Component {
    //alert("mount")
 //alert(this.props.cadetName)
     //console.log(this.props.location);
-   
-      this.props.getCadets({
-        type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+      this.props.getMentors({
+        type: mentorTypes.FETCH_TABLES_REQUEST,
         cname: "%"
       });
     
@@ -134,7 +132,7 @@ export class CadetsSearch extends Component {
       mode: undefined,
       itemsHasErrored: false,
       itemsIsLoading: false,
-      cadetsearchState: {},
+      mentorState: {},
       selectedRowID: -1,
       modal: false,
       attribValue: "",
@@ -213,15 +211,15 @@ export class CadetsSearch extends Component {
     }
 
     const filterBy = _.trim(this.filterValue.toLowerCase());
-    const size = this.props.cadetSearchState.items.length;
+    const size = this.props.mentorState.items.length;
 
     let filteredItems = [];
 
     for (var index = 0; index < size; index++) {
-      const { hv_cadet_name } = this.props.cadetSearchState.items[index];
+      const { hv_cadet_name } = this.props.mentorState.items[index];
 
       if (hv_cadet_name.toLowerCase().indexOf(filterBy) !== -1) {
-        filteredItems.push(this.props.cadetSearchState.items[index]);
+        filteredItems.push(this.props.mentorState.items[index]);
       }
 
       if (filteredItems.length > (this.state.pageSize || 10) - 1) {
@@ -231,7 +229,7 @@ export class CadetsSearch extends Component {
 
     /*
     this.props.makeRowEditable({
-      type: cadetSearchTypes.MAKE_ROW_EDITABLE,
+      type: mentorTypes.MAKE_ROW_EDITABLE,
       payload: {
         rowID: -1
       }
@@ -248,6 +246,7 @@ export class CadetsSearch extends Component {
   }
 
   showDetails = row => {
+    return;
     debugger;
     //alert(row.hv_cadet_id);
     this.selectedCadetRow = row;
@@ -358,61 +357,10 @@ export class CadetsSearch extends Component {
         <Container
           fluid
            style={{
-                        overflow: "hidden",
-                        marginTop: "20px",
-                        marginLeft: "-10px",
-                        marginRight: "20px", 
+                        overflow: "hidden",                                               
                         height:"100%"
           }}
         >
-          <Nav tabs className="m-0 p-0">
-            {!this.state.inDetailsTab && (
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "1"
-                  })}
-                  onClick={() => {
-                    this.toggle("1");
-                  }}
-                >
-                  <i className="fa fa-home" /> Cadets
-                </NavLink>
-              </NavItem>
-            )}
-            {!this.state.inDetailsTab && (
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "2"
-                  })}
-                  onClick={() => {
-                    this.toggle("2");
-                  }}
-                >
-                  <i className="fa fa-podcast" /> Mentors
-                </NavLink>
-              </NavItem>
-            )}
-            {this.state.inDetailsTab && (
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  className={classnames({
-                    active: this.state.activeTab === "3"
-                  })}
-                  onClick={() => {
-                    this.toggle("3");
-                  }}
-                >
-                  <i className="fa fa-podcast" /> Cadet Details
-                </NavLink>
-              </NavItem>
-            )}
-          </Nav>
-
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
               <Row className="p-0 m-0">
@@ -473,7 +421,7 @@ export class CadetsSearch extends Component {
                       </DropdownMenu>
                     </Dropdown>
                     <span className="d-flex align-items-center">
-                      {this.state.pageOfItems.length} Cadets
+                      {this.state.pageOfItems.length} Mentors
                     </span>
                   </div>
                 </Col>
@@ -512,7 +460,7 @@ export class CadetsSearch extends Component {
                           style={styles.link}
                           onClick={() => this.sortTable("hv_cadet_name")}
                         >
-                          Cadet Name {" "}
+                          Mentor Name {" "}
                           <i
                             className={this.RenderHeaderColumn("hv_cadet_name")}
                           />
@@ -521,7 +469,7 @@ export class CadetsSearch extends Component {
                           style={styles.link}
                           onClick={() => this.sortTable("hv_cadet_id")}
                         >
-                          Cadet ID {" "}
+                          Mentor ID {" "}
                           <i
                             className={this.RenderHeaderColumn("hv_cadet_id")}
                           />
@@ -681,42 +629,7 @@ export class CadetsSearch extends Component {
                   </Table>
                 </Col>
               </Row>
-            </TabPane>
-            <TabPane tabId="2">
-              <Mentors></Mentors>
-            </TabPane>
-            <TabPane tabId="3">
-              <Row className="mt-2 mb-0 p-0">
-                <Col sm="12">
-                  <div className="float-right">
-                    <span
-                      className="fa-stack"
-                      style={styles.link}
-                      onClick={() =>
-                        this.setState({ inDetailsTab: false, activeTab: "1" })}
-                    >
-                      <i className="fa fa-square-o fa-stack-2x" />
-                      <i className="fa fa-times fa-stack-1x" />
-                    </span>
-                    {/*
-                    <Button
-                      size="sm"
-                      color="primary"
-                      onClick={() =>
-                        this.setState({ inDetailsTab: false, activeTab: "1" })}
-                    >
-                      Cancel Details
-                    </Button>
-                      */}
-                  </div>
-                </Col>
-              </Row>
-              <Row className="m-0 p-0">
-                <Col sm="12">
-                  <CadetDetails cadetRow={this.selectedCadetRow} closeDetails={()=>this.setState({ inDetailsTab: false, activeTab: "1" })} />
-                </Col>
-              </Row>
-            </TabPane>
+            </TabPane>            
           </TabContent>
         </Container>
       </div>
@@ -727,17 +640,17 @@ export class CadetsSearch extends Component {
 const mapStateToProps = state => {
   debugger;
   return {
-    cadetSearchState: state.cadetSearchState
+    mentorState: state.mentorState
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
-      ...cadetSearchActions
+      ...mentorActions
     },
     dispatch
   )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CadetsSearch);
+export default connect(mapStateToProps, mapDispatchToProps)(Mentors);

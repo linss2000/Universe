@@ -12,6 +12,7 @@ import { types as headerTypes } from './../reducers/cdheaderreducer'
 import { types as cadetSearchTypes } from './../reducers/cadetsearchreducer'
 import { types as cadetDetailsTypes } from './../reducers/cadetdetailsreducer'
 import { types as CadetInlineTypes } from "reducers/cadetinlinesearchreducer";
+import { types as mentorTypes } from "reducers/mentorreducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -24,6 +25,7 @@ import  * as headersaga  from './cdheadersaga'
 import  * as cadetSearchSaga  from './cadetsearchsaga'
 import  * as cadetDetailsSaga  from './cadetsearchsaga'
 import  * as cadetInlineSaga  from './cadetinlinesearchsaga'
+import  * as mentorSaga  from './mentorsaga'
 
 
 export default function* rootSaga () {
@@ -40,6 +42,7 @@ export default function* rootSaga () {
         takeLatest([cadetSearchTypes.FETCH_TABLES_REQUEST], cadetSearchSaga.handleRequest),
         takeLatest([cadetDetailsTypes.FETCH_TABLES_REQUEST], cadetDetailsSaga.handleRequest),
         takeLatest([CadetInlineTypes.FETCH_TABLES_REQUEST], cadetInlineSaga.handleRequest),
+        takeLatest([mentorTypes.FETCH_TABLES_REQUEST], mentorSaga.handleRequest),
 
         ];
     /*
