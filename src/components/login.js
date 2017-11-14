@@ -113,7 +113,7 @@ class Login extends Component {
       //alert("token: " + sessionStorage.getItem("token"));
       //this.props.history.push
       //this.props.history.push('/attrib', ...this.state);
-      alert(this.props.authState.name);
+      //alert(this.props.authState.name);
       this.setState({ isLoading: false, name: this.props.authState.name });
       this.props.resetMessage({
         type: authTypes.MESSAGE,

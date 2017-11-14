@@ -266,15 +266,7 @@ export class Admin extends Component {
                     debugger;
                     this.changeImg(1);
                   }}
-                />
-                <ListItem
-                  style={listStyle}
-                  primaryText="Attributes"
-                  onClick={() => {
-                    debugger;
-                    this.showAttrib();
-                  }}
-                />
+                />                
                 <ListItem
                   style={listStyle}
                   primaryText="Cadet and Mentor fields"
