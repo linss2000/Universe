@@ -428,16 +428,16 @@ export default class Reports extends Component {
                                 <br/>
                         
                         <Row>
-                    <span className="header-label" style={{ marginLeft:'20px' }}>
+                    <span className="header-label" style={{ marginLeft:'20px' }}><i>
              The Reports library, provides real time report date in on Excel format.<br/>
-Click on a report to export the report date to Excel.
+Click on a report to export the report date to Excel.</i>
             </span>
                         </Row>
                                 <br/>
                         
                             <Row>
                                 <Col sm="12">
-                                    <CardImg style={{ width: "80%", height: "100%" }} src={reportsLibrary} />
+                                    <CardImg style={{ width: "80%", height: "90%" }} src={reportsLibrary} />
 
                                 </Col>
                             </Row>
@@ -445,10 +445,10 @@ Click on a report to export the report date to Excel.
                         <TabPane tabId="3">
                         <Row>
                     <span className="header-label" style={{ marginLeft:'20px' }}>
-                                <br/>
+                                <br/><i>
                     
              Ad Hoc reports allows user to create their own reports by selecting fields and defining filter criteria.<br/>
-Select the fields and criteria for your report and click on a report to export the report date to Excel.
+Select the fields and criteria for your report and click on a report to export the report date to Excel.</i>
             </span>
                         </Row>
                                 <br/>

@@ -105,13 +105,11 @@ class HomeComponent extends Component {
     return (
       <Container
         fluid
-        style={{ width: 1024, overflowX: "hidden", overflowY:"auto", margin: "10px" }}
-      >
+        style={{ width: 1024, overflowX: "hidden", overflowY:"auto", margin: "10px" }}>
         <div
-          style={{ display: this.state.showHome == true ? "block" : "none" }}
-        >
+          style={{ display: this.state.showHome == true ? "block" : "none" }} >
           <div className="d-flex">
-            <Row className="m-1 p-1">
+            <Row >
               {" "}
               <Col sm="12">
                 {/*<h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />*/}
@@ -129,7 +127,7 @@ class HomeComponent extends Component {
             </Row>
           </div>
           <Divider />
-          <div>
+          <div >
             <Row>
               <Col>
                 <div>
@@ -161,7 +159,7 @@ class HomeComponent extends Component {
                 </div>
                 <Collapse isOpen={this.state.notifycollapse}>
                 <Row><Col sm="12">
-                  <Paper style={paperStyle} zDepth={1}>
+                  <Paper style={{height: "130px", width: "100%",display: "flex"}}  zDepth={1}>
                     <br />
                     <Table
                       bordered
@@ -411,8 +409,7 @@ class HomeComponent extends Component {
         <div
           style={{
             display: this.state.showApprovals == true ? "block" : "none"
-          }}
-        >
+          }}>
           <div>
             <Row>
               {" "}
