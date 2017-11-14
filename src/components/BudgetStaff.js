@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Staffandbdgt from 'images/Staffandbdgt.PNG'
-
+import RaisedButton from "material-ui/RaisedButton";
 import {
     Container,
     TabContent,
@@ -23,21 +23,35 @@ export default class ApprovalsTab extends Component {
 
     render() {
         return(
-            <Container fluid style={{ width: 1024, overflow: "hidden", margin: "20px" }} >
-                 
-            <div className="d-flex">
-               
-                <Row> <Col sm="12">
-                <Card style={{ width: '1000px'} }>
+                <Container fluid >
+                {/* <div style={{height : '50px'}}></div> */}
+            <div  >
+                           
                  <CardImg
                 
-                style={{width:"100%",height:"100%"}}
+                style={{width:"100%",height:"60%"}}
                     src={Staffandbdgt}                
               />
-            </Card>
-                </Col>
+
+             
+                
+                <Row>
+                 <Col sm="8">
+                 </Col>
+                 
+                <Col sm="4" style={{justifyContent:"right", alignItems: 'right'}}>
+
+               
+                <a 
+                                                                 href={"http://hvs.selfip.net:3003/cadetexcel"}
+                                                                 download={"test.xlsx"}
+                                                                 > <RaisedButton style={{justifyContent:"right"}} label="Standard Budget/Accounting Report" primary={true}/></a>
+                                                                
+                
+                 </Col>
 
                 </Row>
+            
             </div>
             </Container>
         )
