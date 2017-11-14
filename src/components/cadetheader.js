@@ -81,7 +81,7 @@ import Avatar from 'material-ui/Avatar';
           </Col>
           <Col>
             <div className="float-right  header-label px-2" style={{fontWeight: 'bold',color:'#102027'}} >
-            Welcome, {this.state.items[0].user}
+            Welcome, {this.props.name || "Sri"}
             </div>
           </Col>
         </Row>
