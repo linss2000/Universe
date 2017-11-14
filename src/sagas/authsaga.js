@@ -75,16 +75,27 @@ function* login(userData) {
         message: { val: -1, msg: resultObj.response.statusText }
       });
     } else {
-      if (JSON.parse(resultObj).message == 1) {
+      //alert("Message" + JSON.parse(resultObj).message)
+      //alert("name" + JSON.parse(resultObj).name)
+      
+      if (JSON.parse(resultObj).message == "ok") {
         sessionStorage.setItem("token", JSON.parse(resultObj).token);
+        //alert(JSON.parse(resultObj).name)
+        yield put({
+          type: authTypes.NAME,
+          name: JSON.parse(resultObj).name
+        });
       }
       yield put({
         type: authTypes.MESSAGE,
         message: {
           val: JSON.parse(resultObj).result,
-          msg: JSON.parse(resultObj).message
+          msg: JSON.parse(resultObj).message,        
         }
       });
+      console.log(JSON.parse(resultObj))
+      //
+      
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {

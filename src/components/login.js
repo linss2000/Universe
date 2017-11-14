@@ -20,9 +20,7 @@ import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import passwordRules from "password-rules";
 import { Tooltip } from "reactstrap";
 import RefreshIndicator from "material-ui/RefreshIndicator";
-import {
-  Container
-} from "reactstrap";
+import { Container } from "reactstrap";
 
 //import { actions as messageActions } from 'ducks/message'
 
@@ -41,8 +39,8 @@ const styles = {
     padding: "1px",
     backgroundImage: `url(${bgImg})`,
     backgroundSize: "100%",
-    backgroundPosition:"center",
-    backgroundRepeat:"no-repeat",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
     backgroundColor: "#51b8e1"
   }
 };
@@ -66,7 +64,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      name: "",
       isLoading: false,
       error: null,
       items: [],
@@ -107,6 +105,7 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+  //componentWillReceiveProps(nextProps) {
     debugger;
     if (this.props.authState.message.msg == "ok") {
       debugger;
@@ -114,7 +113,8 @@ class Login extends Component {
       //alert("token: " + sessionStorage.getItem("token"));
       //this.props.history.push
       //this.props.history.push('/attrib', ...this.state);
-      this.setState({ isLoading: false });
+      alert(this.props.authState.name);
+      this.setState({ isLoading: false, name: this.props.authState.name });
       this.props.resetMessage({
         type: authTypes.MESSAGE,
         message: ""
@@ -237,9 +237,9 @@ class Login extends Component {
             margin: "20px"
           }}
         >
-          <div className="App" >
+          <div className="App">
             <div>
-            <img src={clientlogo} className="mx-auto my-2" />
+              <img src={clientlogo} className="mx-auto my-2" />
               <h2 className="text-danger">Welcome to Cadet Systems</h2>
             </div>
             <div className="d-flex justify-content-center">

@@ -9,15 +9,16 @@ export const types = {
   LOGOUT: "AUTH/LOGOUT",
   ITEMS: "AUTH/ITEMS",
   MESSAGE: "AUTH/MESSAGE",
+  NAME: "AUTH/NAME",
   TOKEN: "AUTH/TOKEN"
 };
 
 export const initialState = {
-  user: null,
+  name: "",
   isLoading: false,
   error: null,
   items: [],
-  message: { val: 0, msg: "" }, 
+  message: { val: 0, msg: "" },
   token: ""
 };
 
@@ -31,8 +32,11 @@ export default (state = initialState, action) => {
     case types.MESSAGE:
       return { ...state, message: action.message };
 
+    case types.NAME:
+      return { ...state, name: action.name };
+
     case types.TOKEN:
-      return { ...state, message: action.token };
+      return { ...state, token: action.token };
 
     case types.SIGNUP_REQUEST:
     case types.LOGIN_REQUEST:
@@ -62,9 +66,9 @@ export const actions = {
   }),
   login: payload => ({ type: types.LOGIN_REQUEST, payload }),
   logout: () => ({ type: types.LOGOUT }),
-  resetMessage: (payload) => ({
+  resetMessage: payload => ({
     type: payload.type,
-    message : payload.message
+    message: payload.message
   })
 };
 
