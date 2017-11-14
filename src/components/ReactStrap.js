@@ -61,11 +61,18 @@ import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
 
 import "App.css";
-
+ 
 const tabStyles = {
-    backgroundColor: "#D3D3D3",
-    color:"black"
-
+   // backgroundColor: "#D3D3D3",
+ //   color:"black",
+ default_tab:{
+      color: "#000000",
+      backgroundColor: "#D3D3D3",
+      fontWeight: 400,
+    },
+    active_tab:{
+      color: "#D3D3D3",
+    }
 };
 
 const styles = {
@@ -92,7 +99,8 @@ const styles = {
 const paperStyle = {
   height: "80px",
   width: "99.2%",
-  margin: 5
+  margin: 5,
+  backgroundColor:'#ecf0f6'
   // textAlign: "left",
   // display: "flex",
   // justifyContent: "left"
@@ -100,7 +108,7 @@ const paperStyle = {
 const FirstFunctional = props => {
   return <div onClick={() => props.showMessage("Child")}>{props.name}</div>;
 };
-
+     
 export class ReactStrapComp extends Component {
   static propTypes = {
     //name: PropTypes.string.isRequired
@@ -150,13 +158,16 @@ console.log(props)
   }
 
   handleChange = value => {
+    debugger
     // alert(value)
     this.setState({
       activeTab: value
     });
+    
   };
 
   render() {
+   
     return (
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
@@ -169,61 +180,61 @@ console.log(props)
             onChange={this.handleChange}
             style={{ height: "100%", width: "100%" }}
           >
-            <Tab
-              style={tabStyles}
+            <Tab inkBarStyle={{background: 'blue'}}
+              style={tabStyles.default_tab}
               label="Home"
               value="0"
-              icon={<FontIcon className="fa fa-home" />}
+              icon={<FontIcon className="fa fa-home" style={{color:"darkgrey" }}/>}
             >
               <HomeComponent callParentSearch={this.cadetSearch} />
             </Tab>
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Cadets"
               value="1"
-              icon={<FontIcon className="fa fa-home" />}
+              icon={<FontIcon className="fa fa-home" style={{color:"darkgrey" }} />}
             >
               <div style={{ height: "100%", width: "100%" }}>
                 <CadetsSearch cadetName={this.state.cadetName} />
               </div>
             </Tab>
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Staff and Budget"
               value="2"
-              icon={<FontIcon className="fa fa-users" />}
+              icon={<FontIcon className="fa fa-users" style={{color:"darkgrey" }}/>}
             >
               <BudgetStaff />
             </Tab>
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Course Schedule"
               value="3"
-              icon={<FontIcon className="fa fa-calendar" />}
+              icon={<FontIcon className="fa fa-calendar" style={{color:"darkgrey" }}/>}
             >
               <Course />
             </Tab>
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Approvals"
               value="4"
-              icon={<FontIcon className="fa fa-check-circle" />}
+              icon={<FontIcon className="fa fa-check-circle" style={{color:"darkgrey" }}/>}
             >
               <ApprovalsTab />
             </Tab>{" "}
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Reports"
               value="5"
-              icon={<FontIcon className="fa fa-line-chart" />}
+              icon={<FontIcon className="fa fa-line-chart" style={{color:"darkgrey" }}/>}
             >
               <Reports />
             </Tab>{" "}
             <Tab
-              style={tabStyles}
+              style={tabStyles.default_tab}
               label="Admin"
               value="6"
-              icon={<FontIcon className="fa fa-cog" />}
+              icon={<FontIcon className="fa fa-cog" style={{color:"darkgrey" }}/>}
             >
               <Row className="m-0 p-0">
                 <Col sm="12">
@@ -235,19 +246,12 @@ console.log(props)
                       position: "relative"
                     }}
                   >
-                    {/* <Row className="m-0 p-0">                            
-                    <Col sm="12">
-                      <h4 className="text-default">
-                        Admin{" "}
-                        <i className="fa fa-arrow-circle-o-down" />{" "}
-                      </h4>
-                    </Col>
-                  </Row> */}
+                    
                     <Row>
                       {" "}
                       <Col sm="12">
                         <Admin/>
-                        {/*<AttribList {...this.props} />*/}
+                        
                       </Col>
                     </Row>
                   </Container>
