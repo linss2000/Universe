@@ -15,44 +15,56 @@ import {
     Row,
     Col,
     CardImg
-    
+
 } from "reactstrap";
 import Divider from 'material-ui/Divider';
 
 export default class ApprovalsTab extends Component {
 
     render() {
-        return(
-                <Container fluid >
-                {/* <div style={{height : '50px'}}></div> */}
-            <div  >
-                           
-                 <CardImg
-                
-                style={{width:"100%",height:"60%"}}
-                    src={Staffandbdgt}                
-              />
-
+        return (
+            /* <Container fluid >
+             { <div style={{height : '50px'}}></div> }
+         <div  >
+                        
+              <CardImg
              
-                
-                <Row>
-                 <Col sm="8">
-                 </Col>
-                 
-                <Col sm="4" style={{justifyContent:"right", alignItems: 'right'}}>
+             style={{width:"100%",height:"60%"}}
+                 src={Staffandbdgt}                
+           />*/
 
-               
-                <a 
-                                                                 href={"http://hvs.selfip.net:3003/cadetexcel"}
-                                                                 download={"test.xlsx"}
-                                                                 > <RaisedButton style={{justifyContent:"right"}} label="Standard Budget/Accounting Report" primary={true}/></a>
-                                                                
-                
-                 </Col>
+            <Container fluid style={{ width: 1024, overflow: "hidden", marginTop: "20px", marginLeft: "10px" }} >
+                {/* <div style={{height : '50px'}}></div> */}
+                <div className="d-flex">
 
-                </Row>
-            
-            </div>
+                    <Row> <Col sm="12">
+                        <Card style={{ width: '1000px' }}>
+                            <CardImg
+
+                                style={{ width: "100%", height: "80%" }}
+                                src={Staffandbdgt}
+                                /><br/>
+                                <div style={{'margin-left':"auto"}}>
+                            <a
+                                href={"http://hvs.selfip.net:3003/budgetexcel"}
+                                download={"test.xlsx"}
+                                > 
+                                  <Button
+                        size="sm"
+                                     style={{ justifyContent: "right" ,backgroundColor:"#507EB1"}} >Standard Budget/Accounting Report
+                      </Button>
+                    
+                            </a>
+</div>
+                        </Card>
+                    </Col>
+
+                    </Row>
+
+
+                     
+
+                </div>
             </Container>
         )
     }

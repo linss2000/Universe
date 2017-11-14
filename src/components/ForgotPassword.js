@@ -72,7 +72,7 @@ const styles = {
     backgroundSize: "100%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    backgroundColor: "#295878"
+    backgroundColor: "#51b8e1"
   }
 };
 
