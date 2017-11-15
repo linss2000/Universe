@@ -59,6 +59,7 @@ import Admin from "./Admin";
 
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
+import BAP from "./BAP";
 
 import "App.css";
  
@@ -204,8 +205,8 @@ console.log(props)
               label="Staff and Budget"
               value="2"
               icon={<FontIcon className="fa fa-users" style={{color:"darkgrey" }}/>}
-            >
-              <BudgetStaff />
+            >            
+              <BAP />
             </Tab>
             <Tab
               style={tabStyles.default_tab}

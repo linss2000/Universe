@@ -13,6 +13,9 @@ import { types as cadetSearchTypes } from './../reducers/cadetsearchreducer'
 import { types as cadetDetailsTypes } from './../reducers/cadetdetailsreducer'
 import { types as CadetInlineTypes } from "reducers/cadetinlinesearchreducer";
 import { types as mentorTypes } from "reducers/mentorreducer";
+import { types as budgetTypes } from "reducers/budgetreducer";
+import { types as purchaseTypes } from "reducers/purchasereducer";
+import { types as BAPTypes } from "reducers/bapreducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -26,6 +29,9 @@ import  * as cadetSearchSaga  from './cadetsearchsaga'
 import  * as cadetDetailsSaga  from './cadetsearchsaga'
 import  * as cadetInlineSaga  from './cadetinlinesearchsaga'
 import  * as mentorSaga  from './mentorsaga'
+import  * as budgetSaga  from './budgetsaga'
+import  * as purchaseSaga  from './purchasesaga'
+import  * as BAPSaga  from './bapsaga'
 
 
 export default function* rootSaga () {
@@ -43,7 +49,9 @@ export default function* rootSaga () {
         takeLatest([cadetDetailsTypes.FETCH_TABLES_REQUEST], cadetDetailsSaga.handleRequest),
         takeLatest([CadetInlineTypes.FETCH_TABLES_REQUEST], cadetInlineSaga.handleRequest),
         takeLatest([mentorTypes.FETCH_TABLES_REQUEST], mentorSaga.handleRequest),
-
+        takeLatest([budgetTypes.FETCH_TABLES_REQUEST], budgetSaga.handleRequest),
+        takeLatest([purchaseTypes.FETCH_TABLES_REQUEST], purchaseSaga.handleRequest),
+        takeLatest([BAPTypes.FETCH_TABLES_REQUEST], BAPSaga.handleRequest),
         ];
     /*
     const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])

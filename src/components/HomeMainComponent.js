@@ -236,7 +236,7 @@ class HomeComponent extends Component {
                                 <br />
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/cadetexcel"}
+                                  href={"http://hvs.selfip.net:3003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img
@@ -296,7 +296,7 @@ class HomeComponent extends Component {
                                 <br />
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/cadetexcel"}
+                                  href={"http://hvs.selfip.net:3003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img
@@ -351,7 +351,7 @@ class HomeComponent extends Component {
                                 {" "}
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/cadetexcel"}
+                                  href={"http://hvs.selfip.net:3003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img
