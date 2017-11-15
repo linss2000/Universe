@@ -358,7 +358,7 @@ export class Budget extends Component {
           style={{
             overflow: "hidden",
             height: "100%",
-            width:"100%"
+            width: "100%"
           }}
         >
           <TabContent activeTab={this.state.activeTab}>
@@ -412,7 +412,7 @@ export class Budget extends Component {
                 </Col>
                 <Col sm="4">
                   <div className="mx-center">
-                    {this.state.pageOfItems.length} Staff 
+                    {this.state.pageOfItems.length} Staff
                   </div>
                 </Col>
                 <Col sm="3">
@@ -435,7 +435,7 @@ export class Budget extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm="12" style={{width:"100%"}}>
+                <Col sm="12" style={{ width: "100%" }}>
                   <Table
                     bordered
                     striped
@@ -452,9 +452,7 @@ export class Budget extends Component {
                         >
                           Budget Category {" "}
                           <i
-                            className={this.RenderHeaderColumn(
-                              "hv_bdgt_cat"
-                            )}
+                            className={this.RenderHeaderColumn("hv_bdgt_cat")}
                           />
                         </th>
                         <th
@@ -474,16 +472,14 @@ export class Budget extends Component {
                         >
                           Title{" "}
                           <i
-                            className={this.RenderHeaderColumn(
-                              "hv_bdgt_title"
-                            )}
+                            className={this.RenderHeaderColumn("hv_bdgt_title")}
                           />
                         </th>
                         <th
                           style={styles.link}
                           onClick={() => this.sortTable("hv_bdgt_obj_code")}
                         >
-                         Object / Position Code{" "}
+                          Object / Position Code{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_bdgt_obj_code"
@@ -496,9 +492,7 @@ export class Budget extends Component {
                         >
                           Budget Value{" "}
                           <i
-                            className={this.RenderHeaderColumn(
-                              "hv_bdgt_amt"
-                            )}
+                            className={this.RenderHeaderColumn("hv_bdgt_amt")}
                           />
                         </th>
                         <th
@@ -507,9 +501,7 @@ export class Budget extends Component {
                         >
                           Commitment Amt(YTD){" "}
                           <i
-                            className={this.RenderHeaderColumn(
-                              "hv_commit_amt"
-                            )}
+                            className={this.RenderHeaderColumn("hv_commit_amt")}
                           />
                         </th>
                       </tr>
@@ -595,6 +587,27 @@ export class Budget extends Component {
                       </tr>
                     </tbody>
                   </Table>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="12">
+                  <div className="float-right">
+                    <a
+                      href={"http://hvs.selfip.net:3003/budgetexcel"}
+                      download={"budget.xlsx"}
+                    >
+                      <Button
+                        size="sm"
+                        style={{
+                          justifyContent: "right",
+                          backgroundColor: "#507EB1",
+                          cursor:"pointer"
+                        }}
+                      >
+                        Standard Budget/Accounting Report
+                      </Button>
+                    </a>
+                  </div>
                 </Col>
               </Row>
             </TabPane>

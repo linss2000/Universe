@@ -481,12 +481,12 @@ export class Schedule extends Component {
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_bdgt_obj_code")}
+                          onClick={() => this.sortTable("hv_obj_code")}
                         >
                          Title {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_bdgt_obj_code"
+                              "hv_obj_code"
                             )}
                           />
                         </th>
@@ -534,7 +534,7 @@ export class Schedule extends Component {
                           <td>{row.hv_category}</td>
                           <td>{row.hv_staff_name}</td>
                           <td>{row.hv_staff_title}</td>
-                          <td>{row.hv_bdgt_obj_code}</td>
+                          <td>{row.hv_obj_code}</td>
                           <td>{row.hv_bdgt_diff}</td>
                           <td>{row.hv_allocation}</td>
                           <td><div><Button className="bg-primary text-white rounded" size="sm" >Approve</Button>{" "}<Button color="secondary" className="rounded" size="sm" >Reject</Button> </div></td>
