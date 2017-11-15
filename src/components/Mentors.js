@@ -72,17 +72,17 @@ export class Mentors extends Component {
     //console.log(nextProps);
     //alert(this.props.cadetName )
     //alert(nextProps.cadetName )
-    
-    if (this.props.cadetName != nextProps.cadetName){
-        //alert("in");
-        //alert( nextProps.cadetName)
-        this.setState({
-            inputSearch: nextProps.cadetName
-          });
-      
-          this.filterValue = nextProps.cadetName;
-          this.debouncedSearch();
-        /*
+
+    if (this.props.cadetName != nextProps.cadetName) {
+      //alert("in");
+      //alert( nextProps.cadetName)
+      this.setState({
+        inputSearch: nextProps.cadetName
+      });
+
+      this.filterValue = nextProps.cadetName;
+      this.debouncedSearch();
+      /*
         
         this.props.getCadets({
             type: mentorTypes.FETCH_TABLES_REQUEST,
@@ -90,7 +90,7 @@ export class Mentors extends Component {
           });
           */
     }
-    
+
     if (nextProps.mentorState.items) {
       this.items = nextProps.mentorState.items;
     }
@@ -110,14 +110,13 @@ export class Mentors extends Component {
     debugger;
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
-   //alert("mount")
-//alert(this.props.cadetName)
+    //alert("mount")
+    //alert(this.props.cadetName)
     //console.log(this.props.location);
-      this.props.getMentors({
-        type: mentorTypes.FETCH_TABLES_REQUEST,
-        cname: "%"
-      });
-    
+    this.props.getMentors({
+      type: mentorTypes.FETCH_TABLES_REQUEST,
+      cname: "%"
+    });
   }
 
   constructor(props) {
@@ -139,8 +138,8 @@ export class Mentors extends Component {
       pageOfItems: [],
       filterValue: "",
       sortAsc: true,
-      sortedCol: "hv_cadet_name",
-      searchCol: "hv_cadet_name",
+      sortedCol: "hv_mentor_name",
+      searchCol: "hv_mentor_name",
       pageSize: 10,
       dropdownOpen: false,
       popoverOpen: false,
@@ -191,7 +190,7 @@ export class Mentors extends Component {
   clickedItem(item, e) {
     return;
     debugger;
-    this.filterValue = item.hv_cadet_name.toLowerCase();
+    this.filterValue = item.hv_mentor_name.toLowerCase();
     this.setState({
       popoverOpen: false
     });
@@ -216,9 +215,9 @@ export class Mentors extends Component {
     let filteredItems = [];
 
     for (var index = 0; index < size; index++) {
-      const { hv_cadet_name } = this.props.mentorState.items[index];
+      const { hv_mentor_name } = this.props.mentorState.items[index];
 
-      if (hv_cadet_name.toLowerCase().indexOf(filterBy) !== -1) {
+      if (hv_mentor_name.toLowerCase().indexOf(filterBy) !== -1) {
         filteredItems.push(this.props.mentorState.items[index]);
       }
 
@@ -248,7 +247,7 @@ export class Mentors extends Component {
   showDetails = row => {
     return;
     debugger;
-    //alert(row.hv_cadet_id);
+    //alert(row.hv_mentor_status);
     this.selectedCadetRow = row;
     this.setState({
       activeTab: "3",
@@ -353,12 +352,12 @@ export class Mentors extends Component {
 
   render() {
     return (
-      <div style={{height:"100%", width: "100%"}}>
+      <div style={{ height: "100%", width: "100%" }}>
         <Container
           fluid
-           style={{
-                        overflow: "hidden",                                               
-                        height:"100%"
+          style={{
+            overflow: "hidden",
+            height: "100%"
           }}
         >
           <TabContent activeTab={this.state.activeTab}>
@@ -411,18 +410,8 @@ export class Mentors extends Component {
                   </div>
                 </Col>
                 <Col sm="4">
-                  <div className="d-flex justify-content-between text-center flex-nowrap mw-100">
-                    <Dropdown disabled={true} toggle={this.classToggle}>
-                      <DropdownToggle caret>
-                        Residential class 51(In Application)
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Another Action</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                    <span className="d-flex align-items-center">
-                      {this.state.pageOfItems.length} Mentors
-                    </span>
+                  <div className="mx-center">
+                    {this.state.pageOfItems.length} Mentors
                   </div>
                 </Col>
                 <Col sm="3">
@@ -458,85 +447,67 @@ export class Mentors extends Component {
                         <th style={{ width: "20px" }} />
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_name")}
+                          onClick={() => this.sortTable("hv_mentor_name")}
                         >
                           Mentor Name {" "}
                           <i
-                            className={this.RenderHeaderColumn("hv_cadet_name")}
-                          />
-                        </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_id")}
-                        >
-                          Mentor ID {" "}
-                          <i
-                            className={this.RenderHeaderColumn("hv_cadet_id")}
-                          />
-                        </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_status")}
-                        >
-                          Status{" "}
-                          <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_status"
+                              "hv_mentor_name"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_platoon")}
+                          onClick={() => this.sortTable("hv_mentor_status")}
                         >
-                          Platoon{" "}
+                          Status {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_platoon"
+                              "hv_mentor_status"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_squad")}
+                          onClick={() => this.sortTable("hv_mentor_cadet_assn")}
                         >
-                          Squad{" "}
+                          Cadet Assignment{" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_squad"
+                              "hv_mentor_cadet_assn"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_teacher")}
+                          onClick={() => this.sortTable("hv_mentor_assn_dt")}
                         >
-                          Teacher{" "}
+                          Assign Date{" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_teacher"
+                              "hv_mentor_assn_dt"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_counselor")}
+                          onClick={() => this.sortTable("hv_mentor_train_dt")}
                         >
-                          Counselor{" "}
+                          Training Date{" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_counselor"
+                              "hv_mentor_train_dt"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_casemgr")}
+                          onClick={() => this.sortTable("hv_mentor_gender")}
                         >
-                          Case Manager{" "}
+                          Gender{" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_cadet_casemgr"
+                              "hv_mentor_gender"
                             )}
                           />
                         </th>
@@ -544,20 +515,16 @@ export class Mentors extends Component {
                     </thead>
                     <tbody>
                       {this.state.pageOfItems.map((row, index) => (
-                        <tr key={index}  onClick={() => this.showDetails(row)}>
-                          <td
-                            style={styles.link}                           
-                          >
+                        <tr key={index} onClick={() => this.showDetails(row)}>
+                          <td style={styles.link}>
                             <i className="fa fa-ellipsis-v fa-fw" />
                           </td>
-                          <td>{row.hv_cadet_name}</td>
-                          <td>{row.hv_cadet_id}</td>
-                          <td>{row.hv_cadet_status}</td>
-                          <td>{row.hv_cadet_platoon}</td>
-                          <td>{row.hv_cadet_squad}</td>
-                          <td>{row.hv_cadet_teacher}</td>
-                          <td>{row.hv_cadet_counselor}</td>
-                          <td>{row.hv_cadet_casemgr}</td>
+                          <td>{row.hv_mentor_name}</td>
+                          <td>{row.hv_mentor_status}</td>
+                          <td>{row.hv_mentor_cadet_assn}</td>
+                          <td>{row.hv_mentor_assn_dt}</td>
+                          <td>{row.hv_mentor_train_dt}</td>
+                          <td>{row.hv_mentor_gender}</td>
                         </tr>
                       ))}
                       <tr
@@ -629,7 +596,7 @@ export class Mentors extends Component {
                   </Table>
                 </Col>
               </Row>
-            </TabPane>            
+            </TabPane>
           </TabContent>
         </Container>
       </div>
