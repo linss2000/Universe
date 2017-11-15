@@ -42,7 +42,7 @@ import {
 
 import clientpic from "images/cadet_generic.png";
 import cDetail from "images/cDetail.png";
-import bottompic from "images/cadet_details_botframe.png";
+import bottompic from "images/cadetdetails.png";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import * as _ from "lodash";

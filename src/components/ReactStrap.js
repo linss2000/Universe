@@ -51,7 +51,7 @@ import {
   CardHeader
 } from "reactstrap";
 import HomeComponent from "./HomeMainComponent";
-import ApprovalsTab from "./Approvals";
+import BAS from "./BAS";
 import BudgetStaff from "./BudgetStaff";
 import Reports from "./Reports";
 import Course from "./Course";
@@ -160,7 +160,7 @@ console.log(props)
 
   handleChange = value => {
     debugger
-    // alert(value)
+    //alert(value)
     this.setState({
       activeTab: value
     });
@@ -174,7 +174,7 @@ console.log(props)
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
-            <CadetHeader name={this.props.name}/>
+            <CadetHeader name={this.props.name} {...this.props}/>
           </Paper>
 
           <Tabs
@@ -188,7 +188,7 @@ console.log(props)
               value="0"
               icon={<FontIcon className="fa fa-home" style={{color:"darkgrey" }}/>}
             >
-              <HomeComponent callParentSearch={this.cadetSearch} />
+              <HomeComponent callParentSearch={this.cadetSearch} parentSwitchTab={this.handleChange} />
             </Tab>
             <Tab
               style={tabStyles.default_tab}
@@ -222,7 +222,7 @@ console.log(props)
               value="4"
               icon={<FontIcon className="fa fa-check-circle" style={{color:"darkgrey" }}/>}
             >
-              <ApprovalsTab />
+              <BAS />
             </Tab>{" "}
             <Tab
               style={tabStyles.default_tab}
@@ -252,8 +252,7 @@ console.log(props)
                     <Row>
                       {" "}
                       <Col sm="12">
-                        <Admin/>
-                        
+                        <Admin/>                        
                       </Col>
                     </Row>
                   </Container>

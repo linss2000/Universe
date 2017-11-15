@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 import export_excel from "images/export_excel.PNG";
 import chart from "images/chart.PNG";
 
-import ApprovalsTab from "./Approvals";
+//import ApprovalsTab from "./Approvals";
 import CadetInlineSearch from "./CadetInlineSearch";
 import { actions as cadetDetailsActions } from "reducers/cadetdetailsreducer";
 import {
@@ -62,10 +62,13 @@ class HomeComponent extends Component {
   onClickLink(index) {
     debugger;
     if (index == 1) {
+      /*
       this.setState({
         showApprovals: true,
         showHome: false
       });
+      */
+      this.props.parentSwitchTab("4");
     }
   }
   renderList() {
@@ -86,10 +89,13 @@ class HomeComponent extends Component {
               }}
               onClick={() => {
                 if (index == 1) {
+                  /*
                   this.setState({
                     showApprovals: !this.state.showApprovals,
                     showHome: !this.state.showHome
                   });
+                  */
+                  this.props.parentSwitchTab("4");
                 }
               }}
             >
@@ -436,8 +442,8 @@ class HomeComponent extends Component {
                                        this.setState
                                         ({ showApprovals: !this.state.showApprovals,
                                         showHome : !this.state.showHome })}}>Home  <i className="fa fa-arrow-circle-o-down" />&nbsp;
-                                       <span style={{fontSize:'12px'}}><i className="fa fa-chevron-right"/>Approvals</span></h5> */}
-                <ApprovalsTab />
+                                       <span style={{fontSize:'12px'}}><i className="fa fa-chevron-right"/>Approvals</span></h5>  <ApprovalsTab />*/}
+               
               </Col>
             </Row>
           </div>

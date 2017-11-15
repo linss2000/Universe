@@ -425,6 +425,10 @@ export class CadetsSearch extends Component {
                   <span className="fa-stack fa-lg">
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-list-ul fa-stack-1x" />
+                  </span> {" "}
+                  <span className="fa-stack fa-lg">
+                    <i className="fa fa-square-o fa-stack-2x" />
+                    <i className="fa fa-cloud-upload fa-stack-1x" />
                   </span>
                 </Col>
                 <Col sm="3">

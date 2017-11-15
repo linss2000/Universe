@@ -16,6 +16,9 @@ import { types as mentorTypes } from "reducers/mentorreducer";
 import { types as budgetTypes } from "reducers/budgetreducer";
 import { types as purchaseTypes } from "reducers/purchasereducer";
 import { types as BAPTypes } from "reducers/bapreducer";
+import { types as approvalTypes } from "reducers/approvalreducer";
+import { types as scheduleTypes } from "reducers/schedulereducer";
+import { types as BASTypes } from "reducers/basreducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -32,7 +35,9 @@ import  * as mentorSaga  from './mentorsaga'
 import  * as budgetSaga  from './budgetsaga'
 import  * as purchaseSaga  from './purchasesaga'
 import  * as BAPSaga  from './bapsaga'
-
+import  * as approvalSaga  from './approvalsaga'
+import  * as scheduleSaga  from './schedulesaga'
+import  * as BASSaga  from './bassaga'
 
 export default function* rootSaga () {
   try {
@@ -52,6 +57,9 @@ export default function* rootSaga () {
         takeLatest([budgetTypes.FETCH_TABLES_REQUEST], budgetSaga.handleRequest),
         takeLatest([purchaseTypes.FETCH_TABLES_REQUEST], purchaseSaga.handleRequest),
         takeLatest([BAPTypes.FETCH_TABLES_REQUEST], BAPSaga.handleRequest),
+        takeLatest([approvalTypes.FETCH_TABLES_REQUEST], approvalSaga.handleRequest),
+        takeLatest([scheduleTypes.FETCH_TABLES_REQUEST], scheduleSaga.handleRequest),
+        takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
         ];
     /*
     const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])

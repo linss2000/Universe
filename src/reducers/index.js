@@ -14,6 +14,9 @@ import mentorState from './mentorreducer';
 import BudgetState from './budgetreducer';
 import PurchaseState from './purchasereducer';
 import BAPState from './bapreducer';
+import ApprovalState from './approvalreducer';
+import ScheduleState from './schedulereducer';
+import BASState from './basreducer';
 
 
 export default combineReducers({
@@ -31,6 +34,9 @@ export default combineReducers({
    mentorState,
    BudgetState,
    PurchaseState,
-   BAPState
+   BAPState,
+   ApprovalState,
+   ScheduleState,
+   BASState
 });
 

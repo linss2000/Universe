@@ -37,8 +37,8 @@ import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import * as _ from "lodash";
 import { bindActionCreators } from "redux";
-import { types as mentorTypes } from "reducers/mentorreducer";
-import { actions as mentorActions } from "reducers/mentorreducer";
+import { types as approvalTypes } from "reducers/approvalreducer";
+import { actions as approvalActions } from "reducers/approvalreducer";
 
 import HVSPagination from "customComponents/pagination";
 import CadetDetails from "./CadetDetails";
@@ -58,7 +58,7 @@ const styles = {
   }
 };
 
-export class Mentors extends Component {
+export class Approval extends Component {
   static propTypes = {
     //name: PropTypes.string.isRequired
   };
@@ -85,14 +85,14 @@ export class Mentors extends Component {
       /*
         
         this.props.getCadets({
-            type: mentorTypes.FETCH_TABLES_REQUEST,
+            type: approvalTypes.FETCH_TABLES_REQUEST,
             cname: nextProps.cadetName
           });
           */
     }
 
-    if (nextProps.mentorState.items) {
-      this.items = nextProps.mentorState.items;
+    if (nextProps.ApprovalState.items) {
+      this.items = nextProps.ApprovalState.items;
     }
     //this.setState({pageOfItems: this.props.attribTableState.items});
     //console.log("nextProps ");
@@ -113,8 +113,8 @@ export class Mentors extends Component {
     //alert("mount")
     //alert(this.props.cadetName)
     //console.log(this.props.location);
-    this.props.getMentors({
-      type: mentorTypes.FETCH_TABLES_REQUEST,
+    this.props.getApprovals({
+      type: approvalTypes.FETCH_TABLES_REQUEST,
       cname: "%"
     });
   }
@@ -131,15 +131,15 @@ export class Mentors extends Component {
       mode: undefined,
       itemsHasErrored: false,
       itemsIsLoading: false,
-      mentorState: {},
+      ApprovalState: {},
       selectedRowID: -1,
       modal: false,
       attribValue: "",
       pageOfItems: [],
       filterValue: "",
       sortAsc: true,
-      sortedCol: "hv_mentor_name",
-      searchCol: "hv_mentor_name",
+      sortedCol: "hv_staff_name",
+      searchCol: "hv_staff_name",
       pageSize: 10,
       dropdownOpen: false,
       popoverOpen: false,
@@ -190,7 +190,7 @@ export class Mentors extends Component {
   clickedItem(item, e) {
     return;
     debugger;
-    this.filterValue = item.hv_mentor_name.toLowerCase();
+    this.filterValue = item.hv_staff_name.toLowerCase();
     this.setState({
       popoverOpen: false
     });
@@ -210,15 +210,15 @@ export class Mentors extends Component {
     }
 
     const filterBy = _.trim(this.filterValue.toLowerCase());
-    const size = this.props.mentorState.items.length;
+    const size = this.props.ApprovalState.items.length;
 
     let filteredItems = [];
 
     for (var index = 0; index < size; index++) {
-      const { hv_mentor_name } = this.props.mentorState.items[index];
+      const { hv_staff_name } = this.props.ApprovalState.items[index];
 
-      if (hv_mentor_name.toLowerCase().indexOf(filterBy) !== -1) {
-        filteredItems.push(this.props.mentorState.items[index]);
+      if (hv_staff_name.toLowerCase().indexOf(filterBy) !== -1) {
+        filteredItems.push(this.props.ApprovalState.items[index]);
       }
 
       if (filteredItems.length > (this.state.pageSize || 10) - 1) {
@@ -228,7 +228,7 @@ export class Mentors extends Component {
 
     /*
     this.props.makeRowEditable({
-      type: mentorTypes.MAKE_ROW_EDITABLE,
+      type: approvalTypes.MAKE_ROW_EDITABLE,
       payload: {
         rowID: -1
       }
@@ -247,7 +247,7 @@ export class Mentors extends Component {
   showDetails = row => {
     return;
     debugger;
-    //alert(row.hv_mentor_status);
+    //alert(row.hv_staff_name);
     this.selectedCadetRow = row;
     this.setState({
       activeTab: "3",
@@ -357,7 +357,8 @@ export class Mentors extends Component {
           fluid
           style={{
             overflow: "hidden",
-            height: "100%"
+            height: "100%",
+            width:"100%"
           }}
         >
           <TabContent activeTab={this.state.activeTab}>
@@ -411,7 +412,7 @@ export class Mentors extends Component {
                 </Col>
                 <Col sm="4">
                   <div className="mx-center">
-                    {this.state.pageOfItems.length} Mentors
+                    {this.state.pageOfItems.length} Resources 
                   </div>
                 </Col>
                 <Col sm="3">
@@ -419,7 +420,7 @@ export class Mentors extends Component {
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-square-o fa-stack-2x" />
                       <a
-                        href={"http://hvs.selfip.net:3003/cadetexcel"}
+                        href={"http://hvs.selfip.net:3003/approvalexcel"}
                         download={"test.xlsx"}
                       >
                         <i className="fa f fa-file-excel-o fa-stack-1x" />
@@ -434,7 +435,7 @@ export class Mentors extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm="12">
+                <Col sm="12" style={{width:"100%"}}>
                   <Table
                     bordered
                     striped
@@ -447,70 +448,81 @@ export class Mentors extends Component {
                         <th style={{ width: "20px" }} />
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_name")}
+                          onClick={() => this.sortTable("hv_category")}
                         >
-                          Mentor Name {" "}
+                          Budget Category {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_name"
+                              "hv_category"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_status")}
+                          onClick={() => this.sortTable("hv_staff_name")}
                         >
-                          Status {" "}
+                          Staff / Resource Name {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_status"
+                              "hv_staff_name"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_cadet_assn")}
+                          onClick={() => this.sortTable("hv_staff_title")}
                         >
-                          Cadet Assignment{" "}
+                          Staff Type / Title {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_cadet_assn"
+                              "hv_staff_title"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_assn_dt")}
+                          onClick={() => this.sortTable("hv_bdgt_obj_code")}
                         >
-                          Assign Date{" "}
+                         Object / Position Code{" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_assn_dt"
+                              "hv_bdgt_obj_code"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_train_dt")}
+                          onClick={() => this.sortTable("hv_bdgt_diff")}
                         >
-                          Training Date{" "}
+                            Budget Amt(Diff) {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_train_dt"
+                              "hv_bdgt_diff"
                             )}
                           />
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_mentor_gender")}
+                          onClick={() => this.sortTable("hv_allocation")}
                         >
-                          Gender{" "}
+                          Allocation {" "}
                           <i
                             className={this.RenderHeaderColumn(
-                              "hv_mentor_gender"
+                              "hv_allocation"
                             )}
                           />
                         </th>
+                        <th
+                          style={styles.link}
+                          onClick={() => this.sortTable("hv_apprv_type")}
+                        >
+                          Approve / Reject {" "}
+                          <i
+                            className={this.RenderHeaderColumn(
+                              "hv_apprv_type"
+                            )}
+                          />
+                        </th>            
                       </tr>
                     </thead>
                     <tbody>
@@ -519,12 +531,13 @@ export class Mentors extends Component {
                           <td style={styles.link}>
                             <i className="fa fa-ellipsis-v fa-fw" />
                           </td>
-                          <td>{row.hv_mentor_name}</td>
-                          <td>{row.hv_mentor_status}</td>
-                          <td>{row.hv_mentor_cadet_assn}</td>
-                          <td>{row.hv_mentor_assn_dt}</td>
-                          <td>{row.hv_mentor_train_dt}</td>
-                          <td>{row.hv_mentor_gender}</td>
+                          <td>{row.hv_category}</td>
+                          <td>{row.hv_staff_name}</td>
+                          <td>{row.hv_staff_title}</td>
+                          <td>{row.hv_bdgt_obj_code}</td>
+                          <td>{row.hv_bdgt_diff}</td>
+                          <td>{row.hv_allocation}</td>
+                          <td><div><Button className="bg-primary text-white rounded" size="sm" >Approve</Button>{" "}<Button color="secondary" className="rounded" size="sm" >Reject</Button> </div></td>
                         </tr>
                       ))}
                       <tr
@@ -581,7 +594,7 @@ export class Mentors extends Component {
                             </Dropdown>
                           </div>
                         </td>
-                        <td colSpan={4} className="p-0 m-0 border-0" />
+                        <td colSpan={5} className="p-0 m-0 border-0" />
                         <td className="float-right p-0 m-0 border-0">
                           <HVSPagination
                             searchCol={this.state.searchCol}
@@ -607,17 +620,17 @@ export class Mentors extends Component {
 const mapStateToProps = state => {
   debugger;
   return {
-    mentorState: state.mentorState
+    ApprovalState: state.ApprovalState
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
-      ...mentorActions
+      ...approvalActions
     },
     dispatch
   )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Mentors);
+export default connect(mapStateToProps, mapDispatchToProps)(Approval);
