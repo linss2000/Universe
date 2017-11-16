@@ -256,17 +256,20 @@ export class Purchase extends Component {
     //this.props.history.push("/cadetdetails",{ params: row});
   };
 
-  sortTable = columnName => {
+  sortTable = (columnName, type = "S") => {
     debugger;
     let rows;
-    rows = _.sortBy(this.items, item => {
-      debugger;
-      if (_.isNumber(_.parseInt(item[columnName]))) {
-        return _.toNumber(item[columnName]);
-      } else {
-        return _.toString(item[columnName].toLowerCase());
-      }
-    });
+
+    if (type == "D") {
+      rows = _.sortBy(this.items, item => new Date(item[columnName]));
+    } else if (type == "N") {
+      rows = _.sortBy(this.items, item => {        
+        return  parseFloat(item[columnName].replace(/[^0-9\.-]/g,""));
+      });
+    } else {
+      rows = _.sortBy(this.items, [columnName]);
+    }
+    console.log(rows)
 
     if (this.state.sortAsc) {
       rows = rows.reverse();
@@ -279,6 +282,7 @@ export class Purchase extends Component {
       sortAsc: !this.state.sortAsc
     });
   };
+
 
   saveAttribVal = event => {
     debugger;
@@ -514,7 +518,7 @@ export class Purchase extends Component {
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_po_amt")}
+                          onClick={() => this.sortTable("hv_po_amt","N")}
                         >
                           Amount{" "}
                           <i

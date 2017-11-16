@@ -258,8 +258,19 @@ export class CadetsSearch extends Component {
     //this.props.history.push("/cadetdetails",{ params: row});
   };
 
-  sortTable = columnName => {
+  sortTable = (columnName,type = "S") => {
     debugger;
+    let rows;
+
+    if(type == "D") {
+      rows =  _.sortBy(this.items, item => new Date(item[columnName]))
+    } else if(type == "N") {
+      rows =  _.sortBy(this.items, item=> new Number(item[columnName]))
+    } else {
+      rows =  _.sortBy(this.items,[columnName])
+    }
+
+    /*
     let rows;
     rows = _.sortBy(this.items, item => {
       debugger;
@@ -269,6 +280,7 @@ export class CadetsSearch extends Component {
         return _.toString(item[columnName].toLowerCase());
       }
     });
+    */
 
     if (this.state.sortAsc) {
       rows = rows.reverse();
@@ -523,7 +535,7 @@ export class CadetsSearch extends Component {
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_id")}
+                          onClick={() => this.sortTable("hv_cadet_id","N")}
                         >
                           Cadet ID {" "}
                           <i

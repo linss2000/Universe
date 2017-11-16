@@ -102,8 +102,8 @@ export class Budget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
-    console.log(this.state);
+    //console.log("componentDidUpdate");
+    //console.log(this.state);
   }
 
   componentDidMount() {
@@ -256,17 +256,21 @@ export class Budget extends Component {
     //this.props.history.push("/cadetdetails",{ params: row});
   };
 
-  sortTable = columnName => {
+  sortTable = (columnName, type = "S") => {
     debugger;
     let rows;
-    rows = _.sortBy(this.items, item => {
-      debugger;
-      if (_.isNumber(_.parseInt(item[columnName]))) {
-        return _.toNumber(item[columnName]);
-      } else {
-        return _.toString(item[columnName].toLowerCase());
-      }
-    });
+
+    if (type == "D") {
+      rows = _.sortBy(this.items, item => new Date(item[columnName]));
+    } else if (type == "N") {
+      rows = _.sortBy(this.items, item => {        
+        return  parseFloat(item[columnName].replace(/[^0-9\.-]/g,""));
+      });
+    } else {
+      rows = _.sortBy(this.items, [columnName]);
+    }
+    console.log("***********")
+    console.log(rows)
 
     if (this.state.sortAsc) {
       rows = rows.reverse();
@@ -488,7 +492,7 @@ export class Budget extends Component {
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_bdgt_amt")}
+                          onClick={() => this.sortTable("hv_bdgt_amt","N")}
                         >
                           Budget Value{" "}
                           <i
@@ -497,7 +501,7 @@ export class Budget extends Component {
                         </th>
                         <th
                           style={styles.link}
-                          onClick={() => this.sortTable("hv_commit_amt")}
+                          onClick={() => this.sortTable("hv_commit_amt","N")}
                         >
                           Commitment Amt(YTD){" "}
                           <i

@@ -428,37 +428,21 @@ class AttribTable extends Component {
     });
   }
 
-  sortTable = columnName => {
+  sortTable = (columnName, type = "S") => {
     debugger;
-    /*
-    const rows = this.state.pageOfItems.slice();
-    rows.sort((a, b) => {
-      let sortVal = 0;
-
-
-      if (a[columnName] > b[columnName]) {
-        sortVal = 1;
-      }
-      if (a[columnName] < b[columnName]) {
-        sortVal = -1;
-      }
-
-      //do the reverse
-      if (this.state.sortAsc) {
-        sortVal = sortVal * -1;
-      }
-      return sortVal;
-    });
-    */
     let rows;
-    rows = _.sortBy(this.items, item => {
-      debugger;
-      if (_.isNumber(item[columnName])) {
-        return _.toNumber(item[columnName]);
-      } else {
-        return _.toString(item[columnName].toLowerCase());
-      }
-    });
+
+    if (type == "D") {
+      rows = _.sortBy(this.items, item => new Date(item[columnName]));
+    } else if (type == "N") {
+      rows = _.sortBy(this.items, item => {        
+        return  parseFloat(item[columnName].replace(/[^0-9\.-]/g,""));
+      });
+    } else {
+      rows = _.sortBy(this.items, [columnName]);
+    }
+    console.log("***********")
+    console.log(rows)
 
     if (this.state.sortAsc) {
       rows = rows.reverse();
@@ -469,10 +453,9 @@ class AttribTable extends Component {
     this.setState({
       sortedCol: columnName,
       sortAsc: !this.state.sortAsc
-      //pageOfItems: rows
     });
   };
-
+  
   RenderHeaderColumn = columnName => {
     debugger;
 
