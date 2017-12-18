@@ -15,6 +15,7 @@ import ReactStrapComp from "./components/ReactStrap";
 import CadetsSearch from "./components/CadetsSearch";
 import CadetInlineSearch from "./components/CadetInlineSearch";
 import Admin from "./components/Admin";
+import Calendar from "./components/Calendar";
 
 
 import CadetDetails from "./components/CadetDetails";
@@ -27,6 +28,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 import CadetHeader from "./components/cadetheader";
 import MainNavList from "./components/MainNavList";
 import HomeComponent from "./components/HomeMainComponent";
+import Roles from "./components/Roles";
 
 const Root = props => <div {...props} />;
 
@@ -60,8 +62,8 @@ const App = props => {
                 <Route path="/cadet" component={CadetsSearch} />
                 <Route path="/cadetinline" component={CadetInlineSearch} />
                 <Route path="/admin" component={Admin} />
-                
-                
+                <Route path="/calendar" component={Calendar} />
+               
                 <Route
                   path="/cadetdetails"
                   render={props => <CadetDetails {...props} />}

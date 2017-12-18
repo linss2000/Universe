@@ -27,6 +27,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import Divider from "material-ui/Divider";
 import Toggle from "material-ui/Toggle";
 import AppBar from "material-ui/AppBar";
+import Roles from "./Roles";
+
 import {
   Table,
   ListGroup,
@@ -127,7 +129,8 @@ export class Admin extends Component {
       smColForm: "10",
       showFieldMenu: true,
       showmaintainMenu: true,
-      tableTag: "Academy or State Specific Fields"
+      tableTag: "Academy or State Specific Fields",
+      compVal : "R"
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -140,7 +143,8 @@ export class Admin extends Component {
 
     this.setState({
       imgIndex: index,
-      inAttrib: false
+      inAttrib: false,
+      compVal : ""
     });
   };
 
@@ -252,13 +256,14 @@ export class Admin extends Component {
                 <ListItem
                   style={listStyle}
                   primaryText="Academy or State Specific"
-                  onClick={() => {                   
+                  onClick={() => {
                     this.setState({
                       inAttrib: true,
+                      compVal : "A",
                       tableTag: "Academy or State Specific Fields"
-                    });                    
+                    });
                   }}
-                />                         
+                />
                 <ListItem
                   style={listStyle}
                   primaryText="Cadet and Mentor fields"
@@ -269,44 +274,48 @@ export class Admin extends Component {
                       style={listStyle}
                       key={1}
                       primaryText="Cadet Characteristics"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Characteristics"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Medical"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Medical"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Residential"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Post-Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Post-Residential"
-                        });                    
+                        });
                       }}
                     />
                   ]}
@@ -378,7 +387,10 @@ export class Admin extends Component {
                   primaryText="Role Maintenance"
                   onClick={() => {
                     debugger;
-                    this.changeImg(2);
+                    this.setState({
+                      inAttrib: false,
+                      compVal : "R",                      
+                    });
                   }}
                 />
                 <ListItem
@@ -421,18 +433,44 @@ export class Admin extends Component {
             */}
           <Col sm={this.state.smColForm}>
             <Card
-              style={{ width: "100%", height:"100%" ,overflow: "hidden", marginLeft: "2px" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+                marginLeft: "2px"
+              }}
             >
-              {/*
-                <CardImg                  
-                  width="100%"
-                  height="100%"
-                  src={this.state.imgSrc}
-                  //src={`${"images/" + this.state.imgSrc + ".PNG"}`}
-                  alt="Card image cap"
-                />
-                */}
+             
+                {(() => {
+                  switch (this.state.compVal) {
+                    case "A":
+                      return (
+                        <AttribList
+                          {...this.props}
+                          tableTag={this.state.tableTag}
+                          tableName={this.state.tableTag}
+                        />);
+                      
+                      case "R":
+                      return (
+                        <Roles
+                          {...this.props}                         
+                        />
+                      );
 
+                    default:
+                      return (
+                        <img
+                        width="100%"
+                        height="100%"
+                        src={images[this.state.imgIndex]}
+                        alt="Card image cap"
+                      />
+                      );
+                  }
+                })()}
+                        
+              {/*  
               {!this.state.inAttrib ? (
                 <img
                   width="100%"
@@ -443,11 +481,11 @@ export class Admin extends Component {
               ) : (
                 <AttribList {...this.props} tableTag={this.state.tableTag} tableName={this.state.tableTag} />
               )}
+            */}
             </Card>
           </Col>
         </Row>
       </div>
-      
     );
   }
 }

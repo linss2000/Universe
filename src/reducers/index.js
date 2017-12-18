@@ -11,6 +11,7 @@ import cadetDetailsState from './cadetdetailsreducer';
 import notificationState from './notificationsreducer';
 import CadetInlineSearchState from './cadetinlinesearchreducer';
 import mentorState from './mentorreducer';
+import roleState from './rolereducer';
 import BudgetState from './budgetreducer';
 import PurchaseState from './purchasereducer';
 import BAPState from './bapreducer';
@@ -32,6 +33,7 @@ export default combineReducers({
    notificationState,
    CadetInlineSearchState,
    mentorState,
+   roleState,
    BudgetState,
    PurchaseState,
    BAPState,
