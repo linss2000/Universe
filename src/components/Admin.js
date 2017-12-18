@@ -73,6 +73,10 @@ import {
   ModalFooter
 } from "reactstrap";
 
+
+import UsersList from "./users/usersList";
+import {Route} from 'react-router-dom'
+
 const styles = {
   //margin: 12,
   link: {
@@ -116,6 +120,9 @@ export class Admin extends Component {
   constructor(props) {
     debugger;
     super(props);
+
+
+console.log(props)
     this.state = {
       isLoading: false,
       collapse: false,
@@ -136,6 +143,9 @@ export class Admin extends Component {
   }
 
   changeImg = index => {
+debugger
+
+
     debugger;
 
     this.setState({
@@ -195,7 +205,11 @@ export class Admin extends Component {
             >
             */
   }
+  componentDidMount() {
+    debugger;
+    console.log('s '+this.props)
 
+  }
   render() {
     debugger;
     return (
@@ -252,13 +266,13 @@ export class Admin extends Component {
                 <ListItem
                   style={listStyle}
                   primaryText="Academy or State Specific"
-                  onClick={() => {                   
+                  onClick={() => {
                     this.setState({
                       inAttrib: true,
                       tableTag: "Academy or State Specific Fields"
-                    });                    
+                    });
                   }}
-                />                         
+                />
                 <ListItem
                   style={listStyle}
                   primaryText="Cadet and Mentor fields"
@@ -269,44 +283,44 @@ export class Admin extends Component {
                       style={listStyle}
                       key={1}
                       primaryText="Cadet Characteristics"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Characteristics"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Medical"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Medical"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Residential"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Post-Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Post-Residential"
-                        });                    
+                        });
                       }}
                     />
                   ]}
@@ -386,7 +400,8 @@ export class Admin extends Component {
                   primaryText="User Maintenance"
                   onClick={() => {
                     debugger;
-                    this.changeImg(3);
+                  
+
                   }}
                 />
               </Collapse>
@@ -394,7 +409,7 @@ export class Admin extends Component {
             {/* </Paper>    */}
             {/* </Collapse> */}
           </Col>
-          {/* 
+          {/*
             <Col sm="3">
               <div>
                 <i
@@ -424,7 +439,7 @@ export class Admin extends Component {
               style={{ width: "100%", height:"100%" ,overflow: "hidden", marginLeft: "2px" }}
             >
               {/*
-                <CardImg                  
+                <CardImg
                   width="100%"
                   height="100%"
                   src={this.state.imgSrc}
@@ -447,7 +462,7 @@ export class Admin extends Component {
           </Col>
         </Row>
       </div>
-      
+
     );
   }
 }

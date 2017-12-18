@@ -19,6 +19,9 @@ import { types as BAPTypes } from "reducers/bapreducer";
 import { types as approvalTypes } from "reducers/approvalreducer";
 import { types as scheduleTypes } from "reducers/schedulereducer";
 import { types as BASTypes } from "reducers/basreducer";
+import { types as usersListType } from "reducers/usersList_reducer";
+
+
 
 
 import  * as authSagas  from './authsaga'
@@ -38,9 +41,12 @@ import  * as BAPSaga  from './bapsaga'
 import  * as approvalSaga  from './approvalsaga'
 import  * as scheduleSaga  from './schedulesaga'
 import  * as BASSaga  from './bassaga'
+import  * as usersListSaga  from './usersList_saga'
+
 
 export default function* rootSaga () {
   try {
+    debugger
     //yield watchOnPings()
     yield [
         takeLatest([authTypes.SIGNUP_REQUEST,authTypes.LOGIN_REQUEST,authTypes.PASSWORD_RESET_REQUEST,authTypes.LOGOUT], authSagas.handleRequest),
@@ -60,6 +66,8 @@ export default function* rootSaga () {
         takeLatest([approvalTypes.FETCH_TABLES_REQUEST], approvalSaga.handleRequest),
         takeLatest([scheduleTypes.FETCH_TABLES_REQUEST], scheduleSaga.handleRequest),
         takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
+        takeLatest([usersListType.FETCH_REQUEST], usersListSaga.handleRequest),
+
         ];
     /*
     const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])

@@ -17,6 +17,7 @@ import BAPState from './bapreducer';
 import ApprovalState from './approvalreducer';
 import ScheduleState from './schedulereducer';
 import BASState from './basreducer';
+import usersListState from './usersList_reducer';
 
 
 export default combineReducers({
@@ -37,6 +38,6 @@ export default combineReducers({
    BAPState,
    ApprovalState,
    ScheduleState,
-   BASState
+   BASState,
+   usersListState
 });
-
