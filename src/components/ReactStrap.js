@@ -59,7 +59,9 @@ import Admin from "./Admin";
 
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
+
 import BAP from "./BAP";
+import Calendar from "./Calendar"
 
 import "App.css";
 
@@ -180,9 +182,10 @@ console.log(props)
           <Tabs
             value={this.state.activeTab}
             onChange={this.handleChange}
+            inkBarStyle={{background: 'blue'}}
             style={{ height: "100%", width: "100%" }}
           >
-            <Tab inkBarStyle={{background: 'blue'}}
+            <Tab 
               style={tabStyles.default_tab}
               label="Home"
               value="0"
@@ -214,7 +217,7 @@ console.log(props)
               value="3"
               icon={<FontIcon className="fa fa-calendar" style={{color:"darkgrey" }}/>}
             >
-              <Course />
+              <Calendar />
             </Tab>
             <Tab
               style={tabStyles.default_tab}

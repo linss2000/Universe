@@ -27,6 +27,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import Divider from "material-ui/Divider";
 import Toggle from "material-ui/Toggle";
 import AppBar from "material-ui/AppBar";
+import Roles from "./Roles";
+
 import {
   Table,
   ListGroup,
@@ -74,8 +76,8 @@ import {
 } from "reactstrap";
 
 
-import UsersList from "./users/usersList";
-import {Route} from 'react-router-dom'
+import UsersList from "./users/UsersList";
+
 
 const styles = {
   //margin: 12,
@@ -134,7 +136,8 @@ console.log(props)
       smColForm: "10",
       showFieldMenu: true,
       showmaintainMenu: true,
-      tableTag: "Academy or State Specific Fields"
+      tableTag: "Academy or State Specific Fields",
+      compVal : "R"
       //imgSrc: "cgyca_staffandbdgt.PNG"
     };
 
@@ -150,7 +153,8 @@ debugger
 
     this.setState({
       imgIndex: index,
-      inAttrib: false
+      inAttrib: false,
+      compVal : ""
     });
   };
 
@@ -269,6 +273,7 @@ debugger
                   onClick={() => {
                     this.setState({
                       inAttrib: true,
+                      compVal : "A",
                       tableTag: "Academy or State Specific Fields"
                     });
                   }}
@@ -286,6 +291,7 @@ debugger
                       onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Characteristics"
                         });
                       }}
@@ -297,6 +303,7 @@ debugger
                       onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Medical"
                         });
                       }}
@@ -308,6 +315,7 @@ debugger
                       onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Residential"
                         });
                       }}
@@ -319,6 +327,7 @@ debugger
                       onClick={() => {
                         this.setState({
                           inAttrib: true,
+                          compVal : "A",
                           tableTag: "Cadet Post-Residential"
                         });
                       }}
@@ -392,7 +401,10 @@ debugger
                   primaryText="Role Maintenance"
                   onClick={() => {
                     debugger;
-                    this.changeImg(2);
+                    this.setState({
+                      inAttrib: false,
+                      compVal : "R",
+                    });
                   }}
                 />
                 <ListItem
@@ -400,7 +412,10 @@ debugger
                   primaryText="User Maintenance"
                   onClick={() => {
                     debugger;
-                  
+                    this.setState({
+                      inAttrib: false,
+                      compVal : "U",
+                    });
 
                   }}
                 />
@@ -436,18 +451,49 @@ debugger
             */}
           <Col sm={this.state.smColForm}>
             <Card
-              style={{ width: "100%", height:"100%" ,overflow: "hidden", marginLeft: "2px" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+                marginLeft: "2px"
+              }}
             >
-              {/*
-                <CardImg
-                  width="100%"
-                  height="100%"
-                  src={this.state.imgSrc}
-                  //src={`${"images/" + this.state.imgSrc + ".PNG"}`}
-                  alt="Card image cap"
-                />
-                */}
 
+                {(() => {
+                  switch (this.state.compVal) {
+                    case "A":
+                      return (
+                        <AttribList
+                          {...this.props}
+                          tableTag={this.state.tableTag}
+                          tableName={this.state.tableTag}
+                        />);
+
+                      case "R":
+                      return (
+                        <Roles
+                          {...this.props}
+                        />
+                      );
+                      case "U":
+                      return (
+                        <UsersList
+                          {...this.props}
+                        />
+                      );
+                    default:
+                      return (
+                        <img
+                        width="100%"
+                        height="100%"
+                        src={images[this.state.imgIndex]}
+                        alt="Card image cap"
+                      />
+                      );
+                  }
+                })()}
+
+              {/*
               {!this.state.inAttrib ? (
                 <img
                   width="100%"
@@ -458,11 +504,11 @@ debugger
               ) : (
                 <AttribList {...this.props} tableTag={this.state.tableTag} tableName={this.state.tableTag} />
               )}
+            */}
             </Card>
           </Col>
         </Row>
       </div>
-
     );
   }
 }

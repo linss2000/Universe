@@ -21,7 +21,9 @@ import { Button, Container, Row, Col } from "reactstrap";
 import CadetHeader from "./components/cadetheader";
 import MainNavList from "./components/MainNavList";
 import HomeComponent from "./components/HomeMainComponent";
-import UsersList from "./components/users/usersList";
+import UsersList from "./components/users/UsersList";
+import Roles from "./components/Roles";
+import Calendar from "./components/Calendar";
 
 //PRIME-REACT
 import 'primereact/resources/primereact.min.css';
@@ -59,6 +61,8 @@ const App = props => {
                 <Route path="/cadet" component={CadetsSearch} />
                 <Route path="/cadetinline" component={CadetInlineSearch} />
                 <Route path="/admin" component={Admin} />
+
+                <Route path="/calendar" component={Calendar} />
 
 
                 <Route

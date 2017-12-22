@@ -12,16 +12,15 @@ import { types as headerTypes } from './../reducers/cdheaderreducer'
 import { types as cadetSearchTypes } from './../reducers/cadetsearchreducer'
 import { types as cadetDetailsTypes } from './../reducers/cadetdetailsreducer'
 import { types as CadetInlineTypes } from "reducers/cadetinlinesearchreducer";
-import { types as mentorTypes } from "reducers/mentorreducer";
-import { types as budgetTypes } from "reducers/budgetreducer";
-import { types as purchaseTypes } from "reducers/purchasereducer";
-import { types as BAPTypes } from "reducers/bapreducer";
-import { types as approvalTypes } from "reducers/approvalreducer";
-import { types as scheduleTypes } from "reducers/schedulereducer";
-import { types as BASTypes } from "reducers/basreducer";
-import { types as usersListType } from "reducers/usersList_reducer";
-
-
+import { types as mentorTypes } from "./../reducers/mentorreducer";
+import { types as budgetTypes } from "./../reducers/budgetreducer";
+import { types as purchaseTypes } from "./../reducers/purchasereducer";
+import { types as BAPTypes } from "./../reducers/bapreducer";
+import { types as approvalTypes } from "./../reducers/approvalreducer";
+import { types as scheduleTypes } from "./../reducers/schedulereducer";
+import { types as BASTypes } from "./../reducers/basreducer";
+import { types as RoleTypes } from "./../reducers/rolereducer";
+import { types as usersListType } from "./../reducers/usersList_reducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -42,13 +41,13 @@ import  * as approvalSaga  from './approvalsaga'
 import  * as scheduleSaga  from './schedulesaga'
 import  * as BASSaga  from './bassaga'
 import  * as usersListSaga  from './usersList_saga'
-
+import  * as RoleSagas  from './rolesaga'
 
 export default function* rootSaga () {
   try {
     debugger
     //yield watchOnPings()
-    yield [
+    yield all( [
         takeLatest([authTypes.SIGNUP_REQUEST,authTypes.LOGIN_REQUEST,authTypes.PASSWORD_RESET_REQUEST,authTypes.LOGOUT], authSagas.handleRequest),
         takeLatest([attribTypes.FETCH_TABLES_REQUEST,attribTypes.INSERT_REQUEST,attribTypes.DELETE_REQUEST,attribTypes.UPDATE_REQUEST], attribSagas.handleRequest),
         takeLatest([attribTabTypes.FETCH_TABLE_REQUEST,attribTabTypes.CANCEL_REQUEST,attribTabTypes.MAKE_ROW_EDITABLE,attribTabTypes.INSERT_REQUEST,attribTabTypes.DELETE_REQUEST,attribTabTypes.UPDATE_REQUEST], attribTableSagas.handleRequest),
@@ -65,23 +64,16 @@ export default function* rootSaga () {
         takeLatest([BAPTypes.FETCH_TABLES_REQUEST], BAPSaga.handleRequest),
         takeLatest([approvalTypes.FETCH_TABLES_REQUEST], approvalSaga.handleRequest),
         takeLatest([scheduleTypes.FETCH_TABLES_REQUEST], scheduleSaga.handleRequest),
-        takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
         takeLatest([usersListType.FETCH_REQUEST], usersListSaga.handleRequest),
+        takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
+        takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),
+        ]);
 
-        ];
-    /*
-    const requestChan = yield actionChannel(["FETCH_DATA_REQUEST", "UPDATE_ROW", "DELETE_ROW", "FETCH_USER_DATA"])
-    while (true) {
-        debugger;
-        // 2- take from the channel
-        const  payload  = yield take(requestChan)
-        // 3- Note that we're using a blocking call
-        yield call(handleRequest, payload)
-    }
-    */
-} catch (e) {
-console.log(e)
     //throw e;
+}
+catch(e){
+  console.log(e)
+
 }
   /*
   yield [
