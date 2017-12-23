@@ -76,7 +76,7 @@ import {
 } from "reactstrap";
 
 
-import UsersList from "./users/UsersList";
+import UsersList from "./Users/usersList";
 
 
 const styles = {

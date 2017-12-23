@@ -18,7 +18,6 @@ import UserComponent from './components/Users/MaintainUsers';
 import CadetDetails from "./components/CadetDetails";
 import logo from "./logo.svg";
 
-
 import "./App.css";
 import { Button, Container, Row, Col } from "reactstrap";
 import CadetHeader from "./components/cadetheader";
@@ -29,7 +28,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 import "./App.css";
-import UsersList from "./components/users/UsersList";
+import UsersList from "./components/Users/usersList";
 import Roles from "./components/Roles";
 import Calendar from "./components/Calendar";
 
