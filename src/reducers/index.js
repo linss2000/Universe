@@ -17,7 +17,7 @@ import BAPState from './bapreducer';
 import ApprovalState from './approvalreducer';
 import ScheduleState from './schedulereducer';
 import BASState from './basreducer';
-
+import ManageUserState from './Users/manageusersreducer';
 
 export default combineReducers({
    authState,
@@ -37,6 +37,7 @@ export default combineReducers({
    BAPState,
    ApprovalState,
    ScheduleState,
-   BASState
+   BASState,
+   ManageUserState
 });
 

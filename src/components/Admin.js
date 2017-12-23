@@ -252,13 +252,13 @@ export class Admin extends Component {
                 <ListItem
                   style={listStyle}
                   primaryText="Academy or State Specific"
-                  onClick={() => {                   
+                  onClick={() => {
                     this.setState({
                       inAttrib: true,
                       tableTag: "Academy or State Specific Fields"
-                    });                    
+                    });
                   }}
-                />                         
+                />
                 <ListItem
                   style={listStyle}
                   primaryText="Cadet and Mentor fields"
@@ -269,44 +269,44 @@ export class Admin extends Component {
                       style={listStyle}
                       key={1}
                       primaryText="Cadet Characteristics"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Characteristics"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Medical"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Medical"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Residential"
-                        });                    
+                        });
                       }}
                     />,
                     <ListItem
                       style={listStyle}
                       key={2}
                       primaryText="Cadet Post-Residential"
-                      onClick={() => {                   
+                      onClick={() => {
                         this.setState({
                           inAttrib: true,
                           tableTag: "Cadet Post-Residential"
-                        });                    
+                        });
                       }}
                     />
                   ]}
@@ -394,7 +394,7 @@ export class Admin extends Component {
             {/* </Paper>    */}
             {/* </Collapse> */}
           </Col>
-          {/* 
+          {/*
             <Col sm="3">
               <div>
                 <i
@@ -424,7 +424,7 @@ export class Admin extends Component {
               style={{ width: "100%", height:"100%" ,overflow: "hidden", marginLeft: "2px" }}
             >
               {/*
-                <CardImg                  
+                <CardImg
                   width="100%"
                   height="100%"
                   src={this.state.imgSrc}
@@ -447,7 +447,7 @@ export class Admin extends Component {
           </Col>
         </Row>
       </div>
-      
+
     );
   }
 }

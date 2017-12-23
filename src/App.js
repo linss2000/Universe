@@ -15,20 +15,27 @@ import ReactStrapComp from "./components/ReactStrap";
 import CadetsSearch from "./components/CadetsSearch";
 import CadetInlineSearch from "./components/CadetInlineSearch";
 import Admin from "./components/Admin";
+import UserComponent from './components/Users/MaintainUsers';
 
 
 import CadetDetails from "./components/CadetDetails";
 
 
 import logo from "./logo.svg";
-import "./App.css";
+
 
 import { Button, Container, Row, Col } from "reactstrap";
 import CadetHeader from "./components/cadetheader";
 import MainNavList from "./components/MainNavList";
 import HomeComponent from "./components/HomeMainComponent";
+// Import primereact 
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/omega/theme.css';
+import 'font-awesome/css/font-awesome.css';
+import "./App.css";
 
 const Root = props => <div {...props} />;
+
 
 const HeaderBar = props => (
   <div
@@ -52,16 +59,16 @@ const App = props => {
           <Col>
             <ConnectedRouter history={history}>
               <Switch>
-                <Route path="/login" component={Login} />   
-                <Route path="/forgotpwd" component={ForgotPassword} />    
-                <Route path="/changepwd/:secToken" render={props => <ChangePassword {...props} /> } /> 
-                <Route path="/changepwd" component={ChangePassword} />                     
+                <Route path="/login" component={Login} />
+                <Route path="/forgotpwd" component={ForgotPassword} />
+                <Route path="/changepwd/:secToken" render={props => <ChangePassword {...props} /> } />
+                <Route path="/changepwd" component={ChangePassword} />
                 <Route path="/listitems" component={ListItems} />
                 <Route path="/cadet" component={CadetsSearch} />
                 <Route path="/cadetinline" component={CadetInlineSearch} />
                 <Route path="/admin" component={Admin} />
-                
-                
+
+
                 <Route
                   path="/cadetdetails"
                   render={props => <CadetDetails {...props} />}
@@ -76,9 +83,13 @@ const App = props => {
                   render={props => <ReactStrapComp {...props} />}
                 />
                 <Route
+                  path="/users"
+                  render={props => <UserComponent {...props} />}
+                />
+                <Route
                   path="/homes"
                   render={props => <HomeComponent {...props} />}
-                />                
+                />
                 <Route path="/" component={Main} />
               </Switch>
             </ConnectedRouter>
