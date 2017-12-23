@@ -59,10 +59,12 @@ import Admin from "./Admin";
 
 import CadetsSearch from "./CadetsSearch";
 import AttribList from "./AttribTables";
+
 import BAP from "./BAP";
+import Calendar from "./Calendar"
 
 import "App.css";
- 
+
 const tabStyles = {
    // backgroundColor: "#D3D3D3",
  //   color:"black",
@@ -109,7 +111,7 @@ const paperStyle = {
 const FirstFunctional = props => {
   return <div onClick={() => props.showMessage("Child")}>{props.name}</div>;
 };
-     
+
 export class ReactStrapComp extends Component {
   static propTypes = {
     //name: PropTypes.string.isRequired
@@ -164,13 +166,13 @@ console.log(props)
     this.setState({
       activeTab: value
     });
-    
+
   };
 
   render() {
-   
+
     return (
-  
+
       <div style={styles.container}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Paper style={paperStyle} zDepth={1}>
@@ -180,9 +182,10 @@ console.log(props)
           <Tabs
             value={this.state.activeTab}
             onChange={this.handleChange}
+            inkBarStyle={{background: 'blue'}}
             style={{ height: "100%", width: "100%" }}
           >
-            <Tab inkBarStyle={{background: 'blue'}}
+            <Tab 
               style={tabStyles.default_tab}
               label="Home"
               value="0"
@@ -205,7 +208,7 @@ console.log(props)
               label="Staff and Budget"
               value="2"
               icon={<FontIcon className="fa fa-users" style={{color:"darkgrey" }}/>}
-            >            
+            >
               <BAP />
             </Tab>
             <Tab
@@ -214,7 +217,7 @@ console.log(props)
               value="3"
               icon={<FontIcon className="fa fa-calendar" style={{color:"darkgrey" }}/>}
             >
-              <Course />
+              <Calendar />
             </Tab>
             <Tab
               style={tabStyles.default_tab}
@@ -248,11 +251,11 @@ console.log(props)
                       position: "relative"
                     }}
                   >
-                    
+
                     <Row>
                       {" "}
                       <Col sm="12">
-                        <Admin/>                        
+                  <Admin/>
                       </Col>
                     </Row>
                   </Container>
@@ -262,7 +265,7 @@ console.log(props)
           </Tabs>
         </Card>
       </div>
-     
+
     );
   }
 }
@@ -270,7 +273,7 @@ console.log(props)
 const mapStateToProps = state => {
   //debugger;
   //alert(state.authState.name)
-  return {    
+  return {
     name: state.authState.name
   };
 };
