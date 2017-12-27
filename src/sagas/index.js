@@ -12,6 +12,7 @@ import { types as headerTypes } from './../reducers/cdheaderreducer'
 import { types as cadetSearchTypes } from './../reducers/cadetsearchreducer'
 import { types as cadetDetailsTypes } from './../reducers/cadetdetailsreducer'
 import { types as CadetInlineTypes } from "reducers/cadetinlinesearchreducer";
+import {types as ManageUserTypes} from "reducers/Users/manageusersreducer";
 import { types as mentorTypes } from "./../reducers/mentorreducer";
 import { types as budgetTypes } from "./../reducers/budgetreducer";
 import { types as purchaseTypes } from "./../reducers/purchasereducer";
@@ -40,9 +41,9 @@ import  * as BAPSaga  from './bapsaga'
 import  * as approvalSaga  from './approvalsaga'
 import  * as scheduleSaga  from './schedulesaga'
 import  * as BASSaga  from './bassaga'
-import  * as usersListSaga  from './usersList_saga'
-import  * as RoleSagas  from './rolesaga'
-
+import * as ManageUserSaga from './Users/manageusersaga.js';
+import  * as usersListSaga  from './usersList_saga';
+import  * as RoleSagas  from './rolesaga';
 export default function* rootSaga () {
   try {
     debugger
@@ -66,6 +67,7 @@ export default function* rootSaga () {
         takeLatest([scheduleTypes.FETCH_TABLES_REQUEST], scheduleSaga.handleRequest),
         takeLatest([usersListType.FETCH_REQUEST], usersListSaga.handleRequest),
         takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
+        takeLatest([ManageUserTypes.INSERT_REQUEST], ManageUserSaga.handleRequest),
         takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),
         ]);
 
