@@ -45,7 +45,7 @@ export class UsersList extends Component{
       usersCount:0,
       filters:'',
       displayDialog:false,
-      car:[]
+      usersListState:[]
     }
   }
 
@@ -118,6 +118,8 @@ export class UsersList extends Component{
   export() {
         this.dt.exportCSV();
     }
+
+
     addNew() {
 
            this.setState({
@@ -126,8 +128,14 @@ export class UsersList extends Component{
            });
        }
        deleteRow(row) {
-        debugger
+         debugger
+         let index = row.hv_user_id;
+         this.setState({
+        //  usersListState: this.state.usersListState.filter((val,i) => i !== index),
+          selectedRow :null,
+          displayDialog: false});
 
+          
           }
           editRow(row) {
 
