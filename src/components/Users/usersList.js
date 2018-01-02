@@ -16,7 +16,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import Test from './Test'
+import MaintainUser from './MaintainUsers'
 
 export class UsersList extends Component{
   static propTypes = {
@@ -38,14 +38,14 @@ export class UsersList extends Component{
     this.addNew = this.addNew.bind(this);
     this.editRow = this.editRow.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
-
-
+    this.onHideDialog = this.onHideDialog.bind(this);
 
     this.state={
       usersCount:0,
       filters:'',
       displayDialog:false,
-      usersListState:[]
+      usersListState:[],
+      currectSelectedUser:[]
     }
   }
 
@@ -81,7 +81,7 @@ export class UsersList extends Component{
       </div>;
     }
   imageTemplate(rowData, column) {
-    debugger
+
         return <img src={rowData.hv_photo}  style={{display:"block", width:"50px" ,height:"  50px"}}/>;
     }
     activeTemplate(rowData,column){
@@ -121,10 +121,12 @@ export class UsersList extends Component{
 
 
     addNew() {
+      this.newUser = true;
 
            this.setState({
-               car: {vin:'', year: '', brand: '', color: ''},
-               displayDialog: true
+             displayDialog:true,
+             currectSelectedUser:null,
+             isNewUser:true
            });
        }
        deleteRow(row) {
@@ -135,14 +137,22 @@ export class UsersList extends Component{
           selectedRow :null,
           displayDialog: false});
 
-          
-          }
-          editRow(row) {
 
-                     this.setState({
-                         car: {vin:'', year: '', brand: '', color: ''},
-                         displayDialog: true
-                     });
+          }
+          editRow(row,e) {
+
+debugger
+            this.setState({
+                displayDialog:true,
+                currectSelectedUser: Object.assign({}, row),
+                isNewUser:false
+            });
+            this.newUser = false;}
+
+                 onHideDialog()
+                 {
+                   this.newUser = false;
+                   this.setState({displayDialog: false})
                  }
  render(){
 
@@ -178,8 +188,19 @@ export class UsersList extends Component{
                </div>
              </Col>
            </Row>
+         let maintainUser=null;
+         debugger
+           if(this.state.displayDialog){
+            maintainUser=             <Dialog visible={this.state.displayDialog} header="Add User" modal={true} onHide={this.onHideDialog}>
+            <MaintainUser userObject={this.state}/>
 
-
+                                </Dialog>
+           }
+           else {
+             {
+               maintainUser=''
+             }
+           }
    return (
      <div>
      <DataTable value={this.props.usersListState.items} paginator={true} rows={5} rowsPerPageOptions={[5,10,20]} ref={(el) => { this.dt = el; }} header={header} >
@@ -190,12 +211,9 @@ export class UsersList extends Component{
                 <Column body={this.activeTemplate} style={{textAlign:'center', width: '3%'}} header="Active"  sortable={true}  filter={true} filterElement={activeFilter} filterMatchMode="in" />
                 <Column body={this.actionTemplate} style={{textAlign:'center', width: '5%'}}/>
             </DataTable>
-            <Dialog visible={this.state.displayDialog} header="Add User" modal={true} onHide={() => this.setState({displayDialog: false})}>
+{maintainUser}
+                    </div>
 
-                        <Test/>
-
-                    </Dialog>
-            </div>
 )
  }
 }
