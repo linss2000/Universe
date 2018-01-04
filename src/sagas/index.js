@@ -65,7 +65,7 @@ export default function* rootSaga () {
         takeLatest([BAPTypes.FETCH_TABLES_REQUEST], BAPSaga.handleRequest),
         takeLatest([approvalTypes.FETCH_TABLES_REQUEST], approvalSaga.handleRequest),
         takeLatest([scheduleTypes.FETCH_TABLES_REQUEST], scheduleSaga.handleRequest),
-        takeLatest([usersListType.FETCH_REQUEST], usersListSaga.handleRequest),
+        takeLatest([usersListType.FETCH_REQUEST,usersListType.DELETE_REQUEST], usersListSaga.handleRequest),
         takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
         takeLatest([ManageUserTypes.INSERT_REQUEST], ManageUserSaga.handleRequest),
         takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),

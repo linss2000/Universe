@@ -89,7 +89,66 @@ import {
         yield put({ type: usersListTypes.MESSAGE, message: "Task Cancelled" });
     }
   }
+  function deleteUserFunction(selectedUserData)
+ {
+   debugger;
+   //alert("getApprovalTables")
+   //alert(cname)
+   //console.log(userData.user);
+   //console.log(userData.password);
+ //alert("in Cadets")
+   //new Promise((resolve, reject) => {
+   return fetch("http://hvs.selfip.net:3003/execSP/", {
+     //return fetch("http://hvs.selfip.net:3003/getCadets/", {
+     //return fetch("http://localhost:3003/getCadets/", {
 
+     method: "POST",
+     headers: {
+       Accept: "application/json",
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+         spName: 'spd_deleteUser',
+         parms:{"hv_user_id":selectedUserData.hv_user_id}
+
+
+     })
+   })
+     .then(statusHelper)
+     .then(response => response.json())
+     .catch(error => error);
+ }
+
+ function* deleteUser(selectedUserData) {
+   debugger;
+   try {
+     debugger
+     const resultObj = yield call(deleteUserFunction,selectedUserData.payload);
+     debugger;
+     if (resultObj.response && !resultObj.response.ok) {
+       debugger;
+       yield put({
+         type: usersListTypes.MESSAGE,
+         message: {val:-1,msg:resultObj.response.statusText}
+       });
+     } else {
+       debugger;
+       const state=yield select()
+       let items=state.usersListState.items.filter(del=>del.hv_user_id!==selectedUserData.hv_user_id)
+       yield put({
+         type: usersListTypes.ITEMS,
+         items:items
+       });
+     }
+   } catch (e) {
+     debugger;
+     yield put({ type: usersListTypes.MESSAGE, message: e });
+   } finally {
+     debugger;
+     if (yield cancelled())
+       yield put({ type: usersListTypes.MESSAGE, message: "Task Cancelled" });
+   }
+ }
 
   export function* handleRequest(action) {
     debugger;
@@ -97,11 +156,14 @@ import {
     try {
       switch (action.type) {
         case usersListTypes.FETCH_REQUEST: {
-          debugger;
           const fetchTask = yield fork(getUsersList,action.payload);
           break;
         }
-
+        case usersListTypes.DELETE_REQUEST: {
+          debugger;
+          const fetchTask = yield fork(deleteUser,action.payload);
+          break;
+        }
         default: {
           return null;
           break;
