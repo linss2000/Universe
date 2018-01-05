@@ -41,10 +41,10 @@ export class UserComponent extends Component {
     this.state = {
       firstName : "",
       lastName : "",
-      userId : "",
-      password : "",
+      UId : "",
+      uPassword : "",
       emailId :"",
-      isActive : 'true',
+      isActive : true,
       userImage : null,
       uploadedImg : null,
       displayMsgdiv : "block",
@@ -52,52 +52,113 @@ export class UserComponent extends Component {
       mobileNo : "",
       homeNo : "",
       otherNo :"",
-      isMobileNo : 'false',
-      isHomeNo : 'false',
-      isOtherNo : 'false',
-      btndisabled : false
-      
-          
+      isMobileNo : false,
+      isHomeNo : false,
+      isOtherNo : false,
+      btndisabled : false,
+      isReadOnly : false
+
+
     }
-    
+
     this.insertUserDetails = this.insertUserDetails.bind(this);
     this.checkNumberSelected = this.checkNumberSelected.bind(this);
     this.bindHomeNumber = this.bindHomeNumber.bind(this);
     this.bindOtherNumber = this.bindOtherNumber.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-   this.handleChange = this.handleChange.bind(this); 
+   this.handleChange = this.handleChange.bind(this);
     this.onActiveChange = this.onActiveChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
+  componentDidMount(){
+//debugger
+// this.state.uPassword = "";
+    if (this.props.userObject != null){
+      if (!this.props.userObject.isNewUser) 
+        this.setState({isReadOnly : true});
+      if (this.props.userObject.currectSelectedUser != null){
+        this.props.getUserDetails({
+            type: ManageUserTypes.FETCH_USER_REQUEST,
+            user : {
+            hv_user_id: this.props.userObject.currectSelectedUser.hv_user_id
+            }
+          });
+      }
+      
+    }
+ 
+    // this.props.insertUserDetails({
+    //   type: ManageUserTypes.INSERT_REQUEST,
+    //   user : {
+    //   hv_first_name: _.trim(this.firstName.getValue()),
+    //   hv_last_name: _.trim(this.lastName.getValue()),
+    //   hv_user_id: _.trim(this.user_id.getValue()),
+    //   hv_pwd: _.trim(this.uPassword.getValue()),
+    //   hv_email : _.trim(this.emailId.getValue()),
+    //   hv_isactive : this.state.isActive == true ? 'Y' : 'N',
+    //   hv_mobile_no : this.state.isMobileNo == true ? this.state.mobileNo : "0",
+    //   hv_home_no : this.state.isHomeNo == true ? this.state.homeNo : "0",
+    //   hv_other_no : this.state.isOtherNo == true ? this.state.otherNo : "0",
+    //   hv_image : this.state.userImage ? this.state.userImage : null
+    //   }
+    // });
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.userState.items) {
+      //debugger
+      var user = nextProps.userState.items[0];
+        this.setState({
+          firstName : user.hv_first_name,
+          lastName : user.hv_last_name,
+          UId : user.hv_user_id,
+          uPassword : user.hv_pwd,
+          emailId :user.hv_email,
+          isActive : user.hv_is_active == 'Y' ? true : false ,
+          userImage : user.hv_photo == "" ? null : user.hv_photo,
+          uploadedImg : user.hv_photo == "" ? null : user.hv_photo,
+          displayMsgdiv : user.hv_photo ? 'none' : 'block',
+          mobileNo : user.mobile_no == "0" ? "" : user.mobile_no ,
+          homeNo : user.home_no == "0" ? "" : user.home_no,
+          otherNo : user.other_no == "0" ? "" : user.other_no,
+          isMobileNo : user.mobile_no != "0" ? true : false,
+          isHomeNo : user.home_no != "0" ? true : false,
+          isOtherNo : user.other_no != "0" ? true : false
+        })
+      }
+    }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.userState.message.val == 2){   
-      debugger    
+    if (this.props.userState.message.val == 2){
+   //   debugger
     alert(this.props.userState.message.statusMsg[0].ReturnMessage);
       this.props.resetMessage({
         type: ManageUserTypes.MESSAGE,
         message: { val: 0, statusMsg: "" }
       });
+      this.props.onDialogClose();
     }
+    
   }
 
   insertUserDetails(){
-debugger
-if(!this.state.isMobileNo)
-    this.setState({mobileNo : "0"});
-if(!this.state.isOtherNo)
-this.setState({otherNo : "0"});
-if(!this.state.isHomeNo)
-  this.setState({homeNo : "0"});
-
+//debugger
+// if(!this.state.isMobileNo)
+//     this.setState({mobileNo : "0"});
+// if(!this.state.isOtherNo)
+// this.setState({otherNo : "0"});
+// if(!this.state.isHomeNo)
+//   this.setState({homeNo : "0"});
+//debugger
     this.props.insertUserDetails({
       type: ManageUserTypes.INSERT_REQUEST,
       user : {
       hv_first_name: _.trim(this.firstName.getValue()),
       hv_last_name: _.trim(this.lastName.getValue()),
-      hv_user_id: _.trim(this.userId.getValue()),
-      hv_pwd: _.trim(this.password.getValue()),
+      hv_user_id: _.trim(this.UId.getValue()),
+      hv_pwd: _.trim(this.uPassword.getValue()),
       hv_email : _.trim(this.emailId.getValue()),
       hv_isactive : this.state.isActive == true ? 'Y' : 'N',
       hv_mobile_no : this.state.isMobileNo == true ? this.state.mobileNo : "0",
@@ -108,28 +169,54 @@ if(!this.state.isHomeNo)
     });
   }
 
+  updateUserDetails(){
+   // debugger
+    // if(!this.state.isMobileNo)
+    //     this.setState({mobileNo : "0"});
+    // if(!this.state.isOtherNo)
+    // this.setState({otherNo : "0"});
+    // if(!this.state.isHomeNo)
+    //   this.setState({homeNo : "0"});
+ debugger
+        this.props.updateUserDetails({
+          type: ManageUserTypes.UPDATE_USER_REQUEST,
+          user : {
+          hv_first_name: _.trim(this.firstName.getValue()),
+          hv_last_name: _.trim(this.lastName.getValue()),
+          hv_user_id: _.trim(this.UId.getValue()),
+          hv_pwd: _.trim(this.uPassword.getValue()),
+          hv_email : _.trim(this.emailId.getValue()),
+          hv_isactive : this.state.isActive == true ? 'Y' : 'N',
+          hv_mobile_no : this.state.isMobileNo == true ? this.state.mobileNo : "0",
+          hv_home_no : this.state.isHomeNo == true ? this.state.homeNo : "0",
+          hv_other_no : this.state.isOtherNo == true ? this.state.otherNo : "0",
+          hv_image : this.state.userImage ? this.state.userImage : null
+          }
+        });
+      }
+    
   onActiveChange(e) {
-    debugger
+   // debugger
     this.setState({isActive : e.checked});
 }
 
 
 onImageDrop(files) {
-  debugger
+ // debugger
   var fileasBinary , imageType ;
   files.forEach(function(file) {
-    debugger
-    const reader = new FileReader();    
+   // debugger
+    const reader = new FileReader();
     reader.onload = () => {
-      debugger
+     // debugger
        fileasBinary = btoa(reader.result);
        let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
        this.setState({
-        userImage :  base64data})      
+        userImage :  base64data})
     }
   imageType = file.type;
   reader.readAsBinaryString(file);
-   }, this);  
+   }, this);
   this.setState({
         uploadedImg : files[0],
        displayMsgdiv : "none"
@@ -138,17 +225,17 @@ onImageDrop(files) {
 }
 
 handleUserChange(e) {
-  debugger
+ // debugger
   this.form.validateFields(e.target);
   this.handleChange(e);
-  this.setState({userId : e.target.value});
+  this.setState({UId : e.target.value});
 }
 
 handlePasswordChange(e) {
   this.form.validateFields(e.target);
   this.handleChange(e);
-  this.setState({password : e.target.value});
-} 
+  this.setState({uPassword : e.target.value});
+}
 
 bindOtherNumber(e){
   this.setState({ isOtherNo: e.target.checked });
@@ -175,16 +262,21 @@ submitForm(e)
   e.preventDefault();
   this.form.validateFields();
   this.setState({ btndisabled: !this.form.isValid() });
-  if(this.form.isValid())
+  if(this.form.isValid()) {
       // alert("Form is valid");
-    this.insertUserDetails();
-  
+     // debugger
+      if (this.props.userObject.isNewUser)
+          this.insertUserDetails();
+      else
+        this.updateUserDetails();
+}
 }
 
 
   render() {
     return (
-      <FormWithConstraints ref={formwithConstraints => this.form = formwithConstraints} onSubmit={this.submitForm} noValidate>
+      
+      <FormWithConstraints ref={formwithConstraints => this.form = formwithConstraints}  noValidate>
       <div className="container" id="divUsers" >
         <div className="row">
         <div className="FileUpload auto">
@@ -194,99 +286,100 @@ submitForm(e)
             accept="image/*"
             activeClassName='active-dropzone'>
             <div style={{display :this.state.displayMsgdiv}}>Drop an image or click to select a file to upload.</div>
-            {this.state.uploadedImg === null ? null :
+            {(this.state.uploadedImg == null) || (this.state.uploadedImg == '') ? null :
           <div>
-            <img src={this.state.uploadedImg.preview} style={{width:"190px",height : "190px"}} />
+            <img src={this.state.uploadedImg.preview ? this.state.uploadedImg.preview : this.state.uploadedImg } style={{width:"190px",height : "190px"}} />
           </div>}
           </Dropzone>
         </div>
           <div className="col-sm-9">
             <div className="box box-info">
-              <div className='box-body pad' style={{minHeight: "400px"}}>              
+              <div className='box-body pad' style={{minHeight: "400px"}}>
                 <div className="row" style={{borderCollapse: "separate",borderSpacing: "5px 5px", width:"100%" }}  >
                   <div className="col-sm-auto labelWidth alignCenter" >
                     <label id="lblEmployeeId" runat="server"  className="labelfont">
                      Employee Id
-                    </label>                   
+                    </label>
                   </div>
                   <div className="col-sm-auto ">
-                      <TextField  id="txtEmployeeId"                      
-                          className="font11"                     
-                          hintText="Employee Id" style={{width:"75%"}} />   
+                      <TextField  id="txtEmployeeId"
+                          className="font11"
+                          hintText="Employee Id" style={{width:"75%"}} />
                       <i className="fa fa-search" onClick= { e => {
                         alert("tdfdfg");
                       }}/>
                   </div>
                   <div className="col-sm-auto labelWidth alignCenter" >
-                  {/* <Checkbox  label="test" onChange={this.onActiveChange}    
+                  {/* <Checkbox  label="test" onChange={this.onActiveChange}
                    checked={this.state.isActive}></Checkbox> */}
                     <label id="lblUserId" runat="server"  className="labelfont">
                      Active
-                    </label>                   
+                    </label>
                   </div>
                   <div  className="col-sm-auto alignCenter" >
-                   <input type="checkbox" style={{ marginLeft: "5px", verticalAlign: "top"}} 
+                   <input type="checkbox" style={{ marginLeft: "5px", verticalAlign: "top"}}
                       checked={this.state.isActive}
                       onChange={this.onActiveChange}
                     />
                   </div>
                   </div>
-                  <Paper style={paperStyle} zDepth={1} >   
+                  <Paper style={paperStyle} zDepth={1} >
                     <Row>
                       <Col sm="6">
                     <Row>
                       <Col sm="auto" className="labelWidth alignCenter">
-                        <span className="text-left labelfont">First Name</span>   
-                      </Col>                   
+                        <span className="text-left labelfont">First Name</span>
+                      </Col>
                       <Col sm="3">
-                       <TextField  id="txtFirstName"   name="txtFirstName"                      
+                       <TextField  id="txtFirstName"   name="txtFirstName"
                           className="font11" required
                           ref={element => (this.firstName = element)}
                           value={this.state.firstName}
                           onChange={(e) =>{
                             this.form.validateFields(e.target);
                             this.handleChange(e);
-                            this.setState({ firstName: e.target.value })} }               
+                            this.setState({ firstName: e.target.value })} }
                           hintText="First Name"/>
                           <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtFirstName">
                             <FieldFeedback when="valueMissing">First Name required.</FieldFeedback>
                          </FieldFeedbacks>
 
                       </Col>
-                    </Row>      
+                    </Row>
                     <Row>
                       <Col sm="auto" className="labelWidth alignCenter">
                       <span className="text-left labelfont">
                           Last Name</span>
                       </Col>
                       <Col sm="3">
-                       <TextField  id="txtLastName"  name="txtLastName"                    
-                          className="font11"                 
+                       <TextField  id="txtLastName"  name="txtLastName"
+                          className="font11"
                           ref={element => (this.lastName = element)}
                           value={this.state.lastName} required
                           onChange={(e) =>{
                             this.form.validateFields(e.target);
                             this.handleChange(e);
-                            this.setState({ lastName: e.target.value })}  }     
+                            this.setState({ lastName: e.target.value })}  }
                           hintText="Last Name"  />
                           <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtLastName">
                             <FieldFeedback when="valueMissing">Last Name required.</FieldFeedback>
                          </FieldFeedbacks>
                       </Col>
-                    </Row>           
+                    </Row>
                     <Row>
                       <Col sm="auto" style={{width:"93px"}} className="labelWidth alignCenter">
                       <span className="text-left labelfont required">
                           User Id</span>
                       </Col>
                       <Col sm="3">
-                       <TextField  id="txtUserId"  name="txtUserId"                 
-                          className="font11"   required            
-                          ref={element => (this.userId = element)}
-                          value={this.state.userId}
-                          onChange={this.handleUserChange}     
+                       <TextField  id="txtUId"
+                          ref={element => (this.UId = element)}
+                          className="font11"   required
+                          value={this.state.UId}
+                          readOnly={this.state.isReadOnly}
+                          onChange={this.handleUserChange}
                           hintText="User Id" minLength={3}/>
-                          <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtUserId">
+                          <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtUId">
                             <FieldFeedback when="valueMissing">Must enter User Id.</FieldFeedback>
                             <FieldFeedback when="tooShort">UserId must contain atleast 3 characters. </FieldFeedback>
                           </FieldFeedbacks>
@@ -299,12 +392,13 @@ submitForm(e)
                       </Col>
                       <Col sm="3">
                       <TextField
-                      id="txtPassword" name="txtPassword"
-                      ref={element => (this.password = element)}
-                          value={this.state.password} required
-                          onChange={this.handlePasswordChange}   
+                      id="txtUPassword" name="txtUPassword"
+                      ref={element => (this.uPassword = element)}
+                      value={this.state.uPassword} required
+                          onChange={this.handlePasswordChange}
+                      hintText="Password"
                       type="password" minLength={8}/>
-                      <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtPassword" show="all">
+                      <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtUPassword" show="all">
                             <FieldFeedback when="valueMissing">Password is required</FieldFeedback>
                             <FieldFeedback when="tooShort">Password must of atleast 8 length.</FieldFeedback>
                             <FieldFeedback when={value =>!/\d/ .test(value)}>Should contain atleast 1 number. </FieldFeedback>
@@ -312,7 +406,7 @@ submitForm(e)
                             <FieldFeedback when={value =>!/[a-z]/ .test(value)}>Should contain atleast 1 character. </FieldFeedback>
                           </FieldFeedbacks>
                       </Col>
-                    </Row>            
+                    </Row>
                     <Row>
                       <Col sm="auto" style={{width:"93px"}}  className="labelWidth alignCenter">
                       <span className="text-left labelfont">
@@ -327,7 +421,7 @@ submitForm(e)
                           onChange={(e) =>{
                             this.form.validateFields(e.target);
                             this.handleChange(e);
-                            this.setState({ emailId: e.target.value })}   
+                            this.setState({ emailId: e.target.value })}
                           }
                        />
                        <FieldFeedbacks style={{width:"256px", color:"red"}} for="txtEmailId">
@@ -340,11 +434,11 @@ submitForm(e)
                   <Col sm="6">
                     <Row>
                     <Col sm="2" className="labelWidth alignCenter">
-                        <span className="text-left labelfont">Password Expiry</span>   
-                      </Col>                   
+                        <span className="text-left labelfont">Password Expiry</span>
+                      </Col>
                       <Col sm="4">
-                        <Calendar showIcon="true" value={this.state.pwdexpiryDt} 
-                        onChange= {(e) =>this.setState({pwdexpiryDt : e.value})} style={{marginLeft:"11px",background:"lightslategrey"}}></Calendar>                      
+                        <Calendar showIcon="true" value={this.state.pwdexpiryDt}
+                        onChange= {(e) =>this.setState({pwdexpiryDt : e.value})} style={{marginLeft:"11px",background:"lightslategrey"}}></Calendar>
                       </Col>
                       </Row>
                       <Row>
@@ -359,52 +453,66 @@ submitForm(e)
                                     <td>
                                       <InputGroup style={{height:"30px"}}>
                                         <InputGroupAddon>
-                                        <Input addon type="checkbox" id="chkMobileNo" 
+                                        <Input addon type="checkbox" id="chkMobileNo"
+                                        checked={this.state.isMobileNo}
                                         onChange={this.checkNumberSelected}
                                          aria-label="Mobile" />
                                         Mobile
-                                        </InputGroupAddon>                                        
-                                        <InputMask mask ="(999)-999-9999" unmask="true" id="txtMobileNo" value={this.state.mobileNo} placeholder="Enter Mobile Number"
+                                        </InputGroupAddon>
+                                        <input type="text"  value={this.state.mobileNo} placeholder="Enter mobile number"
                                             onChange={e =>
-                                                this.setState({ mobileNo: e.value })}/>                                        
+                                                this.setState({ mobileNo: e.target.value })} />
+                                        {/* <InputMask mask="(999) 999-9999" unmask='true' value='1112223333' placeholder="(999) 999-9999"></InputMask>
+                                        <InputMask mask ="(999) 999-9999" unmask="true" id="txtMobileNo" 
+                                        value="{this.mobileNo.getValue()}" placeholder="(999) 999-9999"
+                                            onChange={e =>
+                                                this.setState({ mobileNo: e.value })} ></InputMask> */}
                                       </InputGroup>
                                    <br/>
                                       <InputGroup style={{height:"30px"}}>
                                         <InputGroupAddon>
                                         <Input addon type="checkbox" id="chkHomeNo"
+                                        checked={this.state.isHomeNo}
                                          aria-label="Home"
                                          onChange={this.bindHomeNumber}  />
                                         Home
                                         </InputGroupAddon>
-                                        <InputMask mask ="(999)-999-9999" unmask="true" id="txtHomeNo" placeholder="Enter Home Number"
+                                        <input type="text"  value={this.state.homeNo} placeholder="Enter home number"
+                                            onChange={e =>
+                                                this.setState({ homeNo: e.target.value })} />
+                                        {/* <InputMask mask ="(999)-999-9999" unmask="true" id="txtHomeNo" placeholder="Enter Home Number"
                                         value={this.state.homeNo} style={{width:'100%'}}
                                       onChange={e =>
                                          this.setState({ homeNo: e.value })}
-                                />                                        
+                                /> */}
                                       </InputGroup >
                                     <br/>
                                       <InputGroup style={{height:"30px"}}>
                                         <InputGroupAddon>
-                                        <Input addon type="checkbox" id="chkOtherNo" 
-                                         aria-label="Other" 
+                                        <Input addon type="checkbox" id="chkOtherNo"
+                                        checked={this.state.isOtherNo}
+                                         aria-label="Other"
                                        onChange ={this.bindOtherNumber} />
                                         Other
                                         </InputGroupAddon>
-                                        <InputMask mask ="(999)-999-9999" unmask="true" id="txtOtherNo" placeholder="Enter Other Number"
+                                        <input type="text"  value={this.state.otherNo} placeholder="Enter other if any"
+                                            onChange={e =>
+                                                this.setState({ otherNo: e.target.value })} />
+                                        {/* <InputMask mask ="(999)-999-9999" unmask="true" id="txtOtherNo" placeholder="Enter Other Number"
                                         value={this.state.otherNo} style={{width:'100%'}}
                                       onChange={(e) =>
-                                          this.setState({ otherNo: e.value })}/>                                        
+                                          this.setState({ otherNo: e.value })}/> */}
                                       </InputGroup>
                                     </td>
                                   </tr>
                               </tbody>
                             </Table>
-                       {/* <TextField  id="txtLastName"                      
-                          className="font11"                 
+                       {/* <TextField  id="txtLastName"
+                          className="font11"
                           ref={element => (this.lastName = element)}
                           value={this.state.lastName}
                           onChange={e =>
-                            this.setState({ lastName: e.target.value })}       
+                            this.setState({ lastName: e.target.value })}
                           hintText="Last Name" style={{width:"90%"}} /> */}
                       </Col>
                     </Row>
@@ -413,9 +521,10 @@ submitForm(e)
                   </Paper>
                   <Row>
                     <Col sm="12" style={{float:"right", margin:"5px"}}>
-                      <Button label ="Cancel" style={{float:"right",background:"lightslategray",borderColor :"lightslategray"}}/>
-                      <Button label ="Save" style={{float:"right",background:"grey",borderColor :"grey"}} 
-                      disabled={this.state.btndisabled}
+                      <Button label ="Cancel" style={{float:"right",background:"lightslategray",borderColor :"lightslategray"}}
+                      />
+                      <Button label ="Save" style={{float:"right",background:"grey",borderColor :"grey"}}
+                      disabled={this.state.btndisabled} onClick={this.submitForm}
                        />
                     </Col>
                   </Row>
@@ -456,8 +565,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserComponent);
                           <td className="text-left labelfont" >
                           First Name</td>
                           <td>
-                          <TextField  id="txtFirstName"                      
-                          className="font11"                     
+                          <TextField  id="txtFirstName"
+                          className="font11"
                           hintText="First Name" />
                           </td>
                         </tr>
@@ -465,9 +574,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserComponent);
                           <td className="text-left labelfont" style={{verticalAlign:"middle"}} >
                           Last Name</td>
                           <td>
-                          <TextField    
-                          id="txtLastName"                      
-                          className="font11"                     
+                          <TextField
+                          id="txtLastName"
+                          className="font11"
                           hintText="Last Name" />
                           </td>
                         </tr>

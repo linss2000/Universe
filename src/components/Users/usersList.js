@@ -200,12 +200,12 @@
           ];
 
           let roleIDFilter = <MultiSelect style={{width:'100%'}} className="ui-column-filter" value={this.state.filters.roles ? this.state.filters.roles.value: null} options={roles} onChange={this.onRoleChange}/>
-          var header =      <Row style={{"background-color":"white"}}>
+          var header =      <Row style={{"backgroundColor":"white"}}>
           <Col sm="10">
             <div className="float-left">
-            <span className="text-primary" style={{'font-size':'14px'}}>User Security</span>
+            <span className="text-primary" style={{'fontSize':'14px'}}>User Security</span>
            <br></br>
-            <span className="text-primary" style={{'font-size':'12px'}}>Manage the user that can access the system by adding new users, or modifying the access of exisiting user.</span>
+            <span className="text-primary" style={{'fontSize':'12px'}}>Manage the user that can access the system by adding new users, or modifying the access of exisiting user.</span>
 
             </div>
           </Col>
