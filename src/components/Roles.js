@@ -189,12 +189,16 @@ export class Roles extends Component {
 
 
   deleteRow = row => {
-    this.props.deleteRoleTable({
-      type: roleTypes.DELETE_REQUEST,
-      payload: {
-        rowID: row.role_id,
-        tableID: row.hv_table_i
+    debugger;
+    if(row.roleHasUser == "Y") {
+      if( !window.confirm("There are currently users assigned this role in the system. Removing this role from the system will unassign the role from these users. Are you sure you want to permanently delete this role?")) {
+        return false;
       }
+    }
+
+    this.props.deleteRoleTable({
+      type: roleTypes.DELETE_REQUEST,      
+      roleID: row.role_id           
     });
   };
 

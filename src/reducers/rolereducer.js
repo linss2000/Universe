@@ -10,6 +10,8 @@ export const types = {
     TOKEN: "ROLE/TOKEN",
     SELECTED_ROWID: "ROLE/ROW_ID",
     MAKE_ROW_EDITABLE: "ROLE/ROW_EDITABLE",
+    CHECKROLE_REQUEST: "ROLE/CHECK_REQUEST",
+    
   };
   
   export const initialState = {
@@ -18,7 +20,7 @@ export const types = {
     items: [],
     message: {val:0,msg:""},
     token: "",
-    rowID : -1
+    rowID : -1,    
   };
   
   //export function authState (state = initialState, action) {
@@ -58,7 +60,7 @@ export const types = {
     insertRoleTable: payload => ({ type: types.INSERT_REQUEST, payload }),
     updateRoleTable: payload => ({ type: types.UPDATE_REQUEST, payload }),
     //updateStoreRoleTable: payload => ({ type: types.UPDATE_STORE_REQUEST, payload }),
-    deleteRoleTable: payload => ({ type: types.DELETE_REQUEST, payload }),
+    deleteRoleTable: payload => ({ type: types.DELETE_REQUEST, roleID : payload.roleID  }),
     cancelRoleTable: payload => ({ type: types.CANCEL_REQUEST, payload })
   };
   

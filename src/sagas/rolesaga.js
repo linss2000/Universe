@@ -72,13 +72,13 @@ import {
         .catch(error => error);
     },
 
-    delRoleTable(userData) {
+    chkRoleTable(role_id) {
       debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/delRoleTable/", {
+      return fetch("http://hvs.selfip.net:3003/ExecSP/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -86,8 +86,35 @@ import {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          hv_table_i: userData.tableID,
-          hv_universal_i: userData.rowID
+          spName: "sps_checkRoleForUser",
+          parms: {
+              "role_id" : role_id
+          }
+        })
+      })
+        .then(statusHelper)
+        .then(response => response.json())
+        .catch(error => error);
+    },
+
+    delRoleTable(roleID) {
+      debugger;
+      //console.log(userData.user);
+      //console.log(userData.password);
+  
+      //new Promise((resolve, reject) => {
+      return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+        //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          spName: "spd_Role",
+          parms: {
+              "roleID" : roleID
+          }
         })
       })
         .then(statusHelper)
@@ -232,7 +259,7 @@ import {
     }
   }
 
-  function* deleteRoleTable(userData){
+  function* deleteRoleTable(roleID){
     try{
       /*
       yield put({
@@ -246,7 +273,7 @@ import {
       });
       */
 
-      const resultObj = yield call(attribApi.delRoleTable, userData.payload);
+      const resultObj = yield call(attribApi.delRoleTable, roleID);
   
       debugger;
       if (resultObj.response && !resultObj.response.ok) {
@@ -257,6 +284,34 @@ import {
         });
       } else {
         debugger;
+        yield put({
+          type: roleTypes.ITEMS,
+          items: []
+        });
+  
+        yield put({
+          type: roleTypes.SELECTED_ROWID,
+          rowID: -1
+        });
+  
+        const resultObj = yield call(attribApi.getRoleTable, "");
+        debugger;
+        if (resultObj.response && !resultObj.response.ok) {
+          debugger;
+          yield put({
+            type: roleTypes.MESSAGE,
+            message: resultObj.response.statusText
+          });
+        } else {
+          debugger;
+          console.log(JSON.parse(resultObj).result)
+          //sessionStorage.setItem("token", JSON.parse(resultObj).token);
+          yield put({
+            type: roleTypes.ITEMS,
+            items: JSON.parse(resultObj).result
+          });
+        }
+        /*
         console.log(JSON.parse(resultObj).result)
         const state = yield select();
         const newitems = state.roleleState.items.filter((itm) => _.trim(itm.hv_universal_i) !== _.trim(userData.payload.rowID));
@@ -265,6 +320,7 @@ import {
           type: roleTypes.ITEMS,
           items: newitems
         });
+        */
 
     } }catch (e) {
 
@@ -333,6 +389,7 @@ import {
     }
   }
   
+
   
   export function* handleRequest(action) {
     debugger;
@@ -380,7 +437,7 @@ import {
         case roleTypes.DELETE_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
           debugger;
-          const fetchTask = yield fork(deleteRoleTable, action.payload);
+          const fetchTask = yield fork(deleteRoleTable, action.roleID);
           debugger;
           break;
         }
