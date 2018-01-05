@@ -46,6 +46,7 @@
         currectSelectedUser:[],
         isNewUser:true
       }
+
     }
 
   renderUsersList(){
@@ -54,11 +55,25 @@
       payload :{}
     });
   }
+
     componentDidMount(){
-      this.renderUsersList()
+    //  debugger
+     this.renderUsersList()
+    //alert(this.props.usersListState.message);
+    }
+    componentDidUpdate(prevProps,prevState){
+     if(this.props.usersListState.message.msg=='deleted')
+     {
+       alert('User deleted successfully');
+       this.props.resetMessage({
+         type: UsersListTypes.MESSAGE,
+         message: { val: 0, msg: "" }
+       });
+     }
     }
     componentWillReceiveProps(nextProps){
-    this.setState({usersCount: nextProps.usersListState.items.length});
+      this.setState({usersCount: nextProps.usersListState.items.length});
+
     }
     actionTemplate(rowData, column) {
           return <div>
@@ -137,11 +152,17 @@
              });
          }
          deleteRow(row) {
-           debugger
-           this.props.deleteUser({
-             type: UsersListTypes.DELETE_REQUEST,
-             payload :row
-           });
+           
+ if (window.confirm("Are you sure to delete this User?") ) {
+   this.props.deleteUser({
+     type: UsersListTypes.DELETE_REQUEST,
+     payload :row
+   });
+ } else {
+     return;
+ }
+
+
           }
             editRow(row,e) {
               this.setState({
@@ -179,9 +200,16 @@
           ];
 
           let roleIDFilter = <MultiSelect style={{width:'100%'}} className="ui-column-filter" value={this.state.filters.roles ? this.state.filters.roles.value: null} options={roles} onChange={this.onRoleChange}/>
-          var header =      <Row>
+          var header =      <Row style={{"background-color":"white"}}>
+          <Col sm="10">
+            <div className="float-left">
+            <span className="text-primary" style={{'font-size':'14px'}}>User Security</span>
+           <br></br>
+            <span className="text-primary" style={{'font-size':'12px'}}>Manage the user that can access the system by adding new users, or modifying the access of exisiting user.</span>
 
-               <Col sm="12">
+            </div>
+          </Col>
+               <Col sm="2">
                <span>{this.state.usersCount} User Accounts</span>
                  <div className="float-right">
                    <span className="fa-stack fa-lg">

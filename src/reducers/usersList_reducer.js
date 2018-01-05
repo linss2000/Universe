@@ -12,12 +12,14 @@ export const types = {
     items: [],
     loading: false,
     error: false,
-    message:''
+    message: {val:0,msg:""},
   };
   export default  (state = initialState, action) => {
     switch (action.type) {
         case types.ITEMS:
           return { ...state, items: action.items };
+          case types.MESSAGE:
+            return { ...state, message: action.message };
       default:
         return state;
     }
@@ -27,4 +29,8 @@ export const types = {
   export const actions = {
     getUsersList: (payload) => ({ type: types.FETCH_REQUEST, payload}),
     deleteUser: (payload) => ({ type: types.DELETE_REQUEST, payload}),
+    resetMessage: (message) => ({
+        type: message.type,
+        message : message.message
+      })
   };
