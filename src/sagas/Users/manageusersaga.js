@@ -66,8 +66,8 @@ import {
         spName : "",
         parms : user
       })
-      // http://hvs.selfip.net:3003/ExecSP/
-    return fetch("http://localhost:3003/ExecSP/", {
+      // 
+    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -111,7 +111,9 @@ import {
             message: {val :2, statusMsg :JSON.parse(resultMessage).result}
           });
    } }catch (e) {
-    yield put({ type: UserTypes.MESSAGE, message: {val:-1, statusMsg:e} });
+    yield put({ 
+      type: UserTypes.MESSAGE, 
+      message: {val:-1, statusMsg:e} });
     }
     finally{
     }

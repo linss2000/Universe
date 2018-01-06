@@ -69,11 +69,12 @@ export class UserComponent extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
    this.handleChange = this.handleChange.bind(this);
     this.onActiveChange = this.onActiveChange.bind(this);
+    this.CloseDialog = this.CloseDialog.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
   componentDidMount(){
-//debugger
+debugger
 // this.state.uPassword = "";
     if (this.props.userObject != null){
       if (!this.props.userObject.isNewUser) 
@@ -108,6 +109,7 @@ export class UserComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+    if(!this.props.userObject.isNewUser){
     if (nextProps.userState.items) {
       //debugger
       var user = nextProps.userState.items[0];
@@ -129,6 +131,7 @@ export class UserComponent extends Component {
           isOtherNo : user.other_no != "0" ? true : false
         })
       }
+    }
     }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.userState.message.val == 2){
@@ -200,6 +203,12 @@ export class UserComponent extends Component {
     this.setState({isActive : e.checked});
 }
 
+CloseDialog(e) {
+  e.preventDefault();
+  if (this.props){
+  this.props.onDialogClose();
+  }
+}
 
 onImageDrop(files) {
  // debugger
@@ -208,14 +217,16 @@ onImageDrop(files) {
    // debugger
     const reader = new FileReader();
     reader.onload = () => {
-     // debugger
-       fileasBinary = btoa(reader.result);
-       let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
+      debugger
+     console.log(reader.result);
+       fileasBinary = reader.result;
+     //  let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
        this.setState({
-        userImage :  base64data})
+        userImage :  fileasBinary})
     }
+    reader.readAsDataURL(file);
   imageType = file.type;
-  reader.readAsBinaryString(file);
+  // reader.readAsBinaryString(file);
    }, this);
   this.setState({
         uploadedImg : files[0],
@@ -522,7 +533,7 @@ submitForm(e)
                   <Row>
                     <Col sm="12" style={{float:"right", margin:"5px"}}>
                       <Button label ="Cancel" style={{float:"right",background:"lightslategray",borderColor :"lightslategray"}}
-                      />
+                      onClick={this.CloseDialog}/>
                       <Button label ="Save" style={{float:"right",background:"grey",borderColor :"grey"}}
                       disabled={this.state.btndisabled} onClick={this.submitForm}
                        />
