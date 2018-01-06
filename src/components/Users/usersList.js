@@ -90,7 +90,7 @@
           </div>;
       }
 
-      
+
       viewTemplate(rowData,column){
         return <div>
         <i className="fa fa-ellipsis-v fa-fw" />
@@ -156,7 +156,7 @@
              });
          }
          deleteRow(row) {
-           
+
  if (window.confirm("Are you sure to delete this User?") ) {
    this.props.deleteUser({
      type: UsersListTypes.DELETE_REQUEST,
@@ -234,7 +234,7 @@
            let maintainUser=null;
            debugger
              if(this.state.displayDialog){
-              maintainUser=             <Dialog visible={this.state.displayDialog} header= {this.state.dialogTitle} modal={true} onHide={this.onHideDialog}>
+              maintainUser= <Dialog visible={this.state.displayDialog} header= {this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width={1200}>
               <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog}/>
 
                                   </Dialog>
