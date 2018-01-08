@@ -152,7 +152,7 @@
              });
          }
          deleteRow(row) {
-           
+
  if (window.confirm("Are you sure to delete this User?") ) {
    this.props.deleteUser({
      type: UsersListTypes.DELETE_REQUEST,
@@ -229,7 +229,7 @@
            let maintainUser=null;
            debugger
              if(this.state.displayDialog){
-              maintainUser=             <Dialog visible={this.state.displayDialog} header="Add User" modal={true} onHide={this.onHideDialog}>
+              maintainUser=             <Dialog visible={this.state.displayDialog} header="Add User" width={1300} modal={true} onHide={this.onHideDialog}>
               <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog}/>
 
                                   </Dialog>
@@ -243,9 +243,6 @@
        <div>
        <DataTable value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} ref={(el) => { this.dt = el; }} header={header} >
        <Column field="" header="" body={this.viewTemplate} style={{textAlign:'center',width:'1%'}} sortable={false} filter={false}/>
-
-        <Column field="" header="" body={this.imageTemplate} style={{textAlign:'center',width:'3%'}} sortable={false} filter={false}/>
-
                   <Column field="hv_user_id" header="User ID"  style={{textAlign:'center',width:'3%'}} sortable={true} filter={true}/>
                   <Column field="hv_first_name" header="First Name" sortable={true} filter={true} style={{textAlign:'center',width:'5%'}}/>
                   <Column field="hv_last_name" header="Last Name" sortable={true} filter={true} style={{textAlign:'center',width:'5%'}}/>
