@@ -70,6 +70,7 @@ export class UserComponent extends Component {
    this.handleChange = this.handleChange.bind(this);
     this.onActiveChange = this.onActiveChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.CloseDialog = this.CloseDialog.bind(this);
   }
 
   componentDidMount(){
@@ -200,6 +201,12 @@ export class UserComponent extends Component {
     this.setState({isActive : e.checked});
 }
 
+CloseDialog(e) {
+    e.preventDefault();
+    if (this.props){
+    this.props.onDialogClose();
+   }
+  }
 
 onImageDrop(files) {
  // debugger
@@ -210,12 +217,12 @@ onImageDrop(files) {
     reader.onload = () => {
      // debugger
        fileasBinary = btoa(reader.result);
-       let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
+      // let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
        this.setState({
-        userImage :  base64data})
+        userImage :  fileasBinary})
     }
   imageType = file.type;
-  reader.readAsBinaryString(file);
+  reader.readAsDataURL(file);
    }, this);
   this.setState({
         uploadedImg : files[0],
@@ -277,25 +284,27 @@ submitForm(e)
     return (
       
       <FormWithConstraints ref={formwithConstraints => this.form = formwithConstraints}  noValidate>
-      <div className="container" id="divUsers" >
+      <div className="" id="divUsers" >
         <div className="row">
         <div className="FileUpload auto">
+        <Paper style={{width:"190px",height : "190px"}} zDepth={2} >
           <Dropzone
             onDrop={this.onImageDrop.bind(this)}
             multiple={false}
             accept="image/*"
-            activeClassName='active-dropzone'>
+            activeClassName='active-dropzone' style={{borderStyle:'solid',borderWidth:'0px'}}>
             <div style={{display :this.state.displayMsgdiv}}>Drop an image or click to select a file to upload.</div>
             {(this.state.uploadedImg == null) || (this.state.uploadedImg == '') ? null :
           <div>
             <img src={this.state.uploadedImg.preview ? this.state.uploadedImg.preview : this.state.uploadedImg } style={{width:"190px",height : "190px"}} />
           </div>}
           </Dropzone>
+          </Paper>
         </div>
           <div className="col-sm-9">
-            <div className="box box-info">
-              <div className='box-body pad' style={{minHeight: "400px"}}>
-                <div className="row" style={{borderCollapse: "separate",borderSpacing: "5px 5px", width:"100%" }}  >
+            <div className="box box-info">  
+              <div className='box-body' style={{minHeight: "400px",width:'100%'}}>
+                <div className="row"  >
                   <div className="col-sm-auto labelWidth alignCenter" >
                     <label id="lblEmployeeId" runat="server"  className="labelfont">
                      Employee Id
@@ -323,7 +332,7 @@ submitForm(e)
                     />
                   </div>
                   </div>
-                  <Paper style={paperStyle} zDepth={1} >
+                  <Paper style={paperStyle} zDepth={2} >
                     <Row>
                       <Col sm="6">
                     <Row>
@@ -433,7 +442,7 @@ submitForm(e)
                   </Col>
                   <Col sm="6">
                     <Row>
-                    <Col sm="2" className="labelWidth alignCenter">
+                    <Col sm="auto" className="labelWidth alignCenter">
                         <span className="text-left labelfont">Password Expiry</span>
                       </Col>
                       <Col sm="4">
@@ -442,15 +451,16 @@ submitForm(e)
                       </Col>
                       </Row>
                       <Row>
-                    <Col sm="2" className="labelWidth alignCenter">
+                    <Col sm="auto" className="labelWidth alignCenter">
                       <span className="text-left labelfont">
                           Phone Number(s)</span>
                       </Col>
                       <Col  sm="4">
-                            <Table>
+                      <br/>
+                       {/* <Table>
                              <tbody>
                                 <tr>
-                                    <td>
+                                    <td> */}
                                       <InputGroup style={{height:"30px"}}>
                                         <InputGroupAddon>
                                         <Input addon type="checkbox" id="chkMobileNo"
@@ -459,7 +469,7 @@ submitForm(e)
                                          aria-label="Mobile" />
                                         Mobile
                                         </InputGroupAddon>
-                                        <input type="text"  value={this.state.mobileNo} placeholder="Enter mobile number"
+                                        <input type="text"  value={this.state.mobileNo} placeholder="Mobile number"
                                             onChange={e =>
                                                 this.setState({ mobileNo: e.target.value })} />
                                         {/* <InputMask mask="(999) 999-9999" unmask='true' value='1112223333' placeholder="(999) 999-9999"></InputMask>
@@ -475,7 +485,7 @@ submitForm(e)
                                         checked={this.state.isHomeNo}
                                          aria-label="Home"
                                          onChange={this.bindHomeNumber}  />
-                                        Home
+                                        Home&nbsp;
                                         </InputGroupAddon>
                                         <input type="text"  value={this.state.homeNo} placeholder="Enter home number"
                                             onChange={e =>
@@ -493,7 +503,7 @@ submitForm(e)
                                         checked={this.state.isOtherNo}
                                          aria-label="Other"
                                        onChange ={this.bindOtherNumber} />
-                                        Other
+                                        Other&nbsp;&nbsp;
                                         </InputGroupAddon>
                                         <input type="text"  value={this.state.otherNo} placeholder="Enter other if any"
                                             onChange={e =>
@@ -503,10 +513,10 @@ submitForm(e)
                                       onChange={(e) =>
                                           this.setState({ otherNo: e.value })}/> */}
                                       </InputGroup>
-                                    </td>
+                                    {/* </td>
                                   </tr>
                               </tbody>
-                            </Table>
+                            </Table> */}
                        {/* <TextField  id="txtLastName"
                           className="font11"
                           ref={element => (this.lastName = element)}
@@ -522,6 +532,7 @@ submitForm(e)
                   <Row>
                     <Col sm="12" style={{float:"right", margin:"5px"}}>
                       <Button label ="Cancel" style={{float:"right",background:"lightslategray",borderColor :"lightslategray"}}
+                      onClick={this.CloseDialog}
                       />
                       <Button label ="Save" style={{float:"right",background:"grey",borderColor :"grey"}}
                       disabled={this.state.btndisabled} onClick={this.submitForm}
