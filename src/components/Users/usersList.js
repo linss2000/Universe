@@ -42,6 +42,7 @@
       this.state={
         usersCount:0,
         filters:'',
+        dialogTitle : "Add User",
         displayDialog:false,
         currectSelectedUser:[],
         isNewUser:true
@@ -88,6 +89,8 @@
 
           </div>;
       }
+
+
       viewTemplate(rowData,column){
         return <div>
         <i className="fa fa-ellipsis-v fa-fw" />
@@ -147,6 +150,7 @@
 
              this.setState({
                displayDialog:true,
+               dialogTitle : 'Add User',
                currectSelectedUser:null,
                isNewUser:true
              });
@@ -167,6 +171,7 @@
             editRow(row,e) {
               this.setState({
                   displayDialog:true,
+                  dialogTitle : 'Edit Details',
                   currectSelectedUser: Object.assign({}, row),
                   isNewUser:false
               });
@@ -229,7 +234,9 @@
            let maintainUser=null;
            debugger
              if(this.state.displayDialog){
-              maintainUser=             <Dialog visible={this.state.displayDialog} header="Add User" width={1300} modal={true} onHide={this.onHideDialog}>
+
+              maintainUser= <Dialog visible={this.state.displayDialog} header= {this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width={1200}>
+
               <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog}/>
 
                                   </Dialog>
