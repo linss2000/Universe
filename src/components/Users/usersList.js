@@ -17,6 +17,11 @@
     Col,
   } from "reactstrap";
   import MaintainUser from './MaintainUsers'
+  import IconMenu from 'material-ui/IconMenu';
+  import MenuItem from 'material-ui/MenuItem';
+  import IconButton from 'material-ui/IconButton';
+  import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
 
   export class UsersList extends Component{
     static propTypes = {
@@ -26,11 +31,8 @@
     constructor(props)
     {
       super(props);
-      this.state = {
-              filters: {}
-          };
-      this.onRoleChange = this.onRoleChange.bind(this);
       this.onActiveChange = this.onActiveChange.bind(this);
+      this.viewTemplate = this.viewTemplate.bind(this);
       this.imageTemplate = this.imageTemplate.bind(this);
       this.actionTemplate = this.actionTemplate.bind(this);
       this.export = this.export.bind(this);
@@ -41,11 +43,13 @@
 
       this.state={
         usersCount:0,
-        filters:'',
         dialogTitle : "Add User",
         displayDialog:false,
         currectSelectedUser:[],
-        isNewUser:true
+        isNewUser:true, 
+        displayFilter:'none',
+        filters: {}
+        
       }
 
     }
@@ -93,15 +97,22 @@
 
       viewTemplate(rowData,column){
         return <div>
-        <i className="fa fa-ellipsis-v fa-fw" />
-
+        <IconMenu
+             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+             targetOrigin={{horizontal: 'left', vertical: 'top'}}
+           >
+             <MenuItem primaryText="Edit"  onClick={() => this.editRow(rowData)} />
+             <MenuItem primaryText="Delete" onClick={() => this.deleteRow(rowData)} />
+           </IconMenu>
         </div>;
       }
     imageTemplate(rowData, column) {
 
           return <img src={rowData.hv_photo}  style={{display:"block", width:"50px" ,height:"  50px"}}/>;
       }
-      activeTemplate(rowData,column){
+      activeTemplate=(rowData,column)=> {
+        debugger  
         if(rowData.hv_is_active!==null)
         {
         if(rowData.hv_is_active=='Y')
@@ -117,28 +128,64 @@
           </span>;
         }
       }
+      //    let filters = this.state.filters;
+      // return <span>
+      //       {rowData.hv_is_active}
+      //   </span>;
+       
       }
 
-    onRoleChange(e) {
-        let filters = this.state.filters;
-        filters['roles'] = {value: e.value};
-        this.setState({filters: filters});
-    }
-    onActiveChange(e) {
+    onActiveChange=(e) =>{
       debugger
-      let filters = this.state.filters;
-      filters= ({ 'active':''})
+         let filters = this.state.filters;
+         let ds=[];
+         e.value.map(val=>{
+          ds.push({value: val})
 
-
-         filters['active'] = {value: e.value[0]};
+         })
+          filters['hv_is_active']={value: e.value}
          this.setState({filters: filters});
     }
-
+    onfilterChange=(e) => {
+      debugger
+        let filters = this.state.filters;
+        switch(e.target.id)
+        {
+          case 'hv_user_id':
+          filters['hv_user_id'] = {value: e.target.value};
+          break;
+          case 'hv_first_name':
+          filters['hv_first_name'] = {value: e.target.value};
+          break;
+          case 'hv_last_name':
+          filters['hv_last_name'] = {value: e.target.value};
+          break;
+          
+        }
+        this.setState({filters: filters});
+    }
+    
+    onFilter=(e) => {
+      debugger
+        this.setState({filters: e.filters});
+      
+    }
+    
     onHideDialog()
     {
       this.setState({displayDialog: false,isNewUser:false})
       this.renderUsersList()
 
+    }
+   onShowFilter=(column)=>{
+     debugger
+     this.dt.getColumns().map(col=>{
+      col.props
+     })
+     if(this.state.displayFilter!=='inline')
+     this.setState({displayFilter:'inline'})     
+     else
+     this.setState({displayFilter:'none'})     
     }
     export() {
           this.dt.exportCSV();
@@ -157,14 +204,14 @@
          }
          deleteRow(row) {
 
- if (window.confirm("Are you sure to delete this User?") ) {
-   this.props.deleteUser({
-     type: UsersListTypes.DELETE_REQUEST,
-     payload :row
-   });
- } else {
-     return;
- }
+         if (window.confirm("Are you sure to delete this User?") ) {
+           this.props.deleteUser({
+             type: UsersListTypes.DELETE_REQUEST,
+             payload :row
+           });
+         } else {
+             return;
+         }
 
 
           }
@@ -179,32 +226,19 @@
 
 
    render(){
+ 
 
-
-          let arr={
-            ...this.props.usersListState.items
-          }
-          let active=Object.keys(arr)
-          .map(igKey=>{
-            let lbl=arr[igKey].hv_is_active=='Y'?'Active':'InActive'
-           return ({ label:lbl, value:arr[igKey].hv_is_active})
-         })
-         .filter((elem, pos, arr) => {
-    return arr.indexOf(elem) == pos;
-  });
-
-
-
-
-          let activeFilter = <MultiSelect style={{width:'100%'}} className="ui-column-filter" value={this.state.filters.active ? this.state.filters.active.value: null} options={active} onChange={this.onActiveChange}/>
-
-          let roles = [
-              {label: 'White', value: 'White'},
-              {label: 'Green', value: 'Green'},
-
+          let userIDFilter = <input style={{display:this.state.displayFilter}} type="text" id="hv_user_id" className="" value={this.state.filters.hv_user_id ? this.state.filters.hv_user_id.value: ''} onChange={this.onfilterChange}/>
+          let FNFilter = <input style={{display:this.state.displayFilter}} type="text" id="hv_first_name"  className="" value={this.state.filters.hv_first_name ? this.state.filters.hv_first_name.value: ''} onChange={this.onfilterChange}/>
+          let LNFilter = <input style={{ display:this.state.displayFilter}} type="text" id="hv_last_name"  className="" value={this.state.filters.hv_last_name ? this.state.filters.hv_last_name.value: ''} onChange={this.onfilterChange}/>
+          let active = [
+              {label: 'Yes', value: 'Y'},
+              {label: 'No', value: 'N'},
           ];
+         let activeFilter = 
+          <MultiSelect style={{display:this.state.displayFilter}} className="" value={this.state.filters.hv_is_active ? this.state.filters.hv_is_active.value: null} options={active} onChange={this.onActiveChange}/>
+          //<Dropdown style={{width:'100%',visibility:this.state.displayFilter}} className="ui-column-filter" value={this.state.filters.hv_is_active ? this.state.filters.hv_is_active.value: 'N'} options={active} onChange={this.onActiveChange}/>
 
-          let roleIDFilter = <MultiSelect style={{width:'100%'}} className="ui-column-filter" value={this.state.filters.roles ? this.state.filters.roles.value: null} options={roles} onChange={this.onRoleChange}/>
           var header =      <Row style={{"backgroundColor":"white"}}>
           <Col sm="10">
             <div className="float-left">
@@ -227,19 +261,24 @@
              </Row>
 
 
-             let customHeader=  <div>      <span className="fa-stack fa-md">
+             let customHeaderAction=  <div>      <span className="fa-stack fa-md">
                      <i className="fa fa-square-o fa-stack-2x" />
                      <i className="fa fa-plus-circle fa-stack-1x" onClick={this.addNew}/>
                    </span>{" "}Add</div>
+
+            let filter=
+            <div>
+            <span className="fa-stack fa-md">
+            <i className="fa fa-filter fa-stack-1x" onClick={()=>{this.onShowFilter('customHeaderUserID')}}/> 
+            </span>
+            </div>
+ 
+
            let maintainUser=null;
            debugger
              if(this.state.displayDialog){
-
               maintainUser= <Dialog visible={this.state.displayDialog} header= {this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width={1200}>
-
-              <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog}/>
-
-                                  </Dialog>
+              <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog}/></Dialog>
              }
              else {
                {
@@ -248,13 +287,14 @@
              }
      return (
        <div>
-       <DataTable value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} ref={(el) => { this.dt = el; }} header={header} >
-       <Column field="" header="" body={this.viewTemplate} style={{textAlign:'center',width:'1%'}} sortable={false} filter={false}/>
-                  <Column field="hv_user_id" header="User ID"  style={{textAlign:'center',width:'3%'}} sortable={true} filter={true}/>
-                  <Column field="hv_first_name" header="First Name" sortable={true} filter={true} style={{textAlign:'center',width:'5%'}}/>
-                  <Column field="hv_last_name" header="Last Name" sortable={true} filter={true} style={{textAlign:'center',width:'5%'}}/>
-                  <Column body={this.activeTemplate}  style={{textAlign:'center', width: '3%'}} header="Active"  sortable={true}  filter={false} filterElement={activeFilter} filterMatchMode="in" />
-                  <Column body={this.actionTemplate}   header={customHeader}  style={{textAlign:'center', width: '5%'}}/>
+       <DataTable id="dataTable" value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} 
+       ref={(el) => { this.dt = el; }} header={header} onFilter={this.onFilter} filters={this.state.filters}>
+       <Column field=""  header={filter} body={this.viewTemplate} style={{textAlign:'center',width:'1%'}} sortable={false} filter={false}/>
+                  <Column field="hv_user_id" header="User ID"   style={{textAlign:'center',width:'10%',height:'1px'}} sortable={true} filter={true} filterElement={userIDFilter} filterMatchMode="contains"/>
+                  <Column field="hv_first_name" header="First Name"   sortable={true}   style={{textAlign:'center',width:'5%'}} sortable={true} filter={true}   filterElement={FNFilter} filterMatchMode="contains"/>
+                  <Column field="hv_last_name" header="Last Name"     sortable={true}  style={{textAlign:'center',width:'5%'}}  sortable={true}  filter={true}  filterElement={LNFilter} filterMatchMode="contains"/>
+                  <Column  field="hv_is_active" body={this.activeTemplate}  style={{textAlign:'center', width: '5%'}} header="Active"  sortable={true}  filter={true}  filterElement={activeFilter} filterMatchMode="in"/>
+                  <Column body={this.actionTemplate}   header={customHeaderAction}  style={{textAlign:'center', width: '5%'}}/>
               </DataTable>
   {maintainUser}
                       </div>
