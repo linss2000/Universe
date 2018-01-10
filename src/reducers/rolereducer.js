@@ -11,6 +11,7 @@ export const types = {
     SELECTED_ROWID: "ROLE/ROW_ID",
     MAKE_ROW_EDITABLE: "ROLE/ROW_EDITABLE",
     CHECKROLE_REQUEST: "ROLE/CHECK_REQUEST",
+    EXCEL_REQUEST: "ROLE/EXCEL_REQUEST",
     
   };
   
@@ -25,7 +26,7 @@ export const types = {
   
   //export function authState (state = initialState, action) {
   export default (state = initialState, action) => {
-    //debugger;
+    debugger;
 
     switch (action.type) {
         case types.ITEMS:
@@ -61,7 +62,8 @@ export const types = {
     updateRoleTable: payload => ({ type: types.UPDATE_REQUEST, payload }),
     //updateStoreRoleTable: payload => ({ type: types.UPDATE_STORE_REQUEST, payload }),
     deleteRoleTable: payload => ({ type: types.DELETE_REQUEST, roleID : payload.roleID  }),
-    cancelRoleTable: payload => ({ type: types.CANCEL_REQUEST, payload })
+    cancelRoleTable: payload => ({ type: types.CANCEL_REQUEST, payload }),
+    exportToExcel: payload => ({ type: types.EXCEL_REQUEST, payload })
   };
   
   /*

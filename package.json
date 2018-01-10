@@ -12,6 +12,7 @@
     "bootstrap": "^4.0.0-beta",
     "classnames": "^2.2.5",
     "cross-env": "^5.0.5",
+    "downloadjs": "^1.4.7",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "jest": "^21.2.1",
