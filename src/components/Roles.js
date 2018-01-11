@@ -162,8 +162,31 @@ export class Roles extends Component {
     this.onDropDownItemClick = this.onDropDownItemClick.bind(this);
     this.clickedItem = this.clickedItem.bind(this);
     this.classToggle = this.classToggle.bind(this);
+    this.exportToExcel = this.exportToExcel.bind(this);
     //this.newRoleVal = "";
   }
+
+  exportToExcel = () => {
+    debugger;
+    this.props.exportToExcel({
+      type: roleTypes.EXCEL_REQUEST,
+      payload: {
+        spName: "select hv_first_name,hv_last_name from tuser",
+        cols: [
+          {
+            caption: "First Name",
+            type: "string",
+            width: 50
+          },
+          {
+            caption: "Last Name",
+            type: "string",
+            width: 50
+          }
+        ]
+      }
+    });
+  };
 
   debouncedSearch = _.debounce(this._onFilterChange, 100);
 
@@ -187,18 +210,21 @@ export class Roles extends Component {
     this.debouncedSearch();
   };
 
-
   deleteRow = row => {
     debugger;
-    if(row.roleHasUser == "Y") {
-      if( !window.confirm("There are currently users assigned this role in the system. Removing this role from the system will unassign the role from these users. Are you sure you want to permanently delete this role?")) {
+    if (row.roleHasUser == "Y") {
+      if (
+        !window.confirm(
+          "There are currently users assigned this role in the system. Removing this role from the system will unassign the role from these users. Are you sure you want to permanently delete this role?"
+        )
+      ) {
         return false;
       }
     }
 
     this.props.deleteRoleTable({
-      type: roleTypes.DELETE_REQUEST,      
-      roleID: row.role_id           
+      type: roleTypes.DELETE_REQUEST,
+      roleID: row.role_id
     });
   };
 
@@ -428,13 +454,13 @@ export class Roles extends Component {
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-plus-circle fa-stack-1x" />
                   </span>{" "}
-                  {" "}
                   <span className="fa-stack fa-lg">
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-list-ul fa-stack-1x" />
                   </span>
                 </Col>
                 <Col sm="3">
+                  {/* 
                   <div className="float-left">
                     <InputGroup size="sm" style={{ width: "300px" }}>
                       <InputGroupAddon>
@@ -468,6 +494,7 @@ export class Roles extends Component {
                       </InputGroupAddon>
                     </InputGroup>
                   </div>
+                  */}
                 </Col>
                 <Col sm="4">
                   <div className="mx-center">
@@ -476,16 +503,17 @@ export class Roles extends Component {
                 </Col>
                 <Col sm="3">
                   <div className="float-right">
-                    <span className="fa-stack fa-lg">
+                    <span className="fa-stack fa-lg"  style={styles.link}>
                       <i className="fa fa-square-o fa-stack-2x" />
                       <a
-                        href={"http://hvs.selfip.net:3003/cadetexcel"}
+                        onClick={() => {
+                          this.exportToExcel();
+                        }}
                         download={"test.xlsx"}
                       >
                         <i className="fa f fa-file-excel-o fa-stack-1x" />
                       </a>
                     </span>{" "}
-                    {" "}
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-square-o fa-stack-2x" />
                       <i className="fa fa-filter fa-stack-1x" />
@@ -509,14 +537,14 @@ export class Roles extends Component {
                           style={styles.link}
                           onClick={() => this.sortTable("role_name")}
                         >
-                          Role Name {" "}
+                          Role Name{" "}
                           <i className={this.RenderHeaderColumn("role_name")} />
                         </th>
                         <th
                           style={styles.link}
                           onClick={() => this.sortTable("role_desc")}
                         >
-                          Description {" "}
+                          Description{" "}
                           <i className={this.RenderHeaderColumn("role_desc")} />
                         </th>
                         <th style={styles.link}>Permissions </th>
@@ -534,7 +562,7 @@ export class Roles extends Component {
                             <i className="fa fa-square-o fa-stack-2x" />
                             <i className="fa fa-plus-circle fa-stack-1x" />
                           </span>{" "}
-                           Add
+                          Add
                         </th>
                       </tr>
                     </thead>
@@ -549,8 +577,7 @@ export class Roles extends Component {
                           <td>{row.role_functions}</td>
                           <td>{row.role_active}</td>
                           <td>
-                            {this.props.roleState.rowID !=
-                            row.role_id ? (
+                            {this.props.roleState.rowID != row.role_id ? (
                               <div>
                                 <i
                                   className="fa fa-pencil fa-fw"
