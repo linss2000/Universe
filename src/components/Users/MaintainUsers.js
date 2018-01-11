@@ -216,7 +216,7 @@ onImageDrop(files) {
     const reader = new FileReader();
     reader.onload = () => {
      // debugger
-       fileasBinary = btoa(reader.result);
+       fileasBinary = reader.result;
       // let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
        this.setState({
         userImage :  fileasBinary})
