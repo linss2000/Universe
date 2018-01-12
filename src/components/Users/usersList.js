@@ -21,7 +21,6 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import datatableCSS  from '../../css/datatable.css'
 import "App.css";
 
 
@@ -236,7 +235,7 @@ export class UsersList extends Component {
       <MultiSelect style={{ width: '10px', display: this.state.displayFilter }} className="" value={this.state.filters.hv_is_active ? this.state.filters.hv_is_active.value : null} options={active} onChange={this.onActiveChange} />
     //<Dropdown style={{width:'100%',visibility:this.state.displayFilter}} className="ui-column-filter" value={this.state.filters.hv_is_active ? this.state.filters.hv_is_active.value: 'N'} options={active} onChange={this.onActiveChange}/>
 
-    var header = <Row >
+    var header = <Row style={{ "backgroundColor": "white" }}>
       <Col sm="10">
         <div className="float-left">
           <span className="text-primary" style={{ 'fontSize': '14px' }}>User Security</span>
@@ -291,7 +290,7 @@ export class UsersList extends Component {
     return (
       <div>
         <DataTable id="dataTable" value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
-          ref={(el) => { this.dt = el; } } header={header} onFilter={this.onFilter} filters={this.state.filters} tableClassName={datatableCSS.datatable}>
+          ref={(el) => { this.dt = el; } } header={header} onFilter={this.onFilter} filters={this.state.filters} tableClassName="datatable">
           <Column field="" header={filter} body={this.viewTemplate} style={{ textAlign: 'center', width: '3%' }} sortable={false} filter={false}  />
           <Column field="hv_user_id" header="User ID" style={{ textAlign: 'center', width: '5%', height: '1px' }} sortable={true} filter={true} filterElement={userIDFilter} filterMatchMode="contains" />
           <Column field="hv_first_name" header="First Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={FNFilter} filterMatchMode="contains" />
