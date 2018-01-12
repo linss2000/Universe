@@ -25,7 +25,12 @@ import {
 import {FormWithConstraints , FieldFeedbacks,FieldFeedback} from 'react-form-with-constraints';
 
 import { types as ManageUserTypes } from "reducers/Users/manageusersreducer";
-import { actions as ManageUserActions } from "reducers/Users/manageusersreducer";
+import { actions as ManageUserActions } from "reducers/Users/manageusersreducer"; 
+import { types as roleTypes } from "reducers/rolereducer";
+import { actions as roleActions } from "reducers/rolereducer";
+import {Accordion,AccordionTab} from 'primereact/components/accordion/Accordion';
+import { DataTable } from 'primereact/components/datatable/DataTable';
+import { Column } from 'primereact/components/column/Column';
 
 const paperStyle = {
   height: "auto",
@@ -281,8 +286,24 @@ submitForm(e)
 
 
   render() {
+      let header = <Row>
+      <Col sm="10">
+        <div className="float-left">
+        </div>
+      </Col>
+      <Col sm="2">
+        
+        <div className="float-right">
+          <span className="fa-stack fa-lg">
+            <i className="fa fa-square-o fa-stack-2x" />
+            <div style={{ textAlign: 'left' }}><div className="fa fa-plus-circle fa-stack-1x" label="" onClick={this.export}></div></div>
+          </span>{" "}Add
+          {" "}
+        </div>
+      </Col>
+    </Row>
     return (
-      
+      <div>
       <FormWithConstraints ref={formwithConstraints => this.form = formwithConstraints}  noValidate>
       <div className="" id="divUsers" >
         <div className="row">
@@ -303,7 +324,7 @@ submitForm(e)
         </div>
           <div className="col-sm-9">
             <div className="box box-info">  
-              <div className='box-body' style={{minHeight: "400px",width:'100%'}}>
+              <div className='box-body' style={{minHeight: "300px",width:'100%'}}>
                 <div className="row"  >
                   <div className="col-sm-auto labelWidth alignCenter" >
                     <label id="lblEmployeeId" runat="server"  className="labelfont">
@@ -545,7 +566,21 @@ submitForm(e)
       </div>
       </div>
      </FormWithConstraints>
-
+<Paper zDepth="2">
+<Accordion style={{borderColor:'grey',borderWidth:'1px'}}>
+    <AccordionTab header="Security Roles(s)" >
+          <DataTable id="dataTableRoles" value={this.props.userState.items}  scrollable={true} scrollHeight="200px"
+          ref={(el) => { this.dt = el; } } header={header}>
+          <Column field="" header="Role ID" style={{ textAlign: 'center', width: '5%', height: '1px' }} sortable={true}  />
+          <Column field="" header="Role Name" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
+          <Column field="" header="Date Assigned" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
+          <Column field="" header="Expiration" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
+          <Column field="" header="Enabled" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />                        
+        </DataTable>
+    </AccordionTab>
+</Accordion>
+</Paper>
+</div>
     )
   }
 
