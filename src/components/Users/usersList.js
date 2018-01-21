@@ -21,6 +21,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import "App.css";
+
 
 
 export class UsersList extends Component {
@@ -96,8 +98,8 @@ export class UsersList extends Component {
 
   viewTemplate(rowData, column) {
     return <div>
-      <IconMenu
-        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+      <IconMenu 
+        iconButtonElement={<i className="fa fa-ellipsis-v fa-fw" />}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
         >
@@ -244,7 +246,7 @@ export class UsersList extends Component {
         </div>
       </Col>
       <Col sm="2">
-        <span>{this.state.usersCount}User Accounts</span>
+        <span>{this.state.usersCount} User Accounts </span>
         <div className="float-right">
           <span className="fa-stack fa-lg">
             <i className="fa fa-square-o fa-stack-2x" />
@@ -278,7 +280,7 @@ export class UsersList extends Component {
     let maintainUser = null;
     //debugger
     if (this.state.displayDialog) {
-      maintainUser = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width='1200px'>
+      maintainUser = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width='1200px' positionTop="40" style={{overflow:'auto'}}>
         <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog} /></Dialog>
     }
     else {
@@ -289,14 +291,14 @@ export class UsersList extends Component {
     return (
       <div>
         <DataTable id="dataTable" value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
-          ref={(el) => { this.dt = el; } } header={header} onFilter={this.onFilter} filters={this.state.filters}>
-          <Column field="" header={filter} body={this.viewTemplate} style={{ textAlign: 'left', width: '2%' }} sortable={false} filter={false} />
+          ref={(el) => { this.dt = el; } } header={header} onFilter={this.onFilter} filters={this.state.filters} tableClassName="datatable">
+          <Column field="" header={filter} body={this.viewTemplate} style={{ textAlign: 'center', width: '3%' }} sortable={false} filter={false}  />
           <Column field="hv_user_id" header="User ID" style={{ textAlign: 'center', width: '5%', height: '1px' }} sortable={true} filter={true} filterElement={userIDFilter} filterMatchMode="contains" />
-          <Column field="hv_first_name" header="First Name" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} filter={true} filterElement={FNFilter} filterMatchMode="contains" />
-          <Column field="hv_last_name" header="Last Name" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} filter={true} filterElement={LNFilter} filterMatchMode="contains" />
-          <Column field="hv_role_name" header="Role(s)" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} filter={true} filterElement={roleFilter} filterMatchMode="contains" />          
-          <Column field="hv_is_active" body={this.activeTemplate} style={{ textAlign: 'center', width: '4%' }} header="Active" sortable={true} filter={true} filterElement={activeFilter} filterMatchMode="in" />
-          <Column body={this.actionTemplate} header={customHeaderAction} style={{ textAlign: 'center', width: '2%' }} />
+          <Column field="hv_first_name" header="First Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={FNFilter} filterMatchMode="contains" />
+          <Column field="hv_last_name" header="Last Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={LNFilter} filterMatchMode="contains" />
+          <Column field="hv_role_name" header="Role(s)" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={roleFilter} filterMatchMode="contains" />          
+          <Column field="hv_is_active" body={this.activeTemplate} style={{ textAlign: 'center', width: '5%' }} header="Active" sortable={true} filter={true} filterElement={activeFilter} filterMatchMode="in" />
+          <Column body={this.actionTemplate} header={customHeaderAction} style={{ textAlign: 'center', width: '3%' }} />
         </DataTable>
         {maintainUser}
       </div>
