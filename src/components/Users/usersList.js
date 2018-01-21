@@ -65,6 +65,7 @@ export class UsersList extends Component {
     this.renderUsersList()
     //alert(this.props.usersListState.message);
   }
+  
   componentDidUpdate(prevProps, prevState) {
     if (this.props.usersListState.message.msg == 'deleted') {
       alert('User deleted successfully');

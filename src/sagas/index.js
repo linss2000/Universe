@@ -22,6 +22,7 @@ import { types as scheduleTypes } from "./../reducers/schedulereducer";
 import { types as BASTypes } from "./../reducers/basreducer";
 import { types as RoleTypes } from "./../reducers/rolereducer";
 import { types as usersListType } from "./../reducers/usersList_reducer";
+import { types as aeroleTypes } from "./../reducers/aerolereducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -44,6 +45,8 @@ import  * as BASSaga  from './bassaga'
 import * as ManageUserSaga from './Users/manageusersaga.js';
 import  * as usersListSaga  from './usersList_saga';
 import  * as RoleSagas  from './rolesaga';
+import  * as aeroleSagas  from './aerolesaga';
+
 export default function* rootSaga () {
   try {
     debugger
@@ -69,6 +72,7 @@ export default function* rootSaga () {
         takeLatest([BASTypes.FETCH_TABLES_REQUEST], BASSaga.handleRequest),
         takeLatest([ManageUserTypes.INSERT_REQUEST,ManageUserTypes.FETCH_USER_REQUEST,ManageUserTypes.UPDATE_USER_REQUEST], ManageUserSaga.handleRequest),
         takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.EXCEL_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),
+        takeLatest([aeroleTypes.FETCH_TABLE_REQUEST,aeroleTypes.EXCEL_REQUEST,aeroleTypes.CANCEL_REQUEST,aeroleTypes.MAKE_ROW_EDITABLE,aeroleTypes.INSERT_REQUEST,aeroleTypes.DELETE_REQUEST,aeroleTypes.UPDATE_REQUEST], aeroleSagas.handleRequest),
         ]);
 
     //throw e;

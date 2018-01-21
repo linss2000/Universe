@@ -18,7 +18,10 @@ import {
   CardText,
   Row,
   Col,
-  Label
+  Label,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from "reactstrap";
 
 //import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
@@ -41,7 +44,7 @@ import { types as roleTypes } from "reducers/rolereducer";
 import { actions as roleActions } from "reducers/rolereducer";
 
 import HVSPagination from "customComponents/pagination";
-import CadetDetails from "./CadetDetails";
+import AddEditRole from "./AddEditRole";
 import {
   Input,
   InputGroup,
@@ -102,7 +105,7 @@ export class Roles extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
+    //console.log("componentDidUpdate");
     console.log(this.state);
   }
 
@@ -132,6 +135,7 @@ export class Roles extends Component {
       itemsHasErrored: false,
       itemsIsLoading: false,
       roleState: {},
+      selectedRoleRow : {},
       selectedRowID: -1,
       modal: false,
       attribValue: "",
@@ -144,7 +148,10 @@ export class Roles extends Component {
       dropdownOpen: false,
       popoverOpen: false,
       inputSearch: "",
-      inDetailsTab: false
+      inDetailsTab: false,
+      displayFilter: "none",
+      filters: {},
+      roleMode : "A"
     };
 
     this.tableID = 0;
@@ -155,14 +162,15 @@ export class Roles extends Component {
 
     //this.insertRow = this.insertRow.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
-    this._onFilterChange = this._onFilterChange.bind(this);
+    //this._onFilterChange = this._onFilterChange.bind(this);
     this.setFilterValue = this.setFilterValue.bind(this);
     this.dropToggle = this.dropToggle.bind(this);
     this.toggle = this.toggle.bind(this);
     this.onDropDownItemClick = this.onDropDownItemClick.bind(this);
-    this.clickedItem = this.clickedItem.bind(this);
+    //this.clickedItem = this.clickedItem.bind(this);
     this.classToggle = this.classToggle.bind(this);
     this.exportToExcel = this.exportToExcel.bind(this);
+    this.refreshScreen = this.refreshScreen.bind(this);
     //this.newRoleVal = "";
   }
 
@@ -238,9 +246,27 @@ export class Roles extends Component {
     });
   };
 
+  addRow = () => {
+    const row = {
+      role_id : -1
+    }
+
+    this.setState({
+      modal: !this.state.modal,
+      selectedRoleRow : row,
+      roleMode : "A"
+    });
+  }
+
   editRow = row => {
     debugger;
-
+    
+    this.setState({
+      modal: !this.state.modal,
+      selectedRoleRow : row,
+      roleMode : "U"
+    });
+    /*
     if (this.props.roleState.rowID != -1) {
       alert("Please Save the current row");
       return false;
@@ -254,6 +280,7 @@ export class Roles extends Component {
         rowID: row.role_id
       }
     });
+    */
   };
 
   insertRow = () => {
@@ -262,7 +289,7 @@ export class Roles extends Component {
     this.setState({
       modal: !this.state.modal
     });
-
+    
     //alert(this.refs["txtValue"].getValue());
     this.props.insertRoleTable({
       type: roleTypes.INSERT_REQUEST,
@@ -273,6 +300,7 @@ export class Roles extends Component {
     });
   };
 
+  /*
   clickedItem(item, e) {
     return;
     debugger;
@@ -285,7 +313,7 @@ export class Roles extends Component {
     //console.log(item.hv_universal_name)
     //alert(item.hv_universal_name)
   }
-
+*/
   _onFilterChange() {
     debugger;
 
@@ -300,6 +328,45 @@ export class Roles extends Component {
 
     let filteredItems = [];
 
+    //let filteredItems = this.props.roleState.items.slice();
+    if (this.state.filters.role_name) {
+      for (var index = 0; index < size; index++) {
+        const { role_name } = this.props.roleState.items[index];
+
+        if (
+          role_name
+            .toLowerCase()
+            .indexOf(this.state.filters.role_name.value.toLowerCase()) !== -1
+        ) {
+          filteredItems.push(this.props.roleState.items[index]);
+        }
+
+        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+          break;
+        }
+      }
+      //filteredItems = filteredItems.filter(item => item.role_name.toLowerCase() == this.state.filters.role_name.value.toLowerCase());
+    }
+
+    if (this.state.filters.role_desc) {
+      for (var index = 0; index < size; index++) {
+        const { role_desc } = this.props.roleState.items[index];
+
+        if (
+          role_desc
+            .toLowerCase()
+            .indexOf(this.state.filters.role_desc.value.toLowerCase()) !== -1
+        ) {
+          filteredItems.push(this.props.roleState.items[index]);
+        }
+
+        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+          break;
+        }
+      }
+    }
+
+    /*
     for (var index = 0; index < size; index++) {
       const { role_name } = this.props.roleState.items[index];
 
@@ -311,14 +378,6 @@ export class Roles extends Component {
         break;
       }
     }
-
-    /*
-    this.props.makeRowEditable({
-      type: roleTypes.MAKE_ROW_EDITABLE,
-      payload: {
-        rowID: -1
-      }
-    });
     */
 
     this.setState({
@@ -430,13 +489,76 @@ export class Roles extends Component {
         className = "fa fa-sort-desc fa-fw";
       }
     } else {
-      className = "";
+      className = "fa fa-sort fa-fw";
     }
 
     return className;
   };
 
+  onfilterChange = e => {
+    debugger;
+    let filters = this.state.filters;
+    this.filterValue = e.target.value;
+
+    switch (e.target.id) {
+      case "role_name":
+        filters["role_name"] = { value: e.target.value };
+        break;
+      case "role_desc":
+        filters["role_desc"] = { value: e.target.value };
+        break;
+    }
+    this.setState({ filters: filters });
+    this.debouncedSearch();
+  };
+
+  onFilter = e => {
+    debugger;
+    this.setState({ filters: e.filters });
+  };
+
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  refreshScreen() {
+    this.setState({ modal: false});
+
+    this.props.getRoles({
+      type: roleTypes.FETCH_TABLE_REQUEST,
+      cname: ""
+    });
+
+  }
+
   render() {
+    this.roleNameFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="role_name"
+        className=""
+        value={
+          this.state.filters.role_name ? this.state.filters.role_name.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
+    this.descFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="role_desc"
+        className=""
+        value={
+          this.state.filters.role_desc ? this.state.filters.role_desc.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
+
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <Container
@@ -450,7 +572,7 @@ export class Roles extends Component {
             <TabPane tabId="1">
               <Row className="p-0 m-0">
                 <Col sm="2">
-                  <span className="fa-stack fa-lg">
+                  <span className="fa-stack fa-lg" onClick={() => this.addRow()}>
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-plus-circle fa-stack-1x" />
                   </span>{" "}
@@ -503,7 +625,7 @@ export class Roles extends Component {
                 </Col>
                 <Col sm="3">
                   <div className="float-right">
-                    <span className="fa-stack fa-lg"  style={styles.link}>
+                    <span className="fa-stack fa-lg" style={styles.link}>
                       <i className="fa fa-square-o fa-stack-2x" />
                       <a
                         onClick={() => {
@@ -532,32 +654,52 @@ export class Roles extends Component {
                   >
                     <thead>
                       <tr style={{ backgroundColor: "grey", color: "white" }}>
-                        <th style={{ width: "20px" }} />
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_name")}
-                        >
-                          Role Name{" "}
-                          <i className={this.RenderHeaderColumn("role_name")} />
+                        <th style={{ width: "38px" }}>
+                          <span>
+                            <i
+                              className="fa fa-filter"
+                              onClick={() => {
+                                this.setState({ displayFilter: "inline" });
+                              }}
+                            />{" "}
+                            <i
+                              className="fa fa-times"
+                              onClick={() => {
+                                this.filterValue = "";
+                                this.debouncedSearch();
+                                this.setState({
+                                  displayFilter: "none",
+                                  filters: {}
+                                });
+                              }}
+                            />
+                          </span>{" "}
                         </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_desc")}
-                        >
+                        <th style={styles.link}>
+                          Role Name{" "}
+                          <i
+                            className={this.RenderHeaderColumn("role_name")}
+                            onClick={() => this.sortTable("role_name")}
+                          />
+                          {this.roleNameFilter}
+                        </th>
+                        <th style={styles.link}>
                           Description{" "}
-                          <i className={this.RenderHeaderColumn("role_desc")} />
+                          <i
+                            className={this.RenderHeaderColumn("role_desc")}
+                            onClick={() => this.sortTable("role_desc")}
+                          />
+                          {this.descFilter}
                         </th>
                         <th style={styles.link}>Permissions </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_active")}
-                        >
+                        <th style={styles.link}>
                           Active{" "}
                           <i
                             className={this.RenderHeaderColumn("role_active")}
+                            onClick={() => this.sortTable("role_active")}
                           />
                         </th>
-                        <th>
+                        <th onClick={() => this.addRow()}>
                           <span className="fa-stack fa-md">
                             <i className="fa fa-square-o fa-stack-2x" />
                             <i className="fa fa-plus-circle fa-stack-1x" />
@@ -671,11 +813,23 @@ export class Roles extends Component {
                     </tbody>
                   </Table>
                 </Col>
-              </Row>
+              </Row>              
             </TabPane>
           </TabContent>
         </Container>
+        <Modal size="lg"              
+                isOpen={this.state.modal}
+                toggle={this.modalToggle}
+              >
+                <ModalHeader toggle={()=> this.setState({ modal: false})}>
+                  System Administration > {(this.state.roleMode == "A" ? "Add Role" : "Edit Role")}
+                </ModalHeader>
+                <ModalBody>
+                <AddEditRole roleMode={this.state.roleMode} roleRow={this.state.selectedRoleRow} closeDetails={this.refreshScreen} />
+                </ModalBody>               
+              </Modal>
       </div>
+      
     );
   }
 }

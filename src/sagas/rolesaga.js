@@ -28,8 +28,8 @@ const attribApi = {
     //console.log(userData.password);
     //alert(payload.spName)
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExportToExcel/", {
-    //return fetch("http://localhost:3003/ExportToExcel/", {
+    //return fetch("http://hvs.selfip.net:3003/ExportToExcel/", {
+    return fetch("http://localhost:3003/ExportToExcel/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -385,8 +385,7 @@ function* exportToExcel(payload) {
         message: resultObj.response.statusText
       });
     } else {
-      debugger;
-      //console.log(resultObj);
+      debugger;      
       download(resultObj, "Role.xlsx");
       /*
         console.log(JSON.parse(resultObj).result)
