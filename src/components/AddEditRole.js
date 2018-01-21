@@ -495,6 +495,9 @@ export class AddEditRole extends Component {
     if (_.trim(saveStr) != "") {
       saveStr = saveStr.substr(0, saveStr.length - 1);
       saveStr = '[' + saveStr + ']';
+    }  else {
+      alert("Please select a permission for the role");
+      return false;
     }
 
     console.log(saveStr);
