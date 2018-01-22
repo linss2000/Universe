@@ -135,7 +135,7 @@ export class Roles extends Component {
       itemsHasErrored: false,
       itemsIsLoading: false,
       roleState: {},
-      selectedRoleRow : {},
+      selectedRoleRow: {},
       selectedRowID: -1,
       modal: false,
       attribValue: "",
@@ -151,7 +151,7 @@ export class Roles extends Component {
       inDetailsTab: false,
       displayFilter: "none",
       filters: {},
-      roleMode : "A"
+      roleMode: "A"
     };
 
     this.tableID = 0;
@@ -248,23 +248,23 @@ export class Roles extends Component {
 
   addRow = () => {
     const row = {
-      role_id : -1
+      role_id: -1
     }
 
     this.setState({
       modal: !this.state.modal,
-      selectedRoleRow : row,
-      roleMode : "A"
+      selectedRoleRow: row,
+      roleMode: "A"
     });
   }
 
   editRow = row => {
     debugger;
-    
+
     this.setState({
       modal: !this.state.modal,
-      selectedRoleRow : row,
-      roleMode : "U"
+      selectedRoleRow: row,
+      roleMode: "U"
     });
     /*
     if (this.props.roleState.rowID != -1) {
@@ -289,7 +289,7 @@ export class Roles extends Component {
     this.setState({
       modal: !this.state.modal
     });
-    
+
     //alert(this.refs["txtValue"].getValue());
     this.props.insertRoleTable({
       type: roleTypes.INSERT_REQUEST,
@@ -316,7 +316,7 @@ export class Roles extends Component {
 */
   _onFilterChange() {
     debugger;
-
+    /*
     if (!this.filterValue) {
       this.setState((prevState, props) => {
         return { pageOfItems: prevState.pageOfItems };
@@ -324,12 +324,53 @@ export class Roles extends Component {
     }
 
     const filterBy = _.trim(this.filterValue.toLowerCase());
+    */
     const size = this.props.roleState.items.length;
 
     let filteredItems = [];
 
+
+      let keys = Object.keys(this.state.filters);
+      let filter = Object.values(this.state.filters);
+
+      if (keys.length > 0) {
+
+        filteredItems =this.props.roleState.items.filter(
+          function(item) {
+            for (var i = 0; i < filter.length; i++) {
+              if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+                //debugger;
+                return false;
+              }
+            }
+            //debugger;
+            return true;
+          }
+        ); 
+
+        filteredItems = filteredItems.splice(0,(this.state.pageSize || 10));       
+        /*
+        items = this.props.items.map((itm) => {
+         return keys.map((key) => {
+            console.log("Key:" + key)
+            console.log("value:" + this.props.filterValue[key].value)
+            console.log("Item value:" + itm[key])
+  
+            if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
+              if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
+                return itm;
+              }
+            }
+          })         
+        })
+        */
+      } else {
+        filteredItems =  this.props.roleState.items.slice(0,(this.state.pageSize || 10));
+      }
+
+/*
     //let filteredItems = this.props.roleState.items.slice();
-    if (this.state.filters.role_name) {
+    if (this.state.filters.role_name && _.trim(this.state.filters.role_name) != "") {
       for (var index = 0; index < size; index++) {
         const { role_name } = this.props.roleState.items[index];
 
@@ -348,7 +389,7 @@ export class Roles extends Component {
       //filteredItems = filteredItems.filter(item => item.role_name.toLowerCase() == this.state.filters.role_name.value.toLowerCase());
     }
 
-    if (this.state.filters.role_desc) {
+    if (this.state.filters.role_desc && _.trim(this.state.filters.role_desc) != "") {
       for (var index = 0; index < size; index++) {
         const { role_desc } = this.props.roleState.items[index];
 
@@ -366,6 +407,11 @@ export class Roles extends Component {
       }
     }
 
+    debugger;
+    if(Object.keys(this.state.filters).length == 0) {
+      filteredItems = this.props.roleState.items.slice(0,(this.state.pageSize || 10) - 1);
+    }
+    */
     /*
     for (var index = 0; index < size; index++) {
       const { role_name } = this.props.roleState.items[index];
@@ -452,7 +498,7 @@ export class Roles extends Component {
     }
   };
 
-  classToggle = () => {};
+  classToggle = () => { };
 
   dropToggle = () => {
     this.setState({
@@ -479,7 +525,7 @@ export class Roles extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
+    //debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {
@@ -523,14 +569,14 @@ export class Roles extends Component {
     });
   }
 
-  refreshScreen() {
-    this.setState({ modal: false});
-
-    this.props.getRoles({
-      type: roleTypes.FETCH_TABLE_REQUEST,
-      cname: ""
-    });
-
+  refreshScreen(refresh) {
+    this.setState({ modal: false });
+    if (refresh) {
+      this.props.getRoles({
+        type: roleTypes.FETCH_TABLE_REQUEST,
+        cname: ""
+      });
+    }
   }
 
   render() {
@@ -576,13 +622,17 @@ export class Roles extends Component {
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-plus-circle fa-stack-1x" />
                   </span>{" "}
+                </Col>
+                <Col sm="3">
+                  {/* 
                   <span className="fa-stack fa-lg">
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-list-ul fa-stack-1x" />
                   </span>
-                </Col>
-                <Col sm="3">
-                  {/* 
+                  <span className="fa-stack fa-lg">
+                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-filter fa-stack-1x" />
+                  </span>
                   <div className="float-left">
                     <InputGroup size="sm" style={{ width: "300px" }}>
                       <InputGroupAddon>
@@ -636,10 +686,6 @@ export class Roles extends Component {
                         <i className="fa f fa-file-excel-o fa-stack-1x" />
                       </a>
                     </span>{" "}
-                    <span className="fa-stack fa-lg">
-                      <i className="fa fa-square-o fa-stack-2x" />
-                      <i className="fa fa-filter fa-stack-1x" />
-                    </span>
                   </div>
                 </Col>
               </Row>
@@ -731,17 +777,17 @@ export class Roles extends Component {
                                 />
                               </div>
                             ) : (
-                              <div>
-                                <i
-                                  className="fa fa-floppy-o fa-fw"
-                                  onClick={() => this.updateRow(row)}
-                                />{" "}
-                                <i
-                                  className="fa fa-ban fa-fw"
-                                  onClick={() => this.cancelRow(row)}
-                                />
-                              </div>
-                            )}
+                                <div>
+                                  <i
+                                    className="fa fa-floppy-o fa-fw"
+                                    onClick={() => this.updateRow(row)}
+                                  />{" "}
+                                  <i
+                                    className="fa fa-ban fa-fw"
+                                    onClick={() => this.cancelRow(row)}
+                                  />
+                                </div>
+                              )}
                           </td>
                         </tr>
                       ))}
@@ -799,12 +845,12 @@ export class Roles extends Component {
                             </Dropdown>
                           </div>
                         </td>
-                        <td colSpan={4} className="p-0 m-0 border-0" />
+                        <td colSpan={3} className="p-0 m-0 border-0" />
                         <td className="float-right p-0 m-0 border-0">
                           <HVSPagination
                             searchCol={this.state.searchCol}
                             items={this.items}
-                            filterValue={this.state.filterValue}
+                            filterValue={this.state.filters}
                             onChangePage={this.onChangePage}
                             pageSize={this.state.pageSize}
                           />
@@ -813,23 +859,23 @@ export class Roles extends Component {
                     </tbody>
                   </Table>
                 </Col>
-              </Row>              
+              </Row>
             </TabPane>
           </TabContent>
         </Container>
-        <Modal size="lg"              
-                isOpen={this.state.modal}
-                toggle={this.modalToggle}
-              >
-                <ModalHeader toggle={()=> this.setState({ modal: false})}>
-                  System Administration > {(this.state.roleMode == "A" ? "Add Role" : "Edit Role")}
-                </ModalHeader>
-                <ModalBody>
-                <AddEditRole roleMode={this.state.roleMode} roleRow={this.state.selectedRoleRow} closeDetails={this.refreshScreen} />
-                </ModalBody>               
-              </Modal>
+        <Modal size="lg"
+          isOpen={this.state.modal}
+          toggle={this.modalToggle}
+        >
+          <ModalHeader toggle={() => this.setState({ modal: false })}>
+            System Administration > {(this.state.roleMode == "A" ? "Add Role" : "Edit Role")}
+          </ModalHeader>
+          <ModalBody>
+            <AddEditRole roleMode={this.state.roleMode} roleRow={this.state.selectedRoleRow} closeDetails={this.refreshScreen} />
+          </ModalBody>
+        </Modal>
       </div>
-      
+
     );
   }
 }

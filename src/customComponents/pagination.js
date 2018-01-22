@@ -53,6 +53,43 @@ class HVSPagination extends React.Component {
       const pageSize = this.props.pageSize || 10;
 
       let items;
+
+      let keys = Object.keys(this.props.filterValue);
+      let filter = Object.values(this.props.filterValue);
+
+      if (keys.length > 0) {
+
+        items = this.props.items.filter(
+          function(item) {
+            for (var i = 0; i < filter.length; i++) {
+              if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+                //debugger;
+                return false;
+              }
+            }
+            //debugger;
+            return true;
+          }
+        ); 
+        /*
+        items = this.props.items.map((itm) => {
+         return keys.map((key) => {
+            console.log("Key:" + key)
+            console.log("value:" + this.props.filterValue[key].value)
+            console.log("Item value:" + itm[key])
+  
+            if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
+              if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
+                return itm;
+              }
+            }
+          })         
+        })
+        */
+      } else {
+        items = this.props.items;
+      }
+      /*
       if (this.props.filterValue.trim() != "") {
         items = _.filter(this.props.items, item => {
           return (
@@ -64,6 +101,7 @@ class HVSPagination extends React.Component {
       } else {
         items = this.props.items;
       }
+      */
 
       debugger;
 
@@ -90,7 +128,42 @@ class HVSPagination extends React.Component {
 
     let items;
     //alert(this.props.items)
+    let keys = Object.keys(this.props.filterValue);
+    let filter = Object.values(this.props.filterValue);
 
+    if (keys.length > 0) {
+
+      items = this.props.items.filter(
+        function(item) {
+          for (var i = 0; i < filter.length; i++) {
+            if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+              //debugger;
+              return false;
+            }
+          }
+          //debugger;
+          return true;
+        }
+      ); 
+      /*
+      items = this.props.items.map((itm) => {
+       return keys.map((key) => {
+          console.log("Key:" + key)
+          console.log("value:" + this.props.filterValue[key].value)
+          console.log("Item value:" + itm[key])
+
+          if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
+            if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
+              return itm;
+            }
+          }
+        })         
+      })
+      */
+    } else {
+      items = this.props.items;
+    }
+    /*
     if (this.props.filterValue.trim() != "") {
       items = _.filter(this.props.items, item => {
         return (
@@ -102,9 +175,10 @@ class HVSPagination extends React.Component {
     } else {
       items = this.props.items;
     }
+*/
 
-    if(!items || typeof(items) == "undefined"){
-      items=[];
+    if (!items || typeof (items) == "undefined") {
+      items = [];
     }
     let pager = this.state.pager;
 
@@ -113,8 +187,8 @@ class HVSPagination extends React.Component {
       return;
     }
     */
-//console.log(items)
-//alert(items.length)
+    //console.log(items)
+    //alert(items.length)
     // get new pager object for specified page
     pager = this.getPager(items.length, page);
 

@@ -149,7 +149,7 @@ export class AddEditRole extends Component {
       alert(this.props.aeroleState.message.msg);
       
       if(this.props.aeroleState.message.val == 1){
-        this.props.closeDetails();
+        this.props.closeDetails(true);
       }
 
       this.props.resetMessage({
@@ -516,7 +516,7 @@ export class AddEditRole extends Component {
   }
 
   cancelScreen() {
-    this.props.closeDetails();
+    this.props.closeDetails(false);
   }
 
   RenderHeaderColumn = columnName => {
