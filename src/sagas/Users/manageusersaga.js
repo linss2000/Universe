@@ -67,7 +67,7 @@ import {
         parms : user
       })
       // http://hvs.selfip.net:3003/ExecSP/
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
       method: "POST",
       headers: {
         Accept: "application/json",
