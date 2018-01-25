@@ -31,6 +31,13 @@ import { types as ManageUserTypes } from "reducers/Users/manageusersreducer";
 import { actions as ManageUserActions } from "reducers/Users/manageusersreducer";
 import AssignRoles from './AssignRoles';
 
+
+import { types as roleTypes } from "reducers/rolereducer";
+import { actions as roleActions } from "reducers/rolereducer";
+import { Accordion, AccordionTab } from 'primereact/components/accordion/Accordion';
+// import { DataTable } from 'primereact/components/datatable/DataTable';
+// import { Column } from 'primereact/components/column/Column';
+//var js2xmlparser = require("js2xmlparser");
 const paperStyle = {
   height: "auto",
   width: "100%",
@@ -65,7 +72,7 @@ export class UserComponent extends Component {
       rows: [
         { phone_type: "", phone_number: "" }],
         
-        
+         
     }
 
     this.insertUserDetails = this.insertUserDetails.bind(this);
@@ -103,10 +110,12 @@ export class UserComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
     debugger
     if (nextProps.userState.items) {
     if (nextProps.userState.items.length>0) {
       
+    if (nextProps.userState.items) {
       var user = nextProps.userState.items[0][0];
       this.setState({
         firstName: user.hv_first_name,
@@ -128,7 +137,10 @@ export class UserComponent extends Component {
       this.setState({seleactedRoles:nextProps.userState.items[1]})
     }
   }
+
   }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.props.userState.message.val == 2) {
       debugger
@@ -146,6 +158,7 @@ export class UserComponent extends Component {
         type: ManageUserTypes.MESSAGE,
         message: { val: 0, statusMsg: "" }
       });
+
       this.props.onDialogClose();
     }      
   }
@@ -162,6 +175,7 @@ componentWillUnmount(){
     {
     // Build json for phone numbers
     let saveStr = res
+ 
     this.props.insertUserDetails({
       type: ManageUserTypes.INSERT_REQUEST,
       user: {
@@ -178,6 +192,7 @@ componentWillUnmount(){
     });
     }
   }
+  
 
   updateUserDetails() {
     debugger
@@ -202,6 +217,9 @@ componentWillUnmount(){
       }
     });
     }
+
+        
+
   }
 
   onActiveChange(e) {
@@ -234,7 +252,7 @@ componentWillUnmount(){
     })
     return saveStr
 
-
+  
   }
 
   CloseDialog(e) {
@@ -330,6 +348,101 @@ componentWillUnmount(){
     });
   }
 
+ 
+  CloseDialog(e) {
+    e.preventDefault();
+    if (this.props) {
+      this.props.onDialogClose();
+    }
+  }
+
+  onImageDrop(files) {
+    // debugger
+    var fileasBinary, imageType;
+    files.forEach(function (file) {
+      // debugger
+      const reader = new FileReader();
+      reader.onload = () => {
+        // debugger
+        fileasBinary = reader.result;
+        // let base64data = 'data:' + imageType + ';base64,' + fileasBinary;
+        this.setState({
+          userImage: fileasBinary
+        })
+      }
+      imageType = file.type;
+      reader.readAsDataURL(file);
+    }, this);
+    this.setState({
+      uploadedImg: files[0],
+      displayMsgdiv: "none"
+    });
+  }
+
+  typeTemplate = (rowData, column) => {
+    debugger
+    let phoneTypes = [
+      { label: 'Mobile', value: 'Mobile' },
+      { label: 'Home', value: 'Home' },
+      { label: 'Other', value: 'Other' }
+    ]
+    return <div>
+      <Dropdown options={phoneTypes} style={{ width: "100%", fontSize: '12px' }} value={this.state.rows[column.rowIndex].phone_type}
+        onChange={(e) => this.onEditorValueChange(column, 'phone_type', e.value)} required
+        placeholder="Select Phone type" />
+      {/* className= {this.state.warningClass} */}
+    </div>;
+  }
+  phoneTemplate = (rowData, column) => {
+    return <div>
+      <input type="text" style={{ fontSize: "12px", width: "100%" }} pattern="9999999999" value={this.state.rows[column.rowIndex].phone_number} placeholder="Enter Phone number"
+        onChange={(e) => {
+          debugger
+          const re = /^[0-9\b]+$/;
+         if (e.target.value == '' || re.test(e.target.value)) {
+           if(e.target.value.length < 11)
+            this.onEditorValueChange(column, 'phone_number', e.target.value)}}} onBlur={
+              (e) => {
+                if(e.target.value != '' && e.target.value.length < 10)
+                  alert("Please enter valid mobile number");
+              }
+            } required /></div>;
+    {/* <InputMask mask="(999)-999-9999" style={{fontSize:"12px"}} unmask="true" id={column.rowIndex} value={this.state.rows[column.rowIndex].phone_number} placeholder="Enter Phone number"
+   onChange={(e) => this.onEditorValueChange(column,'phone_number', e.target.value)}></InputMask> </div>; */}
+
+  }
+
+ isNumber(evt) {
+   debugger
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+  handleUserChange(e) {
+    // debugger
+    this.form.validateFields(e.target);
+    this.handleChange(e);
+    this.setState({ UId: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.form.validateFields(e.target);
+    this.handleChange(e);
+    this.setState({ uPassword: e.target.value });
+  }
+
+  handleChange(e) {
+    const target = e.currentTarget;
+    this.form.validateFields(target);
+    this.setState({
+      btndisabled: !this.form.isValid()
+    });
+  }
+
+
   addNewRow = () => {
     let isValid = true;
     console.log(this.state.rows);
@@ -349,7 +462,9 @@ componentWillUnmount(){
     }
   }
   submitForm(e) {
+
     debugger
+ 
     e.preventDefault();
     this.form.validateFields();
     this.setState({ btndisabled: !this.form.isValid() });
@@ -362,6 +477,34 @@ componentWillUnmount(){
         this.updateUserDetails();
     }
   }
+
+
+  deleteRow(rowdata) {
+    debugger
+    let list = this.state.rows;
+    let newList = list.filter(e => e.phone_number !== rowdata.phone_number)
+      this.setState({ rows: newList });
+    // }
+  }
+  actionTemplate(rowData, column) {
+    return <div>
+      <i
+        className="fa fa-trash fa-fw" style={{ width: "50%" }}
+        onClick={() => this.deleteRow(rowData)}
+      />
+
+    </div>;
+  }
+  onEditorValueChange(props, field, value) {
+    
+    let phones = [...this.state.rows];
+    phones[props.rowIndex][field] = value;
+    this.setState({
+      rows: phones,
+      warningClass: 'normal'
+    });
+  }
+ 
 
   deleteRow(rowdata) {
     debugger
@@ -389,12 +532,12 @@ componentWillUnmount(){
     });
   }
 
-
   myCallback = (dataFromChild) => {
     debugger
     this.setState({assingedRolesStr:JSON.stringify(dataFromChild)})
   }
   render() {
+
     debugger
     let assingRoles = null
     assingRoles = <AssignRoles rolesObject={this.state.seleactedRoles} callParentAssignRoles={this.myCallback} />
@@ -403,7 +546,7 @@ componentWillUnmount(){
       <i className="fa fa-plus-circle" styl={{ width: "50%" }} onClick={this.addNewRow} />
     </span>
 
-    let header = <Row>
+  let header = <Row>
       <Col sm="10">
         <div className="float-left">
         </div>
@@ -610,15 +753,7 @@ componentWillUnmount(){
                         </Col>
                       </Row>
                     </Paper>
-              
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {assingRoles}
-          <br/>
-                <Row>
+                    <Row>
                       <Col sm="12" style={{ float: "right", margin: "5px" }}>
                         <Button label="Cancel" style={{ float: "right", background: "lightslategray", borderColor: "lightslategray" }}
                           onClick={this.CloseDialog}
@@ -628,9 +763,14 @@ componentWillUnmount(){
                         />
                       </Col>
                     </Row>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {assingRoles}
         </FormWithConstraints>
-         
-      </div>
+        </div>
     )
   }
 
@@ -653,3 +793,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserComponent);
 
+ 
