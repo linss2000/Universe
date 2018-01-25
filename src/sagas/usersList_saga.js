@@ -24,7 +24,7 @@ import {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
       //return fetch("http://localhost:3003/GetRoleTable/", {
 
       method: "POST",
@@ -98,7 +98,7 @@ import {
    //console.log(userData.password);
  //alert("in Cadets")
    //new Promise((resolve, reject) => {
-   return fetch("http://hvs.selfip.net:3003/execSP/", {
+   return fetch("http://hvs.selfip.net:3003/execMP/", {
      //return fetch("http://hvs.selfip.net:3003/getCadets/", {
      //return fetch("http://localhost:3003/getCadets/", {
 

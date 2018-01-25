@@ -139,8 +139,7 @@ body{
             background: lightslategrey;
             border-color: lightslategrey
         }
-        .datatable .ui-datatable .ui-datatable-header {
-            background: pink;
-        }
-        
+       .modalHeaderStyle{
+           font: 10px
+       }
          

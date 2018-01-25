@@ -9,7 +9,8 @@ export const types = {
   export const initialState = {
     error: null,
     message: { val: 0, statusMsg: "" },
-    user : {}
+    user : {},
+    items:[]
   };
 
   export default (state = initialState, action) => {
@@ -31,5 +32,9 @@ export const types = {
     resetMessage: (message) => ({
         type: message.type,
         message : message.message
-      })
+      }),
+      clearItemsState: (message) => ({
+        type: message.type,
+        items : message.items
+      }),
   };

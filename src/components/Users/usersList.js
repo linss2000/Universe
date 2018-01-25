@@ -22,6 +22,9 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import "App.css";
+import AssignRoles from './AssignRoles';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 
 
 
@@ -41,7 +44,9 @@ export class UsersList extends Component {
     this.editRow = this.editRow.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     this.onHideDialog = this.onHideDialog.bind(this);
-
+    this.toggle = this.toggle.bind(this);
+    this.onRoleDialogOpen = this.onRoleDialogOpen.bind(this);
+    this.onRoleDialogClose = this.onRoleDialogClose.bind(this);
     this.state = {
       usersCount: 0,
       dialogTitle: "Add User",
@@ -49,7 +54,9 @@ export class UsersList extends Component {
       currectSelectedUser: [],
       isNewUser: true,
       displayFilter: 'none',
-      filters: {}
+      filters: {},
+      modal:false,
+      rolesAssigned:[]
 
     }
 
@@ -77,7 +84,7 @@ export class UsersList extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({ usersCount: nextProps.usersListState.items.length });
+    this.setState({ usersCount: nextProps.usersListState.items[0].length });
 
   }
   actionTemplate(rowData, column) {
@@ -93,8 +100,24 @@ export class UsersList extends Component {
 
     </div>;
   }
+  roleTemplate=(rowData, column)=> {
+    return  <i class="fa fa-ellipsis-h" aria-hidden="true"  onClick={(e)=>{this.onRoleDialogOpen(rowData)}}>  </i>
 
+  }   
+    toggle=(e)=> {
+    this.setState({ modal: !this.state.modal });
+  }
+  onRoleDialogClose = () => {
+    this.setState({ modal: !this.state.modal });
+    //this.props.callParentAssignRoles(this.state.assignRoles)
 
+  }
+  onRoleDialogOpen=(rowData)=>{
+    debugger
+    this.setState({ modal: !this.state.modal });
+    let arr=this.props.usersListState.items[1].filter((e) => e.hv_user_id == rowData.hv_user_id)
+    this.setState({rolesAssigned:arr})
+  }
   viewTemplate(rowData, column) {
     return <div>
       <IconMenu 
@@ -112,7 +135,7 @@ export class UsersList extends Component {
     return <img src={rowData.hv_photo} style={{ display: "block", width: "50px", height: "  50px" }} />;
   }
   activeTemplate = (rowData, column) => {
-    debugger
+    //debugger
     if (rowData.hv_is_active !== null) {
       if (rowData.hv_is_active == 'Y') {
         return <span>
@@ -279,7 +302,8 @@ export class UsersList extends Component {
     let maintainUser = null;
     //debugger
     if (this.state.displayDialog) {
-      maintainUser = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} onHide={this.onHideDialog} width='1200px' positionTop="40" style={{overflow:'auto'}}>
+      maintainUser = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} appendTo={document.body}
+      onHide={this.onHideDialog} width='1200px' height='700px' positionTop="40" style={{overflow:'auto'}} overflow='auto' >
         <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog} /></Dialog>
     }
     else {
@@ -289,17 +313,34 @@ export class UsersList extends Component {
     }
     return (
       <div>
-        <DataTable id="dataTable" value={this.props.usersListState.items} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
+        <DataTable id="dataTable" value={this.props.usersListState.items[0]} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
           ref={(el) => { this.dt = el; } } header={header} onFilter={this.onFilter} filters={this.state.filters} tableClassName="datatable">
           <Column field="" header={filter} body={this.viewTemplate} style={{ textAlign: 'center', width: '3%' }} sortable={false} filter={false}  />
           <Column field="hv_user_id" header="User ID" style={{ textAlign: 'center', width: '5%', height: '1px' }} sortable={true} filter={true} filterElement={userIDFilter} filterMatchMode="contains" />
           <Column field="hv_first_name" header="First Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={FNFilter} filterMatchMode="contains" />
           <Column field="hv_last_name" header="Last Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={LNFilter} filterMatchMode="contains" />
-          <Column field="hv_role_name" header="Role(s)" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={roleFilter} filterMatchMode="contains" />          
+         {/* <Column field="hv_role_name" header="Role(s) Assigned" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} filter={true} filterElement={roleFilter} filterMatchMode="contains" />*/}
+          <Column body={this.roleTemplate} header="Role(s) Assigned" sortable={true} style={{ textAlign: 'center', width: '6%' }}   />          
+                    
           <Column field="hv_is_active" body={this.activeTemplate} style={{ textAlign: 'center', width: '5%' }} header="Active" sortable={true} filter={true} filterElement={activeFilter} filterMatchMode="in" />
           <Column body={this.actionTemplate} header={customHeaderAction} style={{ textAlign: 'center', width: '3%' }} />
         </DataTable>
         {maintainUser}
+         <Modal isOpen={this.state.modal} size="lg" >
+          <ModalHeader><h6>Role(s) Assigned </h6>
+          </ModalHeader>
+          <ModalBody>
+            <DataTable id="dataTable" value={this.state.rolesAssigned} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
+              ref={(el) => { this.dt = el; } } style={{ width: '100%' }}>
+              <Column field="role_name" header="Role Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} />
+              <Column field="create_ts" header="Date Assigned" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} />
+            </DataTable>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.onRoleDialogClose}>Close</Button>
+          </ModalFooter>
+        </Modal>   
+ 
       </div>
 
     )
