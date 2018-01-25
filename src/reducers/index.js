@@ -20,7 +20,7 @@ import ScheduleState from './schedulereducer';
 import BASState from './basreducer';
 import ManageUserState from './Users/manageusersreducer';
 import usersListState from './usersList_reducer';
-
+import aeroleState from './aerolereducer';
 
 export default combineReducers({
    authState,
@@ -43,5 +43,6 @@ export default combineReducers({
    ScheduleState,
    BASState,
    ManageUserState,
-   usersListState
+   usersListState,
+   aeroleState
 });

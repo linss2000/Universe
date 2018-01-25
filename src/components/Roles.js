@@ -18,7 +18,10 @@ import {
   CardText,
   Row,
   Col,
-  Label
+  Label,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from "reactstrap";
 
 //import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
@@ -41,7 +44,7 @@ import { types as roleTypes } from "reducers/rolereducer";
 import { actions as roleActions } from "reducers/rolereducer";
 
 import HVSPagination from "customComponents/pagination";
-import CadetDetails from "./CadetDetails";
+import AddEditRole from "./AddEditRole";
 import {
   Input,
   InputGroup,
@@ -102,7 +105,7 @@ export class Roles extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
+    //console.log("componentDidUpdate");
     console.log(this.state);
   }
 
@@ -132,6 +135,7 @@ export class Roles extends Component {
       itemsHasErrored: false,
       itemsIsLoading: false,
       roleState: {},
+      selectedRoleRow: {},
       selectedRowID: -1,
       modal: false,
       attribValue: "",
@@ -144,7 +148,10 @@ export class Roles extends Component {
       dropdownOpen: false,
       popoverOpen: false,
       inputSearch: "",
-      inDetailsTab: false
+      inDetailsTab: false,
+      displayFilter: "none",
+      filters: {},
+      roleMode: "A"
     };
 
     this.tableID = 0;
@@ -155,14 +162,15 @@ export class Roles extends Component {
 
     //this.insertRow = this.insertRow.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
-    this._onFilterChange = this._onFilterChange.bind(this);
+    //this._onFilterChange = this._onFilterChange.bind(this);
     this.setFilterValue = this.setFilterValue.bind(this);
     this.dropToggle = this.dropToggle.bind(this);
     this.toggle = this.toggle.bind(this);
     this.onDropDownItemClick = this.onDropDownItemClick.bind(this);
-    this.clickedItem = this.clickedItem.bind(this);
+    //this.clickedItem = this.clickedItem.bind(this);
     this.classToggle = this.classToggle.bind(this);
     this.exportToExcel = this.exportToExcel.bind(this);
+    this.refreshScreen = this.refreshScreen.bind(this);
     //this.newRoleVal = "";
   }
 
@@ -238,22 +246,39 @@ export class Roles extends Component {
     });
   };
 
+  addRow = () => {
+    const row = {
+      role_id: -1
+    }
+
+    this.setState({
+      modal: !this.state.modal,
+      selectedRoleRow: row,
+      roleMode: "A"
+    });
+  }
+
   editRow = row => {
     debugger;
 
+    this.setState({
+      modal: !this.state.modal,
+      selectedRoleRow: row,
+      roleMode: "U"
+    });
+    /*
     if (this.props.roleState.rowID != -1) {
       alert("Please Save the current row");
       return false;
     }
-
     this.newUpdateValue = row.hv_universal_name;
-
     this.props.makeRowEditable({
       type: roleTypes.MAKE_ROW_EDITABLE,
       payload: {
         rowID: row.role_id
       }
     });
+    */
   };
 
   insertRow = () => {
@@ -273,6 +298,7 @@ export class Roles extends Component {
     });
   };
 
+  /*
   clickedItem(item, e) {
     return;
     debugger;
@@ -285,40 +311,108 @@ export class Roles extends Component {
     //console.log(item.hv_universal_name)
     //alert(item.hv_universal_name)
   }
-
+*/
   _onFilterChange() {
     debugger;
-
+    /*
     if (!this.filterValue) {
       this.setState((prevState, props) => {
         return { pageOfItems: prevState.pageOfItems };
       });
     }
-
     const filterBy = _.trim(this.filterValue.toLowerCase());
+    */
     const size = this.props.roleState.items.length;
 
     let filteredItems = [];
 
+
+      let keys = Object.keys(this.state.filters);
+      let filter = Object.values(this.state.filters);
+
+      if (keys.length > 0) {
+
+        filteredItems =this.props.roleState.items.filter(
+          function(item) {
+            for (var i = 0; i < filter.length; i++) {
+              if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+                //debugger;
+                return false;
+              }
+            }
+            //debugger;
+            return true;
+          }
+        ); 
+
+        filteredItems = filteredItems.splice(0,(this.state.pageSize || 10));       
+        /*
+        items = this.props.items.map((itm) => {
+         return keys.map((key) => {
+            console.log("Key:" + key)
+            console.log("value:" + this.props.filterValue[key].value)
+            console.log("Item value:" + itm[key])
+  
+            if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
+              if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
+                return itm;
+              }
+            }
+          })         
+        })
+        */
+      } else {
+        filteredItems =  this.props.roleState.items.slice(0,(this.state.pageSize || 10));
+      }
+
+/*
+    //let filteredItems = this.props.roleState.items.slice();
+    if (this.state.filters.role_name && _.trim(this.state.filters.role_name) != "") {
+      for (var index = 0; index < size; index++) {
+        const { role_name } = this.props.roleState.items[index];
+        if (
+          role_name
+            .toLowerCase()
+            .indexOf(this.state.filters.role_name.value.toLowerCase()) !== -1
+        ) {
+          filteredItems.push(this.props.roleState.items[index]);
+        }
+        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+          break;
+        }
+      }
+      //filteredItems = filteredItems.filter(item => item.role_name.toLowerCase() == this.state.filters.role_name.value.toLowerCase());
+    }
+    if (this.state.filters.role_desc && _.trim(this.state.filters.role_desc) != "") {
+      for (var index = 0; index < size; index++) {
+        const { role_desc } = this.props.roleState.items[index];
+        if (
+          role_desc
+            .toLowerCase()
+            .indexOf(this.state.filters.role_desc.value.toLowerCase()) !== -1
+        ) {
+          filteredItems.push(this.props.roleState.items[index]);
+        }
+        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+          break;
+        }
+      }
+    }
+    debugger;
+    if(Object.keys(this.state.filters).length == 0) {
+      filteredItems = this.props.roleState.items.slice(0,(this.state.pageSize || 10) - 1);
+    }
+    */
+    /*
     for (var index = 0; index < size; index++) {
       const { role_name } = this.props.roleState.items[index];
-
       if (role_name.toLowerCase().indexOf(filterBy) !== -1) {
         filteredItems.push(this.props.roleState.items[index]);
       }
-
       if (filteredItems.length > (this.state.pageSize || 10) - 1) {
         break;
       }
     }
-
-    /*
-    this.props.makeRowEditable({
-      type: roleTypes.MAKE_ROW_EDITABLE,
-      payload: {
-        rowID: -1
-      }
-    });
     */
 
     this.setState({
@@ -393,7 +487,7 @@ export class Roles extends Component {
     }
   };
 
-  classToggle = () => {};
+  classToggle = () => { };
 
   dropToggle = () => {
     this.setState({
@@ -420,7 +514,7 @@ export class Roles extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
+    //debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {
@@ -430,13 +524,76 @@ export class Roles extends Component {
         className = "fa fa-sort-desc fa-fw";
       }
     } else {
-      className = "";
+      className = "fa fa-sort fa-fw";
     }
 
     return className;
   };
 
+  onfilterChange = e => {
+    debugger;
+    let filters = this.state.filters;
+    this.filterValue = e.target.value;
+
+    switch (e.target.id) {
+      case "role_name":
+        filters["role_name"] = { value: e.target.value };
+        break;
+      case "role_desc":
+        filters["role_desc"] = { value: e.target.value };
+        break;
+    }
+    this.setState({ filters: filters });
+    this.debouncedSearch();
+  };
+
+  onFilter = e => {
+    debugger;
+    this.setState({ filters: e.filters });
+  };
+
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  refreshScreen(refresh) {
+    this.setState({ modal: false });
+    if (refresh) {
+      this.props.getRoles({
+        type: roleTypes.FETCH_TABLE_REQUEST,
+        cname: ""
+      });
+    }
+  }
+
   render() {
+    this.roleNameFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="role_name"
+        className=""
+        value={
+          this.state.filters.role_name ? this.state.filters.role_name.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
+    this.descFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="role_desc"
+        className=""
+        value={
+          this.state.filters.role_desc ? this.state.filters.role_desc.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
+
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <Container
@@ -450,17 +607,21 @@ export class Roles extends Component {
             <TabPane tabId="1">
               <Row className="p-0 m-0">
                 <Col sm="2">
-                  <span className="fa-stack fa-lg">
+                  <span className="fa-stack fa-lg"   style={styles.link}  onClick={() => this.addRow()}>
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-plus-circle fa-stack-1x" />
                   </span>{" "}
+                </Col>
+                <Col sm="3">
+                  {/* 
                   <span className="fa-stack fa-lg">
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-list-ul fa-stack-1x" />
                   </span>
-                </Col>
-                <Col sm="3">
-                  {/* 
+                  <span className="fa-stack fa-lg">
+                      <i className="fa fa-square-o fa-stack-2x" />
+                      <i className="fa fa-filter fa-stack-1x" />
+                  </span>
                   <div className="float-left">
                     <InputGroup size="sm" style={{ width: "300px" }}>
                       <InputGroupAddon>
@@ -503,7 +664,7 @@ export class Roles extends Component {
                 </Col>
                 <Col sm="3">
                   <div className="float-right">
-                    <span className="fa-stack fa-lg"  style={styles.link}>
+                    <span className="fa-stack fa-lg" style={styles.link}>
                       <i className="fa fa-square-o fa-stack-2x" />
                       <a
                         onClick={() => {
@@ -514,10 +675,6 @@ export class Roles extends Component {
                         <i className="fa f fa-file-excel-o fa-stack-1x" />
                       </a>
                     </span>{" "}
-                    <span className="fa-stack fa-lg">
-                      <i className="fa fa-square-o fa-stack-2x" />
-                      <i className="fa fa-filter fa-stack-1x" />
-                    </span>
                   </div>
                 </Col>
               </Row>
@@ -532,32 +689,52 @@ export class Roles extends Component {
                   >
                     <thead>
                       <tr style={{ backgroundColor: "grey", color: "white" }}>
-                        <th style={{ width: "20px" }} />
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_name")}
-                        >
-                          Role Name{" "}
-                          <i className={this.RenderHeaderColumn("role_name")} />
+                        <th style={{ width: "38px" }}>
+                          <span>
+                            <i
+                              className="fa fa-filter"
+                              onClick={() => {
+                                this.setState({ displayFilter: "inline" });
+                              }}
+                            />{" "}
+                            <i
+                              className="fa fa-times"
+                              onClick={() => {
+                                this.filterValue = "";
+                                this.debouncedSearch();
+                                this.setState({
+                                  displayFilter: "none",
+                                  filters: {}
+                                });
+                              }}
+                            />
+                          </span>{" "}
                         </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_desc")}
-                        >
+                        <th style={styles.link}>
+                          Role Name{" "}
+                          <i
+                            className={this.RenderHeaderColumn("role_name")}
+                            onClick={() => this.sortTable("role_name")}
+                          />
+                          {this.roleNameFilter}
+                        </th>
+                        <th style={styles.link}>
                           Description{" "}
-                          <i className={this.RenderHeaderColumn("role_desc")} />
+                          <i
+                            className={this.RenderHeaderColumn("role_desc")}
+                            onClick={() => this.sortTable("role_desc")}
+                          />
+                          {this.descFilter}
                         </th>
                         <th style={styles.link}>Permissions </th>
-                        <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("role_active")}
-                        >
+                        <th style={styles.link}>
                           Active{" "}
                           <i
                             className={this.RenderHeaderColumn("role_active")}
+                            onClick={() => this.sortTable("role_active")}
                           />
                         </th>
-                        <th>
+                        <th  style={styles.link}  onClick={() => this.addRow()}>
                           <span className="fa-stack fa-md">
                             <i className="fa fa-square-o fa-stack-2x" />
                             <i className="fa fa-plus-circle fa-stack-1x" />
@@ -579,27 +756,27 @@ export class Roles extends Component {
                           <td>
                             {this.props.roleState.rowID != row.role_id ? (
                               <div>
-                                <i
+                                <i  style={styles.link} 
                                   className="fa fa-pencil fa-fw"
                                   onClick={() => this.editRow(row)}
                                 />{" "}
-                                <i
+                                <i  style={styles.link} 
                                   className="fa fa-trash-o fa-fw"
                                   onClick={() => this.deleteRow(row)}
                                 />
                               </div>
                             ) : (
-                              <div>
-                                <i
-                                  className="fa fa-floppy-o fa-fw"
-                                  onClick={() => this.updateRow(row)}
-                                />{" "}
-                                <i
-                                  className="fa fa-ban fa-fw"
-                                  onClick={() => this.cancelRow(row)}
-                                />
-                              </div>
-                            )}
+                                <div>
+                                  <i  style={styles.link} 
+                                    className="fa fa-floppy-o fa-fw"
+                                    onClick={() => this.updateRow(row)}
+                                  />{" "}
+                                  <i  style={styles.link} 
+                                    className="fa fa-ban fa-fw"
+                                    onClick={() => this.cancelRow(row)}
+                                  />
+                                </div>
+                              )}
                           </td>
                         </tr>
                       ))}
@@ -657,12 +834,12 @@ export class Roles extends Component {
                             </Dropdown>
                           </div>
                         </td>
-                        <td colSpan={4} className="p-0 m-0 border-0" />
+                        <td colSpan={3} className="p-0 m-0 border-0" />
                         <td className="float-right p-0 m-0 border-0">
                           <HVSPagination
                             searchCol={this.state.searchCol}
                             items={this.items}
-                            filterValue={this.state.filterValue}
+                            filterValue={this.state.filters}
                             onChangePage={this.onChangePage}
                             pageSize={this.state.pageSize}
                           />
@@ -675,7 +852,19 @@ export class Roles extends Component {
             </TabPane>
           </TabContent>
         </Container>
+        <Modal size="lg"
+          isOpen={this.state.modal}
+          toggle={this.modalToggle}
+        >
+          <ModalHeader toggle={() => this.setState({ modal: false })}>
+            System Administration > {(this.state.roleMode == "A" ? "Add Role" : "Edit Role")}
+          </ModalHeader>
+          <ModalBody>
+            <AddEditRole roleMode={this.state.roleMode} roleRow={this.state.selectedRoleRow} closeDetails={this.refreshScreen} />
+          </ModalBody>
+        </Modal>
       </div>
+
     );
   }
 }
