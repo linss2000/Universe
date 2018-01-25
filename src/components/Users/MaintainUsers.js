@@ -753,7 +753,15 @@ componentWillUnmount(){
                         </Col>
                       </Row>
                     </Paper>
-                    <Row>
+                 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {assingRoles}
+          <br/>
+             <Row>
                       <Col sm="12" style={{ float: "right", margin: "5px" }}>
                         <Button label="Cancel" style={{ float: "right", background: "lightslategray", borderColor: "lightslategray" }}
                           onClick={this.CloseDialog}
@@ -763,12 +771,6 @@ componentWillUnmount(){
                         />
                       </Col>
                     </Row>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {assingRoles}
         </FormWithConstraints>
         </div>
     )
