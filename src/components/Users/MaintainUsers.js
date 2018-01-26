@@ -568,7 +568,7 @@ componentWillUnmount(){
           <div className="" id="divUsers" >
             <div className="row">
               <div className="FileUpload auto">
-                <Paper style={{ width: "190px", height: "190px" }} zDepth={2} >
+                <Paper style={{ width: "190px", height: "190px" }} zDepth={0} >
                   <Dropzone
                     onDrop={this.onImageDrop.bind(this)}
                     multiple={false}
@@ -613,7 +613,7 @@ componentWillUnmount(){
                         />
                       </div>
                     </div>
-                    <Paper style={paperStyle} zDepth={2} >
+                    <Paper style={paperStyle} zDepth={0} >
                       <Row>
                         <Col sm="6">
                           <Row>
@@ -760,7 +760,12 @@ componentWillUnmount(){
             </div>
           </div>
           {assingRoles}
-          <br/>
+           
+           <Row>
+                      <Col sm="12" style={{ paddingTop: '1%',paddingBottom: '1%'}}>
+                        <br/>
+                      </Col>
+                    </Row>
              <Row>
                       <Col sm="12" style={{ float: "right", margin: "5px" }}>
                         <Button label="Cancel" style={{ float: "right", background: "lightslategray", borderColor: "lightslategray" }}

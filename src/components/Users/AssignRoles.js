@@ -7,12 +7,12 @@ import { actions as roleActions } from "reducers/rolereducer";
 import { DataTable } from 'primereact/components/datatable/DataTable';
 import { Column } from 'primereact/components/column/Column';
 import Roles from "../Roles";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter ,
+Row,Col, Collapse, Button, CardBody, Card } from 'reactstrap';
 import Paper from "material-ui/Paper";
-import { Accordion, AccordionTab } from 'primereact/components/accordion/Accordion';
 import { Checkbox } from 'primereact/components/checkbox/Checkbox';
-import {Row,Col,Button} from "reactstrap";
 import Divider from "material-ui/Divider";
+
 
 export class AssignRoles extends Component {
   constructor(props) {
@@ -20,7 +20,8 @@ export class AssignRoles extends Component {
     this.state = {
       modal: false,
       selectedRoles: [],
-      assignRoles: []
+      assignRoles: [],
+      collapse:true
     }
     this.toggle = this.toggle.bind(this);
     this.onRoleSelection = this.onRoleSelection.bind(this);
@@ -84,13 +85,13 @@ export class AssignRoles extends Component {
   render() {
     return (
       <div>
-      <Paper>
-        <Accordion style={{ borderColor: 'grey', borderWidth: '1px' }} >
-          <AccordionTab header="Security Roles(s)">
-                    <Divider />
+     
+           <Collapse   isOpen={this.state.collapse} style={{overflow:'scroll'}}>
+           
               <Row>
       <Col sm="10">
         <div className="float-left">
+      Security Roles
         </div>
       </Col>
       <Col sm="2">
@@ -103,17 +104,16 @@ export class AssignRoles extends Component {
         </div>
       </Col>
     </Row>
-            <DataTable id="dataTableRoles" value={this.state.assignRoles} scrollable={true} scrollHeight="100px"
+    <Divider/>
+            <DataTable id="dataTableRoles" value={this.state.assignRoles} scrollable={true}   style={{minHeight:"160px",maxHeight:"160px",tableLayout:'fixed',boarder:'1'}}
               ref={(el) => { this.dt = el; } }  >
-              <Column field="role_id" header="Role ID" sortable={true} style={{ textAlign: 'center', width: '2%' }} sortable={true} />
+              <Column field="role_id" header="Role ID" sortable={true} style={{ textAlign: 'center', width: '3%' }} sortable={true} />
               <Column field="role_name" header="Role Name" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
               <Column field="DateAssigned" header="Date Assigned" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
-              <Column field="Expiration" header="Expiration" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
-              <Column field="Enabled" header="Enabled" sortable={true} style={{ textAlign: 'center', width: '8%' }} sortable={true} />
             </DataTable>
-          </AccordionTab>
-        </Accordion>
-      </Paper>
+        
+        </Collapse>
+      
         <Modal isOpen={this.state.modal} size="lg" >
           <ModalHeader><h6>Assign Role(s)</h6>
           </ModalHeader>
