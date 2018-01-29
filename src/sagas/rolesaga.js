@@ -29,7 +29,7 @@ const attribApi = {
     //alert(payload.spName)
     //new Promise((resolve, reject) => {
     return fetch("http://hvs.selfip.net:3003/ExportToExcel/", {
-    //return fetch("http://localhost:3003/ExportToExcel/", {
+      //return fetch("http://localhost:3003/ExportToExcel/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -77,10 +77,11 @@ const attribApi = {
     debugger;
     //console.log(userData.user);
     //console.log(userData.password);
+    //alert( sessionStorage.getItem("token"))
 
     //new Promise((resolve, reject) => {
     return fetch("http://hvs.selfip.net:3003/ExecSP/", {
-      //return fetch("http://localhost:3003/GetRoleTable/", {
+    //return fetch("http://localhost:3003/ExecSP/", {
 
       method: "POST",
       headers: {
@@ -89,12 +90,14 @@ const attribApi = {
       },
       body: JSON.stringify({
         spName: "sps_getRoles",
+        token: sessionStorage.getItem("token"),
         parms: {
           cname: cname
         }
       })
     })
-      .then(statusHelper)
+      //.then(response => response.json())
+      //.then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
   },
@@ -142,7 +145,7 @@ const attribApi = {
         }
       })
     })
-      .then(statusHelper)
+      .then(response => statusHelper)
       .then(response => response.json())
       .catch(error => error);
   },
@@ -162,6 +165,7 @@ const attribApi = {
       },
       body: JSON.stringify({
         spName: "spd_Role",
+        token: sessionStorage.getItem("token"),
         parms: {
           roleID: roleID
         }
@@ -200,10 +204,30 @@ const attribApi = {
 
 function statusHelper(response) {
   debugger;
+  console.log("1111111")
+  //let clone = response.clone();
+  //console.log(response);
+  var res;
+  //res = Promise.resolve(response.json())
+  //console.log(res.PromiseValue)
   if (!response.ok) {
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+    res = Promise.resolve(response.json());
+    //console.log(res);
+    res.then((val) => {
+      console.log(val)/*
+      alert(val.message);
+      var error = {};
+      //error.response = response;
+      error.message = val.message;
+      return error;   
+      //return JSON.stringify(error);     
+      */
+      return val;
+    })
+
+    //const error = new Error(response.statusText);
+    //error.response = response;
+    //throw error;
     //throw Error(response);
   }
   return response;
@@ -221,24 +245,21 @@ function* insertRoleTable(userData) {
       rowID: -1
     });
 
-    const resultObj = yield call(attribApi.insRoleTable, userData.payload);
-    //debugger;
-    if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+    let resultObj = yield call(attribApi.insRoleTable, userData.payload);
+    resultObj = JSON.parse(resultObj);
+
+    if (resultObj.message != "ok") {
+      //debugger;
       yield put({
         type: roleTypes.MESSAGE,
-        message: resultObj.response.statusText
+        message: { val: -1, msg: resultObj.result }
       });
     } else {
       //debugger;
-      console.log(JSON.parse(resultObj).result);
-      const state = yield select();
-      //debugger;
-      const fetchTask = yield call(getRoleTable, {
-        payload: { hv_table_i: userData.payload.tableID }
-      });
-      //debugger;
+      //console.log(JSON.parse(resultObj).result);
+      sessionStorage.setItem("token", resultObj.token);
     }
+
   } catch (e) {
   } finally {
   }
@@ -258,44 +279,21 @@ function* updateRoleTable(userData) {
       });
       */
 
-    const resultObj = yield call(attribApi.updRoleTable, userData.payload);
+    let resultObj = yield call(attribApi.updRoleTable, userData.payload);
+    resultObj = JSON.parse(resultObj);
 
-    debugger;
-    if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+    if (resultObj.message != "ok") {
+      //debugger;
       yield put({
         type: roleTypes.MESSAGE,
-        message: resultObj.response.statusText
+        message: { val: -1, msg: resultObj.result }
       });
     } else {
-      debugger;
-      console.log(JSON.parse(resultObj).result);
-      const state = yield select();
-
-      const newitems = state.roleleState.items.map((itm, index) => {
-        if (_.trim(itm.hv_universal_i) !== _.trim(userData.payload.rowID)) {
-          return itm;
-        } else {
-          debugger;
-          var newItem = {
-            ...itm,
-            hv_universal_name: userData.payload.value
-            //...action.item
-          };
-          return newItem;
-        }
-      });
-
-      yield put({
-        type: roleTypes.SELECTED_ROWID,
-        rowID: -1
-      });
-
-      yield put({
-        type: roleTypes.ITEMS,
-        items: newitems
-      });
+      //debugger;
+      //console.log(JSON.parse(resultObj).result);
+      sessionStorage.setItem("token", resultObj.token);
     }
+
   } catch (e) {
   } finally {
   }
@@ -303,66 +301,46 @@ function* updateRoleTable(userData) {
 
 function* deleteRoleTable(roleID) {
   try {
-    /*
-      yield put({
-        type: roleTypes.ITEMS,
-        items: []
-      });
 
-      yield put({
-        type: roleTypes.SELECTED_ROWID,
-        rowID: -1
-      });
-      */
+    let resultObj = yield call(attribApi.delRoleTable, roleID);
+    resultObj = JSON.parse(resultObj);
 
-    const resultObj = yield call(attribApi.delRoleTable, roleID);
-
-    debugger;
-    if (resultObj.response && !resultObj.response.ok) {
-      debugger;
-      yield put({
-        type: roleTypes.MESSAGE,
-        message: resultObj.response.statusText
-      });
-    } else {
-      debugger;
-      yield put({
-        type: roleTypes.ITEMS,
-        items: []
-      });
-
-      yield put({
-        type: roleTypes.SELECTED_ROWID,
-        rowID: -1
-      });
-
-      const resultObj = yield call(attribApi.getRoleTable, "");
-      debugger;
-      if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+    if (isJSON(resultObj)) {
+      if (resultObj.message != "ok") {
+        //debugger;
         yield put({
           type: roleTypes.MESSAGE,
-          message: resultObj.response.statusText
+          message: { val: -1, msg: resultObj.result }
         });
       } else {
-        debugger;
-        console.log(JSON.parse(resultObj).result);
-        //sessionStorage.setItem("token", JSON.parse(resultObj).token);
-        yield put({
-          type: roleTypes.ITEMS,
-          items: JSON.parse(resultObj).result
-        });
-      }
-      /*
-        console.log(JSON.parse(resultObj).result)
-        const state = yield select();
-        const newitems = state.roleleState.items.filter((itm) => _.trim(itm.hv_universal_i) !== _.trim(userData.payload.rowID));
+        //debugger;
+        //console.log(JSON.parse(resultObj).result);
+        sessionStorage.setItem("token", resultObj.token);      
 
-        yield put({
-          type: roleTypes.ITEMS,
-          items: newitems
-        });
-        */
+        resultObj = yield call(attribApi.getRoleTable, "");
+        resultObj = JSON.parse(resultObj);
+
+        if (resultObj.message != "ok") {
+          //debugger;
+          yield put({
+            type: roleTypes.MESSAGE,
+            message: { val: -1, msg: resultObj.result }
+          });
+        }
+        else {
+          debugger;
+          sessionStorage.setItem("token", resultObj.token);
+          yield put({
+            type: roleTypes.ITEMS,
+            items: resultObj.result
+          });
+        }
+      }
+    } else {
+      yield put({
+        type: roleTypes.MESSAGE,
+        message: { val: -1, msg: resultObj }
+      });
     }
   } catch (e) {
   } finally {
@@ -438,46 +416,49 @@ function* getRoleTable(userData) {
       rowID: -1
     });
 
-    const resultObj = yield call(attribApi.getRoleTable, userData.payload);
+    let resultObj = yield call(attribApi.getRoleTable, userData.payload);
+    console.log(resultObj);
 
-    debugger;
-    if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+    if (isJSON(resultObj)) {
+      resultObj = JSON.parse(resultObj);
+      //debugger;
+      if (resultObj.message != "ok") {
+        //debugger;
+        yield put({
+          type: roleTypes.MESSAGE,
+          message: { val: -1, msg: resultObj.result }
+        });
+      } else {
+        //debugger;
+        //console.log(JSON.parse(resultObj).result);
+        sessionStorage.setItem("token", resultObj.token);
+        yield put({
+          type: roleTypes.ITEMS,
+          items: resultObj.result
+        });
+      }
+    } else {
       yield put({
         type: roleTypes.MESSAGE,
-        message: resultObj.response.statusText
-      });
-    } else {
-      debugger;
-      console.log(JSON.parse(resultObj).result);
-      //sessionStorage.setItem("token", JSON.parse(resultObj).token);
-      yield put({
-        type: roleTypes.ITEMS,
-        items: JSON.parse(resultObj).result
+        message: { val: -1, msg: resultObj }
       });
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
-    /*
-      debugger;
-      let message;
-      switch (error.status) {
-        case 500:
-          message = "Internal Server Error";
-          break;
-        case 401:
-          message = "Invalid credentials";
-          break;
-        default:
-          message = "Something went wrong! " + error.statusText;
-      }
-      */
     debugger;
-    yield put({ type: roleTypes.MESSAGE, message: e });
+    yield put({ type: roleTypes.MESSAGE, message: { val: -1, msg: e } });
   } finally {
     debugger;
     if (yield cancelled())
-      yield put({ type: roleTypes.MESSAGE, message: "Task Cancelled" });
+      yield put({ type: roleTypes.MESSAGE, message: { val: -1, msg: "Task Cancelled" } });
+  }
+}
+
+function isJSON(str) {
+  try {
+    return (JSON.parse(str) && !!str);
+  } catch (e) {
+    return false;
   }
 }
 

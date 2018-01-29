@@ -63,7 +63,11 @@ export const types = {
     //updateStoreRoleTable: payload => ({ type: types.UPDATE_STORE_REQUEST, payload }),
     deleteRoleTable: payload => ({ type: types.DELETE_REQUEST, roleID : payload.roleID  }),
     cancelRoleTable: payload => ({ type: types.CANCEL_REQUEST, payload }),
-    exportToExcel: payload => ({ type: types.EXCEL_REQUEST, payload })
+    exportToExcel: payload => ({ type: types.EXCEL_REQUEST, payload }),
+    resetMessage: payload => ({
+      type: payload.type,
+      message: payload.message
+    })
   };
   
   /*

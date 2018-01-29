@@ -255,7 +255,7 @@ console.log(props)
                     <Row>
                       {" "}
                       <Col sm="12">
-                  <Admin/>
+                  <Admin {...this.props} />
                       </Col>
                     </Row>
                   </Container>

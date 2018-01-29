@@ -76,23 +76,6 @@ export class Roles extends Component {
     //alert(this.props.cadetName )
     //alert(nextProps.cadetName )
 
-    if (this.props.cadetName != nextProps.cadetName) {
-      //alert("in");
-      //alert( nextProps.cadetName)
-      this.setState({
-        inputSearch: nextProps.cadetName
-      });
-
-      this.filterValue = nextProps.cadetName;
-      this.debouncedSearch();
-      /*
-        
-        this.props.getCadets({
-            type: roleTypes.FETCH_TABLES_REQUEST,
-            cname: nextProps.cadetName
-          });
-          */
-    }
 
     if (nextProps.roleState.items) {
       this.items = nextProps.roleState.items;
@@ -106,7 +89,19 @@ export class Roles extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     //console.log("componentDidUpdate");
-    console.log(this.state);
+    //alert(this.props.roleState.message.val)
+    if (Number(this.props.roleState.message.val) != 0) {
+      alert(this.props.roleState.message.msg);
+      
+      this.props.resetMessage({
+        type: roleTypes.MESSAGE,
+        message: { val: 0, msg: "" }
+      });
+
+      this.props.history.push("/login");
+      
+    }
+    //console.log(this.state);
   }
 
   componentDidMount() {
