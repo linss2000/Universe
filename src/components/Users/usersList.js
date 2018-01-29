@@ -332,7 +332,7 @@ export class UsersList extends Component {
           </ModalHeader>
           <ModalBody>
             <DataTable id="dataTable" value={this.state.rolesAssigned} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 20]}
-              ref={(el) => { this.dt = el; } } style={{ width: '100%' }}>
+            style={{ width: '100%' }}>
               <Column field="role_name" header="Role Name" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} />
               <Column field="create_ts" header="Date Assigned" sortable={true} style={{ textAlign: 'center', width: '6%' }} sortable={true} />
             </DataTable>
