@@ -1,8 +1,10 @@
-import React from "react";
+
+import React, { Component, PropTypes } from 'react'
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 import Main from "./Main";
 import Login from "./components/login";
+import TimeOut from "./components/TimeOut";
 import Attributes from "./components/AttribTables";
 import AttribTable from "./components/AttribTable";
 import AppNavigation from "./components/NavBar";
@@ -31,6 +33,12 @@ import "./App.css";
 import UsersList from "./components/Users/usersList";
 import Roles from "./components/Roles";
 import Calendar from "./components/Calendar";
+import IdleTimer from 'react-idle-timer';
+import {
+  Modal,
+  ModalHeader,
+  ModalBody
+} from "reactstrap";
 
 const Root = props => <div {...props} />;
 
@@ -47,61 +55,184 @@ const HeaderBar = props => (
 );
 const MainDiv = props => <div {...props} />;
 
-const App = props => {
-  const { history } = props;
+export class App extends Component {
 
-  return (
-    <MainDiv>
-      <Container fluid>
-        <Row>
-          <Col>
-            <ConnectedRouter history={history}>
-              <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/forgotpwd" component={ForgotPassword} />
-                <Route path="/changepwd/:secToken" render={props => <ChangePassword {...props} /> } />
-                <Route path="/changepwd" component={ChangePassword} />
-                <Route path="/listitems" component={ListItems} />
-                <Route path="/cadet" component={CadetsSearch} />
-                <Route path="/cadetinline" component={CadetInlineSearch} />
-                <Route path="/admin" component={Admin} />
+  constructor(props) {
+    super(props)
+    this.state = {
+      timeout: 900000,
+      remaining: null,
+      isIdle: false,
+      lastActive: null,
+      elapsed: null,
+      modal: false
+    }
 
-                <Route path="/calendar" component={Calendar} />
+    this.modalToggle = this.modalToggle.bind(this);
+  }
+
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  componentDidMount() {
+    //alert("mount")
+    this.setState({
+      remaining: this.refs.idleTimer.getRemainingTime(),
+      lastActive: this.refs.idleTimer.getLastActiveTime(),
+      elapsed: this.refs.idleTimer.getElapsedTime()
+    });
+
+    let intervalHandle = setInterval(() => {
+      if (!this.refs.idleTimer.getRemainingTime() > 0) {
+        //alert("Timed Out");        
+        //this.refs.idleTimer.pause();
+        clearInterval(intervalHandle);
+        this.setState({modal : true});
+        //return false;
+      }
+
+      this.setState({
+        remaining: this.refs.idleTimer.getRemainingTime(),
+        lastActive: this.refs.idleTimer.getLastActiveTime(),
+        elapsed: this.refs.idleTimer.getElapsedTime()
+      });
+
+    }, 1000);
+  }
+
+  closeTimeOut = () =>{    
+    this.setState({modal : false});
+
+    let intervalHandle = setInterval(() => {
+      if (!this.refs.idleTimer.getRemainingTime() > 0) {
+        //alert("Timed Out");        
+        //this.refs.idleTimer.pause();
+        clearInterval(intervalHandle);
+        this.setState({modal : true});
+        //return false;
+      }
+
+      this.setState({
+        remaining: this.refs.idleTimer.getRemainingTime(),
+        lastActive: this.refs.idleTimer.getLastActiveTime(),
+        elapsed: this.refs.idleTimer.getElapsedTime()
+      });
+      
+    }, 1000);
+    //this.refs.idleTimer.resume();
+    //this.refs.idleTimer.reset();
+  }
+
+  _onActive = () => {
+    //alert("on Active")
+    this.setState({ isIdle: false });
+  }
+
+  _onIdle = () => {
+    this.setState({ isIdle: true });
+  }
+
+  _changeTimeout = () => {
+    this.setState({
+      timeout: this.refs.timeoutInput.state.value()
+    });
+  }
+
+  _reset = () => {
+    this.refs.idleTimer.reset();
+  }
+
+  _pause = () => {
+    this.refs.idleTimer.pause();
+  }
+
+  _resume = () => {
+    this.refs.idleTimer.resume();
+  }
+
+  //const App = props => {
+  //const { history } = props;
+  /*
+  <div>
+              <h3>Timeout: {this.state.timeout}ms</h3>
+              <h3>Time Remaining: {this.state.remaining}</h3>
+              <h3>Time Elapsed: {this.state.elapsed}</h3>
+              <h3>Last Active: {this.state.lastActive}</h3>
+              <h3>Idle: {this.state.isIdle.toString()}</h3>
+            </div>
+  */
+  render() {
+    return (
+      <IdleTimer
+        ref="idleTimer"
+        element={document}
+        activeAction={this._onActive}
+        idleAction={this._onIdle}
+        timeout={this.state.timeout}
+        format="MM-DD-YYYY HH:MM:ss.SSS">
+        <MainDiv>
+          <Container fluid>            
+            <Row>
+              <Col>
+                <ConnectedRouter history={this.props.history}>
+                  <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/forgotpwd" component={ForgotPassword} />
+                    <Route path="/changepwd/:secToken" render={props => <ChangePassword {...this.props} />} />
+                    <Route path="/changepwd" component={ChangePassword} />
+                    <Route path="/listitems" component={ListItems} />
+                    <Route path="/cadet" component={CadetsSearch} />
+                    <Route path="/cadetinline" component={CadetInlineSearch} />
+                    <Route path="/admin" component={Admin} />
+
+                    <Route path="/calendar" component={Calendar} />
 
 
-                <Route
-                  path="/cadetdetails"
-                  render={props => <CadetDetails {...props} />}
-                />
-                <Route
-                  path="/attribtable"
-                  render={match => <AttribTable {...match} />}
-                />
-                <Route path="/test" component={ShowData} />
-                <Route
-                  path="/tabs"
-                  render={props => <ReactStrapComp {...props} />}
-                />
-                <Route
-                  path="/users"
-                  render={props => <UserComponent {...props} />}
-                />
-                <Route
-                  path="/homes"
-                  render={props => <HomeComponent {...props} />}
-                />
-                <Route
-                  path="/userslist"
-                  render={props => <UsersList {...props} />}
-                />
-                <Route path="/" component={Main} />
-              </Switch>
-            </ConnectedRouter>
-          </Col>
-        </Row>
-      </Container>
-    </MainDiv>
-  );
-};
+                    <Route
+                      path="/cadetdetails"
+                      render={props => <CadetDetails {...this.props} />}
+                    />
+                    <Route
+                      path="/attribtable"
+                      render={match => <AttribTable {...match} />}
+                    />
+                    <Route path="/test" component={ShowData} />
+                    <Route
+                      path="/tabs"
+                      render={props => <ReactStrapComp {...this.props} />}
+                    />
+                    <Route
+                      path="/users"
+                      render={props => <UserComponent {...this.props} />}
+                    />
+                    <Route
+                      path="/homes"
+                      render={props => <HomeComponent {...this.props} />}
+                    />
+                    <Route
+                      path="/userslist"
+                      render={props => <UsersList {...this.props} />}
+                    />
+                    <Route path="/" component={Main} />
+                  </Switch>
+                </ConnectedRouter>
+              </Col>
+            </Row>
+          </Container>
+        </MainDiv>
+        <Modal size="md"
+          isOpen={this.state.modal}         
+        >                     
+          <ModalBody>
+            <TimeOut {...this.props} closeTimeOut={this.closeTimeOut}/>
+          </ModalBody>
+        </Modal>
+      </IdleTimer>
 
+    );
+  };
+}
 export default App;

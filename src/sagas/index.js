@@ -23,6 +23,7 @@ import { types as BASTypes } from "./../reducers/basreducer";
 import { types as RoleTypes } from "./../reducers/rolereducer";
 import { types as usersListType } from "./../reducers/usersList_reducer";
 import { types as aeroleTypes } from "./../reducers/aerolereducer";
+import { types as timeoutTypes } from "./../reducers/timeoutreducer";
 
 
 import  * as authSagas  from './authsaga'
@@ -46,6 +47,7 @@ import * as ManageUserSaga from './Users/manageusersaga.js';
 import  * as usersListSaga  from './usersList_saga';
 import  * as RoleSagas  from './rolesaga';
 import  * as aeroleSagas  from './aerolesaga';
+import  * as timeoutSagas  from './timeoutsaga';
 
 export default function* rootSaga () {
   try {
@@ -73,6 +75,7 @@ export default function* rootSaga () {
         takeLatest([ManageUserTypes.INSERT_REQUEST,ManageUserTypes.FETCH_USER_REQUEST,ManageUserTypes.UPDATE_USER_REQUEST], ManageUserSaga.handleRequest),
         takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.EXCEL_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),
         takeLatest([aeroleTypes.FETCH_TABLE_REQUEST,aeroleTypes.EXCEL_REQUEST,aeroleTypes.CANCEL_REQUEST,aeroleTypes.MAKE_ROW_EDITABLE,aeroleTypes.INSERT_REQUEST,aeroleTypes.DELETE_REQUEST,aeroleTypes.UPDATE_REQUEST], aeroleSagas.handleRequest),
+        takeLatest([timeoutTypes.SIGNUP_REQUEST,timeoutTypes.LOGIN_REQUEST,timeoutTypes.PASSWORD_RESET_REQUEST,timeoutTypes.LOGOUT], timeoutSagas.handleRequest),
         ]);
 
     //throw e;

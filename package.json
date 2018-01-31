@@ -33,6 +33,7 @@
     "react-dropzone": "^4.2.3",
     "react-fontawesome": "^1.6.1",
     "react-form-with-constraints": "^0.7.0",
+    "react-idle-timer": "^2.0.0",
     "react-intl": "^2.4.0",
     "react-redux": "^4.4.8",
     "react-router": "^4.1.1",
