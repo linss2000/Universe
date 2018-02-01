@@ -18,7 +18,7 @@ import * as _ from "lodash";
 import * as io from "socket.io-client";
 import { types as roleTypes } from "reducers/rolereducer";
 import * as download from "downloadjs";
-
+import * as utils from "Utils/common"
 //import { push } from 'react-router-redux';
 
 const attribApi = {
@@ -286,7 +286,7 @@ function* updateRoleTable(userData) {
       //debugger;
       yield put({
         type: roleTypes.MESSAGE,
-        message: { val: -1, msg: resultObj.result }
+        message: { val: resultObj.val, msg: resultObj.result }
       });
     } else {
       //debugger;
@@ -305,12 +305,12 @@ function* deleteRoleTable(roleID) {
     let resultObj = yield call(attribApi.delRoleTable, roleID);
     resultObj = JSON.parse(resultObj);
 
-    if (isJSON(resultObj)) {
+    if (utils.isJSON(resultObj)) {
       if (resultObj.message != "ok") {
         //debugger;
         yield put({
           type: roleTypes.MESSAGE,
-          message: { val: -1, msg: resultObj.result }
+          message: { val: resultObj.val, msg: resultObj.result }
         });
       } else {
         //debugger;
@@ -324,7 +324,7 @@ function* deleteRoleTable(roleID) {
           //debugger;
           yield put({
             type: roleTypes.MESSAGE,
-            message: { val: -1, msg: resultObj.result }
+            message: { val: resultObj.val, msg: resultObj.result }
           });
         }
         else {
@@ -339,7 +339,7 @@ function* deleteRoleTable(roleID) {
     } else {
       yield put({
         type: roleTypes.MESSAGE,
-        message: { val: -1, msg: resultObj }
+        message: { val: resultObj.val, msg: resultObj.result }
       });
     }
   } catch (e) {
@@ -419,19 +419,19 @@ function* getRoleTable(userData) {
     let resultObj = yield call(attribApi.getRoleTable, userData.payload);
     console.log(resultObj);
 
-    if (isJSON(resultObj)) {
+    if (utils.isJSON(resultObj)) {
       resultObj = JSON.parse(resultObj);
       //debugger;
       if (resultObj.message != "ok") {
         //debugger;
         yield put({
           type: roleTypes.MESSAGE,
-          message: { val: -1, msg: resultObj.result }
+          message: { val: resultObj.val, msg: resultObj.result }
         });
       } else {
         //debugger;
         //console.log(JSON.parse(resultObj).result);
-        sessionStorage.setItem("token", resultObj.token);
+        //sessionStorage.setItem("token", resultObj.token);
         yield put({
           type: roleTypes.ITEMS,
           items: resultObj.result
@@ -440,7 +440,7 @@ function* getRoleTable(userData) {
     } else {
       yield put({
         type: roleTypes.MESSAGE,
-        message: { val: -1, msg: resultObj }
+        message: { val: resultObj.val, msg: resultObj.result }
       });
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
@@ -454,13 +454,6 @@ function* getRoleTable(userData) {
   }
 }
 
-function isJSON(str) {
-  try {
-    return (JSON.parse(str) && !!str);
-  } catch (e) {
-    return false;
-  }
-}
 
 export function* handleRequest(action) {
   debugger;

@@ -90,16 +90,20 @@ export class Roles extends Component {
   componentDidUpdate(prevProps, prevState) {
     //console.log("componentDidUpdate");
     //alert(this.props.roleState.message.val)
-    if (Number(this.props.roleState.message.val) != 0) {
-      alert(this.props.roleState.message.msg);
-      
+    if (Number(this.props.roleState.message.val) != 0) { 
+      if (Number(this.props.roleState.message.val) == -2) {
+        this.props.showTimeOut(this.props.roleState.message.msg);
+      } else {
+        alert(this.props.roleState.message.msg);
+      }
       this.props.resetMessage({
         type: roleTypes.MESSAGE,
         message: { val: 0, msg: "" }
       });
 
-      this.props.history.push("/login");
-      
+      //this.props.showTimeOut();
+      //this.props.history.push("/login");
+
     }
     //console.log(this.state);
   }
@@ -322,82 +326,82 @@ export class Roles extends Component {
     let filteredItems = [];
 
 
-      let keys = Object.keys(this.state.filters);
-      let filter = Object.values(this.state.filters);
+    let keys = Object.keys(this.state.filters);
+    let filter = Object.values(this.state.filters);
 
-      if (keys.length > 0) {
+    if (keys.length > 0) {
 
-        filteredItems =this.props.roleState.items.filter(
-          function(item) {
-            for (var i = 0; i < filter.length; i++) {
-              if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
-                //debugger;
-                return false;
-              }
+      filteredItems = this.props.roleState.items.filter(
+        function (item) {
+          for (var i = 0; i < filter.length; i++) {
+            if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+              //debugger;
+              return false;
             }
-            //debugger;
-            return true;
           }
-        ); 
+          //debugger;
+          return true;
+        }
+      );
 
-        filteredItems = filteredItems.splice(0,(this.state.pageSize || 10));       
-        /*
-        items = this.props.items.map((itm) => {
-         return keys.map((key) => {
-            console.log("Key:" + key)
-            console.log("value:" + this.props.filterValue[key].value)
-            console.log("Item value:" + itm[key])
-  
-            if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
-              if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
-                return itm;
-              }
+      filteredItems = filteredItems.splice(0, (this.state.pageSize || 10));
+      /*
+      items = this.props.items.map((itm) => {
+       return keys.map((key) => {
+          console.log("Key:" + key)
+          console.log("value:" + this.props.filterValue[key].value)
+          console.log("Item value:" + itm[key])
+ 
+          if (this.props.filterValue[key] && _.trim(this.props.filterValue[key].value) != "") {
+            if(itm[key].toLowerCase().indexOf(_.trim(this.props.filterValue[key].value)) != -1){
+              return itm;
             }
-          })         
-        })
-        */
-      } else {
-        filteredItems =  this.props.roleState.items.slice(0,(this.state.pageSize || 10));
-      }
+          }
+        })         
+      })
+      */
+    } else {
+      filteredItems = this.props.roleState.items.slice(0, (this.state.pageSize || 10));
+    }
 
-/*
-    //let filteredItems = this.props.roleState.items.slice();
-    if (this.state.filters.role_name && _.trim(this.state.filters.role_name) != "") {
-      for (var index = 0; index < size; index++) {
-        const { role_name } = this.props.roleState.items[index];
-        if (
-          role_name
-            .toLowerCase()
-            .indexOf(this.state.filters.role_name.value.toLowerCase()) !== -1
-        ) {
-          filteredItems.push(this.props.roleState.items[index]);
+    /*
+        //let filteredItems = this.props.roleState.items.slice();
+        if (this.state.filters.role_name && _.trim(this.state.filters.role_name) != "") {
+          for (var index = 0; index < size; index++) {
+            const { role_name } = this.props.roleState.items[index];
+            if (
+              role_name
+                .toLowerCase()
+                .indexOf(this.state.filters.role_name.value.toLowerCase()) !== -1
+            ) {
+              filteredItems.push(this.props.roleState.items[index]);
+            }
+            if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+              break;
+            }
+          }
+          //filteredItems = filteredItems.filter(item => item.role_name.toLowerCase() == this.state.filters.role_name.value.toLowerCase());
         }
-        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
-          break;
+        if (this.state.filters.role_desc && _.trim(this.state.filters.role_desc) != "") {
+          for (var index = 0; index < size; index++) {
+            const { role_desc } = this.props.roleState.items[index];
+            if (
+              role_desc
+                .toLowerCase()
+                .indexOf(this.state.filters.role_desc.value.toLowerCase()) !== -1
+            ) {
+              filteredItems.push(this.props.roleState.items[index]);
+            }
+            if (filteredItems.length > (this.state.pageSize || 10) - 1) {
+              break;
+            }
+          }
         }
-      }
-      //filteredItems = filteredItems.filter(item => item.role_name.toLowerCase() == this.state.filters.role_name.value.toLowerCase());
-    }
-    if (this.state.filters.role_desc && _.trim(this.state.filters.role_desc) != "") {
-      for (var index = 0; index < size; index++) {
-        const { role_desc } = this.props.roleState.items[index];
-        if (
-          role_desc
-            .toLowerCase()
-            .indexOf(this.state.filters.role_desc.value.toLowerCase()) !== -1
-        ) {
-          filteredItems.push(this.props.roleState.items[index]);
+        debugger;
+        if(Object.keys(this.state.filters).length == 0) {
+          filteredItems = this.props.roleState.items.slice(0,(this.state.pageSize || 10) - 1);
         }
-        if (filteredItems.length > (this.state.pageSize || 10) - 1) {
-          break;
-        }
-      }
-    }
-    debugger;
-    if(Object.keys(this.state.filters).length == 0) {
-      filteredItems = this.props.roleState.items.slice(0,(this.state.pageSize || 10) - 1);
-    }
-    */
+        */
     /*
     for (var index = 0; index < size; index++) {
       const { role_name } = this.props.roleState.items[index];
@@ -602,7 +606,7 @@ export class Roles extends Component {
             <TabPane tabId="1">
               <Row className="p-0 m-0">
                 <Col sm="2">
-                  <span className="fa-stack fa-lg"   style={styles.link}  onClick={() => this.addRow()}>
+                  <span className="fa-stack fa-lg" style={styles.link} onClick={() => this.addRow()}>
                     <i className="fa fa-square-o fa-stack-2x" />
                     <i className="fa fa-plus-circle fa-stack-1x" />
                   </span>{" "}
@@ -729,7 +733,7 @@ export class Roles extends Component {
                             onClick={() => this.sortTable("role_active")}
                           />
                         </th>
-                        <th  style={styles.link}  onClick={() => this.addRow()}>
+                        <th style={styles.link} onClick={() => this.addRow()}>
                           <span className="fa-stack fa-md">
                             <i className="fa fa-square-o fa-stack-2x" />
                             <i className="fa fa-plus-circle fa-stack-1x" />
@@ -751,22 +755,22 @@ export class Roles extends Component {
                           <td>
                             {this.props.roleState.rowID != row.role_id ? (
                               <div>
-                                <i  style={styles.link} 
+                                <i style={styles.link}
                                   className="fa fa-pencil fa-fw"
                                   onClick={() => this.editRow(row)}
                                 />{" "}
-                                <i  style={styles.link} 
+                                <i style={styles.link}
                                   className="fa fa-trash-o fa-fw"
                                   onClick={() => this.deleteRow(row)}
                                 />
                               </div>
                             ) : (
                                 <div>
-                                  <i  style={styles.link} 
+                                  <i style={styles.link}
                                     className="fa fa-floppy-o fa-fw"
                                     onClick={() => this.updateRow(row)}
                                   />{" "}
-                                  <i  style={styles.link} 
+                                  <i style={styles.link}
                                     className="fa fa-ban fa-fw"
                                     onClick={() => this.cancelRow(row)}
                                   />
