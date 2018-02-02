@@ -24,7 +24,7 @@ import {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
+    return fetch("http://localhost:3003/ExecSPM/", {
       //return fetch("http://localhost:3003/GetRoleTable/", {
 
       method: "POST",
@@ -34,12 +34,13 @@ import {
       },
       body: JSON.stringify({
         spName: "sps_getUsers",
+        token: sessionStorage.getItem("token"),
         parms: {
             "cname" : ""
         }
       })
     })
-      .then(statusHelper)
+     // .then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
   }
@@ -47,13 +48,8 @@ import {
 
   //.then(data => data)
   function statusHelper(response) {
-    //debugger;
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.response = response;
-      throw error;
-      //throw Error(response);
-    }
+    debugger;
+   
     return response;
   }
 
@@ -65,21 +61,26 @@ import {
     //debugger;
     try {
       //debugger
-      const resultObj = yield call(getUserListFunction);
+      let resultObj = yield call(getUserListFunction);
+debugger;
+    if (isJSON(resultObj)) {
+      resultObj = JSON.parse(resultObj);
       //debugger;
-      if (resultObj.response && !resultObj.response.ok) {
+      if (resultObj.message != "ok") {
         //debugger;
         yield put({
           type: usersListTypes.MESSAGE,
-          message: {val:-1,msg:resultObj.response.statusText}
+          message: {val:-1,msg:resultObj.result}
         });
       } else {
         //debugger;
+       sessionStorage.setItem("token", resultObj.token);
         yield put({
           type: usersListTypes.ITEMS,
-          items:JSON.parse(resultObj).result
+          items:resultObj.result
         });
       }
+    }
     } catch (e) {
       //debugger;
       yield put({ type: usersListTypes.MESSAGE, message: e });
@@ -98,7 +99,7 @@ import {
    //console.log(userData.password);
  //alert("in Cadets")
    //new Promise((resolve, reject) => {
-   return fetch("http://hvs.selfip.net:3003/execMP/", {
+   return fetch("http://localhost:3003/execMP/", {
      //return fetch("http://hvs.selfip.net:3003/getCadets/", {
      //return fetch("http://localhost:3003/getCadets/", {
 
@@ -109,8 +110,8 @@ import {
      },
      body: JSON.stringify({
          spName: 'spd_deleteUser',
+          token: sessionStorage.getItem("token"),
          parms:{"hv_user_id":selectedUserData.hv_user_id}
-
 
      })
    })
@@ -174,5 +175,13 @@ import {
       }
     } catch (e) {
       yield put({ type: usersListTypes.MESSAGE, error: e });
+    }
+  }
+
+  function isJSON(str) {
+    try {
+      return (JSON.parse(str) && !!str);
+    } catch (e) {
+      return false;
     }
   }

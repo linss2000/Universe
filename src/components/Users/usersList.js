@@ -85,7 +85,18 @@ export class UsersList extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
+    debugger
+    if(nextProps.usersListState.message.val==0){
     this.setState({ usersCount: nextProps.usersListState.items[0].length });
+    }
+    else{
+      alert(nextProps.usersListState.message.msg);      
+        this.props.resetMessage({
+        type: UsersListTypes.MESSAGE,
+        message: { val: 0, msg: "" }
+      });
+      this.props.history.push("/login");
+    }
 
   }
   actionTemplate(rowData, column) {
