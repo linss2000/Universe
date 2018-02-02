@@ -60,15 +60,17 @@ export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      timeout: 900000,
+      timeout:900000,
       remaining: null,
       isIdle: false,
       lastActive: null,
       elapsed: null,
-      modal: false
+      modal: false,
+      message: ""
     }
 
     this.modalToggle = this.modalToggle.bind(this);
+    //this.showTO = this.showTO.bind(this);
   }
 
   modalToggle() {
@@ -90,7 +92,8 @@ export class App extends Component {
         //alert("Timed Out");        
         //this.refs.idleTimer.pause();
         clearInterval(intervalHandle);
-        this.setState({modal : true});
+        this.setState({modal : true,
+        message : `Your Session has timed out.\nPlease Login to continue.`});
         //return false;
       }
 
@@ -102,6 +105,10 @@ export class App extends Component {
 
     }, 1000);
   }
+
+  showTO = () => {
+    this.setState({modal : true});
+  };
 
   closeTimeOut = () =>{    
     this.setState({modal : false});
@@ -187,10 +194,7 @@ export class App extends Component {
                     <Route path="/cadet" component={CadetsSearch} />
                     <Route path="/cadetinline" component={CadetInlineSearch} />
                     <Route path="/admin" component={Admin} />
-
                     <Route path="/calendar" component={Calendar} />
-
-
                     <Route
                       path="/cadetdetails"
                       render={props => <CadetDetails {...this.props} />}
@@ -227,7 +231,7 @@ export class App extends Component {
           isOpen={this.state.modal}         
         >                     
           <ModalBody>
-            <TimeOut {...this.props} closeTimeOut={this.closeTimeOut}/>
+            <TimeOut {...this.props} closeTimeOut={this.closeTimeOut} message={this.state.message}/>
           </ModalBody>
         </Modal>
       </IdleTimer>

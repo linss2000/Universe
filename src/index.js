@@ -16,6 +16,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import "./index.css";
 import App from "./App";
+import TimeOut from "./components/TimeOut";
 
 import registerServiceWorker from "./registerServiceWorker";
 //import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -31,6 +32,12 @@ import GridList from "./components/grid";
 import rootSaga from "./sagas/index";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.min.css";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody
+} from "reactstrap";
+
 
 //import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 injectTapEventPlugin();
@@ -59,18 +66,66 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({}, sagaMiddleware, routerMiddleware(history));
 
-const AppComp = () => (
-  <ErrorBoundary>
-    <Provider store={store}>
-      <MuiThemeProvider>
-        <App history={history} />
-      </MuiThemeProvider>
-    </Provider>
-  </ErrorBoundary>
-);
+//const AppComp = () => (
+
+export class AppComp extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      //timeout: 900000,
+      remaining: null,
+      isIdle: false,
+      lastActive: null,
+      elapsed: null,
+      modal: false,
+      message : ""
+    }
+
+    this.modalToggle = this.modalToggle.bind(this);
+    this.showTimeOut = this.showTimeOut.bind(this);
+    this.closeTimeOut = this.closeTimeOut.bind(this);
+  }
+
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  componentDidMount() {
+    //alert("mount")
+  }
+
+  showTimeOut = (msg) => {
+    this.setState({ modal: true, message  : msg });
+  };
+
+  closeTimeOut = () => {
+    this.setState({ modal: false });
+  };
+
+  render() {
+    return (
+      <ErrorBoundary>
+        <Provider store={store}>
+          <MuiThemeProvider>
+            <App history={history} showTimeOut={this.showTimeOut}/>
+            <Modal size="md"
+              isOpen={this.state.modal}
+            >
+              <ModalBody>
+                <TimeOut closeTimeOut={this.closeTimeOut}  {...this.props} message={this.state.message}/>
+              </ModalBody>
+            </Modal>
+          </MuiThemeProvider>
+        </Provider>
+      </ErrorBoundary>
+    )
+  }
+}
 
 // then run the saga
 sagaMiddleware.run(rootSaga);
-
 ReactDOM.render(<AppComp />, document.getElementById("root"));
 registerServiceWorker();
