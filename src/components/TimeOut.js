@@ -142,7 +142,6 @@ class TimeOut extends Component {
                 if (this.props.timeoutState.message.val == -2) {
                     this.props.history.push("/changepwd");
                 }
-
                 //Reset the message
             }
         }
@@ -225,6 +224,7 @@ class TimeOut extends Component {
                <img src={clientlogo} className="img-fluid"/>
          <img src={clientlogo} className="mx-auto"  />
         {this.props.timeoutState.message == "ok" ? (<div style={font11}> Log on Succesfull </div>) : this.props.timeoutState.message}
+        Your Session has timed out.<br/>Please Login to continue.
         */
 
         return (
@@ -238,7 +238,9 @@ class TimeOut extends Component {
                 >
                     <div className="App">
                         <div>
-                            <h4 className="text-secondary">Your Session has timed out.<br/>Please Login to continue.</h4>
+                            <h4 className="text-secondary">{this.props.message.split('\n').map((item,key) => {
+                                return <span key={key}> {item} <br/></span>
+                            })}</h4>
                         </div>
                         <div className="d-flex justify-content-center">
                             <Paper style={paperStyle} zDepth={5}>
