@@ -110,8 +110,30 @@ export class UserComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
-    debugger
+    if (nextProps.userState.message.val == 2) {
+            if (nextProps.userState.message.statusMsg != undefined) {
+              if (nextProps.userState.message.statusMsg[0].hasOwnProperty('ReturnMessage')) {
+                alert(nextProps.userState.message.statusMsg[0].ReturnMessage);
+                this.props.onDialogClose();
+              }
+              else
+                alert('Error in transaction!!');
+            }
+            else
+              alert("Error in the transaction!!");     
+            this.props.onDialogClose();
+            this.props.resetMessage({
+              type: ManageUserTypes.MESSAGE,
+              message: { val: 0, statusMsg: "" }
+            });
+          }      
+          else if (nextProps.userState.message.statusMsg != "" && nextProps.userState.message.val < 0 ){
+            alert(nextProps.userState.message.statusMsg);
+            this.props.resetMessage({
+              type: ManageUserTypes.MESSAGE,
+              message: { val: 0, statusMsg: "" }
+            });
+          }
     if (nextProps.userState.items) {
     if (nextProps.userState.items.length>0) {
       
@@ -128,7 +150,6 @@ export class UserComponent extends Component {
         uploadedImg: user.hv_photo == "" ? null : user.hv_photo,
         displayMsgdiv: user.hv_photo ? 'none' : 'block',
       })
-      debugger
       if (nextProps.userState.items[2].length > 0) {
         let phonelist = nextProps.userState.items[2];
         this.setState({ rows: phonelist });
@@ -142,25 +163,7 @@ export class UserComponent extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.userState.message.val == 2) {
-      debugger
-      if (this.props.userState.message.statusMsg != undefined) {
-        if (this.props.userState.message.statusMsg[0].hasOwnProperty('ReturnMessage')) {
-          alert(this.props.userState.message.statusMsg[0].ReturnMessage);
-          this.props.onDialogClose();
-        }
-        else
-          alert('Error in transaction!!');
-      }
-      else
-        alert("Error in the transaction!!");
-      this.props.resetMessage({
-        type: ManageUserTypes.MESSAGE,
-        message: { val: 0, statusMsg: "" }
-      });
-
-      this.props.onDialogClose();
-    }      
+    
   }
 componentWillUnmount(){
    this.props.clearItemsState({

@@ -23,8 +23,8 @@ import {
         spName : "spi_UserDetails",
         parms : userData
       })
-   // return fetch("http://localhost:3003/ExecSP/", {
-      return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+   //return fetch("http://localhost:3003/ExecSP/", {
+   return fetch("http://hvs.selfip.net:3003/ExecSP/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,10 +32,11 @@ import {
       },
       body: JSON.stringify({
           spName : 'spi_UserDetails',
+          token: sessionStorage.getItem("token"),
           parms : userData
       })
     })
-      .then(statusHelper)
+     // .then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
   }
@@ -43,8 +44,8 @@ import {
 
   function updateUser(userData) {
     //debugger;
-    //return fetch("http://localhost:3003/ExecSP/", {
-      return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+//    return fetch("http://localhost:3003/ExecSP/", {
+ return fetch("http://hvs.selfip.net:3003/ExecSP/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -52,6 +53,7 @@ import {
       },
       body: JSON.stringify({
           spName : 'spu_UserDetails',
+          token: sessionStorage.getItem("token"),
           parms : userData
       })
     })
@@ -68,6 +70,7 @@ import {
       })
       // http://hvs.selfip.net:3003/ExecSP/
     return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
+    //return fetch("http://localhost:3003/ExecSPM/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -75,16 +78,17 @@ import {
       },
       body: JSON.stringify({
           spName : 'sps_GetUserDetailsById',
+          token: sessionStorage.getItem("token"),
           parms : user
       })
     })
-      .then(statusHelper)
+     // .then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
   }
 
   function statusHelper(response) {
-   // debugger;
+    debugger;
     if (!response.ok) {
       const error = new Error(response.statusText);
       error.response = response;
@@ -97,42 +101,66 @@ import {
   function* insertUserDetails(userData){
     try{
     // debugger
+    
       const resultMessage = yield call(insertUser, userData.user);
-      if (resultMessage.response && !resultMessage.response.ok) {
-       // debugger;
-        yield put({
-          type: UserTypes.MESSAGE,
-          message: resultMessage.response.statusText
-        });
-      } else {
+      if (isJSON(resultMessage)) {
+        let resultObj = JSON.parse(resultMessage);
+        if (resultObj.message != "ok") {
+          //debugger;
+          yield put({
+            type: UserTypes.MESSAGE,
+            message: { val: -1, statusMsg: resultObj.result }
+          });
+        }
+      else {
        // debugger;
         yield put({
             type: UserTypes.MESSAGE,
-            message: {val :2, statusMsg :JSON.parse(resultMessage).result}
+            message: {val :2, statusMsg :resultObj.result}
           });
-   } }catch (e) {
+   } }
+  }catch (e) {
     yield put({ type: UserTypes.MESSAGE, message: {val:-1, statusMsg:e} });
     }
     finally{
     }
   }
 
+  function isJSON(str) {
+    try {
+      return (JSON.parse(str) && !!str);
+    } catch (e) {
+      return false;
+    }
+  }
+
   function* updateUserDetails(userData){
     try{
-   //  debugger
+     debugger
       const resultMessage = yield call(updateUser, userData.user);
-      if (resultMessage.response && !resultMessage.response.ok) {
-     //   debugger;
-        yield put({
-          type: UserTypes.MESSAGE,
-          message: resultMessage.response.statusText
-        });
-      } else {
-       // debugger;
+      if (isJSON(resultMessage)) {
+        let resultObj = JSON.parse(resultMessage);
+        if (resultObj.message != "ok") {
+          //debugger;
+          yield put({
+            type: UserTypes.MESSAGE,
+            message: { val: -1, statusMsg: resultObj.result }
+          });
+        }
+      
+      // if (resultMessage.response && !resultMessage.response.ok) {
+      //   debugger;
+      //   yield put({
+      //     type: UserTypes.MESSAGE,
+      //     message: {val:-1,statusMsg: resultMessage.response.statusText}
+      //   });
+      // } else {
+      else {
         yield put({
             type: UserTypes.MESSAGE,
-            message: {val :2, statusMsg :JSON.parse(resultMessage).result}
+            message: {val :2, statusMsg :resultObj.result}
           });
+        }
    } }catch (e) {
     yield put({ type: UserTypes.MESSAGE, message: {val:-1, statusMsg:e} });
     }
@@ -144,21 +172,25 @@ import {
  
   function* getUserDetails(userData){
     try {
-     // debugger
-      const resultObj = yield call(getUser,userData.user);
-      if (resultObj.response && !resultObj.response.ok) {
-      //  debugger;
-        yield put({
-          type: UserTypes.MESSAGE,
-          message: {val:-1,msg:resultObj.response.statusText}
-        });
-      } else {
+     
+      let resultObj = yield call(getUser,userData.user);
+      debugger
+      if (isJSON(resultObj)) {
+        resultObj = JSON.parse(resultObj);
+        if (resultObj.message != "ok") {
+          debugger;
+          yield put({
+            type: UserTypes.MESSAGE,
+            message: { val: -1, statusMsg: resultObj.result }
+          });
+        } else {
       
         yield put({
           type: UserTypes.ITEMS,
-          items:JSON.parse(resultObj).result
+          items: resultObj.result
         });
       }
+    }
     } catch (e) {
       
       yield put({ type: UserTypes.MESSAGE, message: e });
