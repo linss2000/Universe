@@ -18,13 +18,13 @@ import {
 
 
    function getUserListFunction()
-  {
+  { 
     //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://localhost:3003/ExecSPM/", {
+    return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
       //return fetch("http://localhost:3003/GetRoleTable/", {
 
       method: "POST",
@@ -67,13 +67,13 @@ debugger;
       resultObj = JSON.parse(resultObj);
       //debugger;
       if (resultObj.message != "ok") {
-        //debugger;
+      debugger;
         yield put({
           type: usersListTypes.MESSAGE,
           message: {val:-1,msg:resultObj.result}
         });
       } else {
-        //debugger;
+      debugger;
        sessionStorage.setItem("token", resultObj.token);
         yield put({
           type: usersListTypes.ITEMS,
@@ -99,7 +99,7 @@ debugger;
    //console.log(userData.password);
  //alert("in Cadets")
    //new Promise((resolve, reject) => {
-   return fetch("http://localhost:3003/execMP/", {
+   return fetch("http://hvs.selfip.net:3003/execMP/", {
      //return fetch("http://hvs.selfip.net:3003/getCadets/", {
      //return fetch("http://localhost:3003/getCadets/", {
 
@@ -180,6 +180,7 @@ debugger;
 
   function isJSON(str) {
     try {
+      debugger
       return (JSON.parse(str) && !!str);
     } catch (e) {
       return false;

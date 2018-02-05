@@ -76,28 +76,33 @@ export class UsersList extends Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.usersListState.message.msg == 'deleted') {
+    debugger
+   if (this.props.usersListState.message.msg == 'deleted') {
       alert('User deleted successfully');
       this.props.resetMessage({
         type: UsersListTypes.MESSAGE,
         message: { val: 0, msg: "" }
       });
     }
+    if(this.props.usersListState.message.val!=0){
+      this.props.showTimeOut(this.props.usersListState.message.msg);
+    }
+ 
   }
   componentWillReceiveProps(nextProps) {
     debugger
     if(nextProps.usersListState.message.val==0){
+    if(nextProps.usersListState.items.length!=0){
     this.setState({ usersCount: nextProps.usersListState.items[0].length });
     }
-    else{
-      alert(nextProps.usersListState.message.msg);      
-        this.props.resetMessage({
-        type: UsersListTypes.MESSAGE,
-        message: { val: 0, msg: "" }
-      });
-      this.props.history.push("/login");
     }
-
+//     else{
+//         this.props.showTimeOut(nextProps.usersListState.message.msg);
+//     }
+// this.props.resetMessage({
+//         type: UsersListTypes.MESSAGE,
+//         message: { val: 0, msg: "" }
+//       });
   }
   actionTemplate(rowData, column) {
     return <div>
