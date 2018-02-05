@@ -92,10 +92,16 @@ export class UserComponent extends Component {
   }
 
   componentDidMount() {
-    //debugger
     if (this.props.userObject != null) {
       if (!this.props.userObject.isNewUser)
-        this.setState({ isReadOnly: true });
+        this.setState({ isReadOnly: true });        
+      else if (this.props.userObject.isNewUser){
+        debugger
+        if(sessionStorage.getItem("token") == undefined){
+          this.props.showTimeOut("Please login to proceed !!!");
+        }
+      }
+
       if (this.props.userObject.currectSelectedUser != null) {
         this.props.getUserDetails({
           type: ManageUserTypes.FETCH_USER_REQUEST,
@@ -128,7 +134,10 @@ export class UserComponent extends Component {
             });
           }      
           else if (nextProps.userState.message.statusMsg != "" && nextProps.userState.message.val < 0 ){
-            alert(nextProps.userState.message.statusMsg);
+          if (nextProps.userState.message.val == -2)
+                  this.props.showTimeOut(nextProps.userState.message.statusMsg);
+           else 
+             alert(nextProps.userState.message.statusMsg);
             this.props.resetMessage({
               type: ManageUserTypes.MESSAGE,
               message: { val: 0, statusMsg: "" }
