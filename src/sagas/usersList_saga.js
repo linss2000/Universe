@@ -70,7 +70,7 @@ debugger;
       debugger;
         yield put({
           type: usersListTypes.MESSAGE,
-          message: {val:-1,msg:resultObj.result}
+          message: {val: resultObj.val,msg:resultObj.result}
         });
       } else {
       debugger;
