@@ -63,6 +63,7 @@ export class UsersList extends Component {
   }
 
   renderUsersList() {
+    debugger
     this.props.getUsersList({
       type: UsersListTypes.FETCH_REQUEST,
       payload: {}
@@ -84,7 +85,7 @@ export class UsersList extends Component {
         message: { val: 0, msg: "" }
       });
     }
-    if(this.props.usersListState.message.val!=0){
+    if(this.props.usersListState.message.val==-2){
       this.props.showTimeOut(this.props.usersListState.message.msg);
     }
  

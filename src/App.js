@@ -220,6 +220,11 @@ export class App extends Component {
                       path="/userslist"
                       render={props => <UsersList {...this.props} />}
                     />
+                        <Route
+                      path="/Roles"
+                      render={props => <UsersList {...this.props} />}
+                    />
+                    
                     <Route path="/" component={Main} />
                   </Switch>
                 </ConnectedRouter>
