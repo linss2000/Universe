@@ -63,6 +63,7 @@ export class UsersList extends Component {
   }
 
   renderUsersList() {
+    debugger
     this.props.getUsersList({
       type: UsersListTypes.FETCH_REQUEST,
       payload: {}
@@ -76,17 +77,33 @@ export class UsersList extends Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.usersListState.message.msg == 'deleted') {
+    debugger
+   if (this.props.usersListState.message.msg == 'deleted') {
       alert('User deleted successfully');
       this.props.resetMessage({
         type: UsersListTypes.MESSAGE,
         message: { val: 0, msg: "" }
       });
     }
+    if(this.props.usersListState.message.val==-2){
+      this.props.showTimeOut(this.props.usersListState.message.msg);
+    }
+ 
   }
   componentWillReceiveProps(nextProps) {
+    debugger
+    if(nextProps.usersListState.message.val==0){
+    if(nextProps.usersListState.items.length!=0){
     this.setState({ usersCount: nextProps.usersListState.items[0].length });
-
+    }
+    }
+//     else{
+//         this.props.showTimeOut(nextProps.usersListState.message.msg);
+//     }
+// this.props.resetMessage({
+//         type: UsersListTypes.MESSAGE,
+//         message: { val: 0, msg: "" }
+//       });
   }
   actionTemplate(rowData, column) {
     return <div>
