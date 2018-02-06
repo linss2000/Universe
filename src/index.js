@@ -110,6 +110,7 @@ export class AppComp extends Component {
       <ErrorBoundary>
         <Provider store={store}>
           <MuiThemeProvider>
+            <div>
             <App history={history} showTimeOut={this.showTimeOut}/>
             <Modal size="md"
               isOpen={this.state.modal}
@@ -118,6 +119,7 @@ export class AppComp extends Component {
                 <TimeOut closeTimeOut={this.closeTimeOut}  {...this.props} message={this.state.message}/>
               </ModalBody>
             </Modal>
+            </div>
           </MuiThemeProvider>
         </Provider>
       </ErrorBoundary>

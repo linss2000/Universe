@@ -73,25 +73,25 @@ export class CadetsSearch extends Component {
     //console.log(nextProps);
     //alert(this.props.cadetName )
     //alert(nextProps.cadetName )
-    
-    if (this.props.cadetName != nextProps.cadetName){
-        //alert("in");
-        //alert( nextProps.cadetName)
-        this.setState({
-            inputSearch: nextProps.cadetName
-          });
+
+    if (this.props.cadetName != nextProps.cadetName) {
+      //alert("in");
+      //alert( nextProps.cadetName)
+      this.setState({
+        inputSearch: nextProps.cadetName
+      });
+
+      this.filterValue = nextProps.cadetName;
+      this.debouncedSearch();
+      /*
       
-          this.filterValue = nextProps.cadetName;
-          this.debouncedSearch();
-        /*
-        
-        this.props.getCadets({
-            type: cadetSearchTypes.FETCH_TABLES_REQUEST,
-            cname: nextProps.cadetName
-          });
-          */
+      this.props.getCadets({
+          type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+          cname: nextProps.cadetName
+        });
+        */
     }
-    
+
     if (nextProps.cadetSearchState.items) {
       this.items = nextProps.cadetSearchState.items;
     }
@@ -111,15 +111,15 @@ export class CadetsSearch extends Component {
     debugger;
     //alert(this.props.location.state.params.hv_table_i)
     //if (this.props) {
-   //alert("mount")
-//alert(this.props.cadetName)
+    //alert("mount")
+    //alert(this.props.cadetName)
     //console.log(this.props.location);
-   
-      this.props.getCadets({
-        type: cadetSearchTypes.FETCH_TABLES_REQUEST,
-        cname: "%"
-      });
-    
+
+    this.props.getCadets({
+      type: cadetSearchTypes.FETCH_TABLES_REQUEST,
+      cname: "%"
+    });
+
   }
 
   constructor(props) {
@@ -147,7 +147,9 @@ export class CadetsSearch extends Component {
       dropdownOpen: false,
       popoverOpen: false,
       inputSearch: "",
-      inDetailsTab: false
+      inDetailsTab: false,
+      filters: {},
+      displayFilter: "none",
     };
 
     this.tableID = 0;
@@ -169,6 +171,7 @@ export class CadetsSearch extends Component {
   }
 
   debouncedSearch = _.debounce(this._onFilterChange, 100);
+
 
   setFilterValue = e => {
     //return;
@@ -203,6 +206,70 @@ export class CadetsSearch extends Component {
     //alert(item.hv_universal_name)
   }
 
+  onfilterChange = e => {
+    //debugger;
+    let filters = this.state.filters;
+    this.filterValue = e.target.value;
+
+    switch (e.target.id) {
+      case "hv_cadet_name":
+        filters["hv_cadet_name"] = { value: e.target.value };
+        break;
+      case "hv_cadet_casemgr":
+        filters["hv_cadet_casemgr"] = { value: e.target.value };
+        break;
+    }
+    this.setState({ filters: filters });
+    this.debouncedSearch();
+  };
+  
+  _onFilterChange() {
+    debugger;
+
+    const size = this.props.cadetSearchState.items.length;
+
+    let filteredItems = [];
+
+    let keys = Object.keys(this.state.filters);
+    let filter = Object.values(this.state.filters);
+
+    console.log("keys")
+    console.log(keys)
+    console.log(this.state.filters)
+
+    if (keys.length > 0) {
+
+      filteredItems = this.props.cadetSearchState.items.filter(
+        function (item) {
+          for (var i = 0; i < filter.length; i++) {
+            if (item[keys[i]].toLowerCase().indexOf(filter[i].value) == -1) {
+              //debugger;
+              return false;
+            }
+          }
+          //debugger;
+          return true;
+        }
+      );
+
+      filteredItems = filteredItems.splice(0, (this.state.pageSize || 10));
+
+    } else {
+      filteredItems = this.props.cadetSearchState.items.slice(0, (this.state.pageSize || 10));
+    }
+
+
+
+    this.setState({
+      pageOfItems: filteredItems,
+      filterValue: this.filterValue.toLowerCase(),
+      selectedRowID: -1,
+      popoverOpen: false,
+      dropdownOpen: false
+    });
+  }
+  /*
+
   _onFilterChange() {
     debugger;
 
@@ -229,14 +296,6 @@ export class CadetsSearch extends Component {
       }
     }
 
-    /*
-    this.props.makeRowEditable({
-      type: cadetSearchTypes.MAKE_ROW_EDITABLE,
-      payload: {
-        rowID: -1
-      }
-    });
-    */
 
     this.setState({
       pageOfItems: filteredItems,
@@ -246,6 +305,7 @@ export class CadetsSearch extends Component {
       dropdownOpen: false
     });
   }
+  */
 
   showDetails = row => {
     debugger;
@@ -258,16 +318,16 @@ export class CadetsSearch extends Component {
     //this.props.history.push("/cadetdetails",{ params: row});
   };
 
-  sortTable = (columnName,type = "S") => {
+  sortTable = (columnName, type = "S") => {
     debugger;
     let rows;
 
-    if(type == "D") {
-      rows =  _.sortBy(this.items, item => new Date(item[columnName]))
-    } else if(type == "N") {
-      rows =  _.sortBy(this.items, item=> new Number(item[columnName]))
+    if (type == "D") {
+      rows = _.sortBy(this.items, item => new Date(item[columnName]))
+    } else if (type == "N") {
+      rows = _.sortBy(this.items, item => new Number(item[columnName]))
     } else {
-      rows =  _.sortBy(this.items,[columnName])
+      rows = _.sortBy(this.items, [columnName])
     }
 
     /*
@@ -321,7 +381,7 @@ export class CadetsSearch extends Component {
     }
   };
 
-  classToggle = () => {};
+  classToggle = () => { };
 
   dropToggle = () => {
     this.setState({
@@ -348,8 +408,7 @@ export class CadetsSearch extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
-
+    //debugger;
     let className;
     if (this.state.sortedCol == columnName) {
       if (this.state.sortAsc) {
@@ -358,23 +417,47 @@ export class CadetsSearch extends Component {
         className = "fa fa-sort-desc fa-fw";
       }
     } else {
-      className = "";
+      className = "fa fa-sort fa-fw";
     }
 
     return className;
   };
 
   render() {
+    this.cadetNameFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="hv_cadet_name"
+        className=""
+        value={
+          this.state.filters.hv_cadet_name ? this.state.filters.hv_cadet_name.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
+    this.caseMgrFilter = (
+      <input
+        style={{ display: this.state.displayFilter }}
+        type="text"
+        id="hv_cadet_casemgr"
+        className=""
+        value={
+          this.state.filters.hv_cadet_casemgr ? this.state.filters.hv_cadet_casemgr.value : ""
+        }
+        onChange={this.onfilterChange}
+      />
+    );
     return (
-      <div style={{height:"100%", width: "100%"}}>
+      <div style={{ height: "100%", width: "100%" }}>
         <Container
           fluid
-           style={{
-                        overflow: "hidden",
-                        marginTop: "20px",
-                        marginLeft: "-10px",
-                        marginRight: "20px", 
-                        height:"100%"
+          style={{
+            overflow: "hidden",
+            marginTop: "20px",
+            marginLeft: "-10px",
+            marginRight: "20px",
+            height: "100%"
           }}
         >
           <Nav tabs className="m-0 p-0">
@@ -523,98 +606,120 @@ export class CadetsSearch extends Component {
                   >
                     <thead>
                       <tr style={{ backgroundColor: "grey", color: "white" }}>
-                        <th style={{ width: "20px" }} />
+                        <th style={{ width: "38px" }}>
+                          <span>
+                            <i
+                              className="fa fa-filter"
+                              onClick={() => {
+                                this.setState({ displayFilter: "inline" });
+                              }}
+                            />{" "}
+                            <i
+                              className="fa fa-times"
+                              onClick={() => {
+                                this.filterValue = "";
+                                this.debouncedSearch();
+                                this.setState({
+                                  displayFilter: "none",
+                                  filters: {}
+                                });
+                              }}
+                            />
+                          </span>{" "}
+                        </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_name")}
+                          style={styles.link}                          
                         >
                           Cadet Name {" "}
                           <i
                             className={this.RenderHeaderColumn("hv_cadet_name")}
+                            onClick={() => this.sortTable("hv_cadet_name")}
                           />
+                          {this.cadetNameFilter}
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_id","N")}
+                          style={styles.link}                          
                         >
                           Cadet ID {" "}
                           <i
                             className={this.RenderHeaderColumn("hv_cadet_id")}
+                            onClick={() => this.sortTable("hv_cadet_id", "N")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_status")}
+                          style={styles.link}                          
                         >
                           Status{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_status"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_status")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_platoon")}
+                          style={styles.link}                          
                         >
                           Platoon{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_platoon"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_platoon")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_squad")}
+                          style={styles.link}                          
                         >
                           Squad{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_squad"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_squad")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_teacher")}
+                          style={styles.link}                          
                         >
                           Teacher{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_teacher"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_teacher")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_counselor")}
+                          style={styles.link}                          
                         >
                           Counselor{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_counselor"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_counselor")}
                           />
                         </th>
                         <th
-                          style={styles.link}
-                          onClick={() => this.sortTable("hv_cadet_casemgr")}
+                          style={styles.link}                          
                         >
                           Case Manager{" "}
                           <i
                             className={this.RenderHeaderColumn(
                               "hv_cadet_casemgr"
                             )}
+                            onClick={() => this.sortTable("hv_cadet_casemgr")}
                           />
+                          {this.caseMgrFilter}
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {this.state.pageOfItems.map((row, index) => (
-                        <tr key={index}  onClick={() => this.showDetails(row)}>
+                        <tr key={index} onClick={() => this.showDetails(row)}>
                           <td
-                            style={styles.link}                           
+                            style={styles.link}
                           >
                             <i className="fa fa-ellipsis-v fa-fw" />
                           </td>
@@ -687,7 +792,7 @@ export class CadetsSearch extends Component {
                           <HVSPagination
                             searchCol={this.state.searchCol}
                             items={this.items}
-                            filterValue={this.state.filterValue}
+                            filterValue={this.state.filters}
                             onChangePage={this.onChangePage}
                             pageSize={this.state.pageSize}
                           />
@@ -729,7 +834,7 @@ export class CadetsSearch extends Component {
               </Row>
               <Row className="m-0 p-0">
                 <Col sm="12">
-                  <CadetDetails cadetRow={this.selectedCadetRow} closeDetails={()=>this.setState({ inDetailsTab: false, activeTab: "1" })} />
+                  <CadetDetails cadetRow={this.selectedCadetRow} closeDetails={() => this.setState({ inDetailsTab: false, activeTab: "1" })} />
                 </Col>
               </Row>
             </TabPane>

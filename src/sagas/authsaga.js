@@ -80,7 +80,10 @@ function* login(userData) {
       
       if (JSON.parse(resultObj).message == "ok") {
         sessionStorage.setItem("token", JSON.parse(resultObj).token);
-        //alert(JSON.parse(resultObj).name)
+        if(JSON.parse(resultObj).roles) {
+          sessionStorage.setItem("roles", JSON.parse(resultObj).roles);
+        }
+        //alert(JSON.parse(resultObj).roles)
         yield put({
           type: authTypes.NAME,
           name: JSON.parse(resultObj).name
