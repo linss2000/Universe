@@ -17,6 +17,7 @@ import { delay, buffers, eventChannel, END } from "redux-saga";
 import * as _ from "lodash";
 import * as io from "socket.io-client";
 import { types as authTypes } from "reducers/authreducer";
+import * as utils from "Utils/common"
 
 //import { push } from 'react-router-redux';
 
@@ -27,8 +28,8 @@ const authApi = {
     console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    //return fetch("http://localhost:3003/loginsvc/", {
-    return fetch("http://hvs.selfip.net:3003/loginsvc/", {
+    return fetch("http://localhost:3003/loginsvc/", {
+      //return fetch("http://hvs.selfip.net:3003/loginsvc/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,7 +40,7 @@ const authApi = {
         pwd: userData.password
       })
     })
-      .then(statusHelper)
+      //.then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
   }
@@ -65,40 +66,35 @@ function* login(userData) {
     console.log(userData.payload.user);
     console.log(userData.payload.password);
     //yield put({ type: authTypes.LOGIN_REQUEST, isLoading: false })
-    const resultObj = yield call(authApi.login, userData.payload);
+    let resultObj = yield call(authApi.login, userData.payload);
+    if (utils.isJSON(resultObj)) {
+      resultObj = JSON.parse(resultObj);
 
-    debugger;
-    if (resultObj.response && !resultObj.response.ok) {
-      debugger;
-      yield put({
-        type: authTypes.MESSAGE,
-        message: { val: -1, msg: resultObj.response.statusText }
-      });
-    } else {
-      //alert("Message" + JSON.parse(resultObj).message)
-      //alert("name" + JSON.parse(resultObj).name)
-      
-      if (JSON.parse(resultObj).message == "ok") {
-        sessionStorage.setItem("token", JSON.parse(resultObj).token);
-        if(JSON.parse(resultObj).roles) {
-          sessionStorage.setItem("roles", JSON.parse(resultObj).roles);
-        }
+      if (resultObj.message == "ok") {
         //alert(JSON.parse(resultObj).roles)
         yield put({
           type: authTypes.NAME,
-          name: JSON.parse(resultObj).name
+          name: resultObj.name
         });
       }
+
+      //alert("1")
+      //alert(resultObj.message);
+
       yield put({
         type: authTypes.MESSAGE,
         message: {
-          val: JSON.parse(resultObj).result,
-          msg: JSON.parse(resultObj).message,        
+          val: resultObj.result,
+          msg: resultObj.message,
         }
       });
-      console.log(JSON.parse(resultObj))
-      //
+      //console.log(JSON.parse(resultObj))    
+    } else {
       
+      yield put({
+        type: authTypes.MESSAGE,
+        message: { val: resultObj.val, msg: resultObj.result }
+      });
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
@@ -128,34 +124,6 @@ function* login(userData) {
   }
 }
 
-function* loadTO(userData) {
-  debugger;
-  try {
-    //yield call(delay, 5000)
-    console.log("saga s" + userData.token);
-    //console.log(userData.password)
-    //yield put({ type: "ITEMS_IS_LOADING", isLoading: false })
-    const resultObj = yield call(authApi.loadTO, userData);
-    debugger;
-    console.log(resultObj);
-    if (resultObj !== null && resultObj !== undefined) {
-      sessionStorage.setItem("token", JSON.parse(resultObj).token);
-      //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).message })
-      yield put({
-        type: "LOGIN_STATUS",
-        message: JSON.parse(resultObj).message
-      });
-    } else {
-      //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).message })
-      yield put({ type: "LOGIN_STATUS", message: "Unauthorized" });
-    }
-  } finally {
-    debugger;
-    if (yield cancelled())
-      yield put({ type: "LOGIN_STATUS", message: "Task Cancelled" });
-  }
-}
-
 export function* handleRequest(action) {
   debugger;
   console.log("authSaga request", action);
@@ -164,10 +132,7 @@ export function* handleRequest(action) {
   //yield call(updateStatus);
   try {
     switch (action.type) {
-      case "FETCH_TO_DATA": {
-        const fetchTO = yield fork(loadTO, action.payload);
-        break;
-      }
+      
       case authTypes.LOGIN_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
         debugger;

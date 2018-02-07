@@ -80,8 +80,8 @@ const attribApi = {
     //alert( sessionStorage.getItem("token"))
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
-    //return fetch("http://localhost:3003/ExecSP/", {
+    //return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://localhost:3003/ExecSP/", {
 
       method: "POST",
       headers: {
@@ -90,6 +90,8 @@ const attribApi = {
       },
       body: JSON.stringify({
         spName: "sps_getRoles",
+        //lstUpdTs :sessionStorage.getItem("lstUpdTs"),
+        //funcId: "-1",
         token: sessionStorage.getItem("token"),
         parms: {
           cname: cname
@@ -437,7 +439,7 @@ function* getRoleTable(userData) {
           items: resultObj.result
         });
       }
-    } else {
+    } else {      
       yield put({
         type: roleTypes.MESSAGE,
         message: { val: resultObj.val, msg: resultObj.result }

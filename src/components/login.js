@@ -106,7 +106,7 @@ class Login extends Component {
 
   componentDidUpdate(prevProps, prevState) {
   //componentWillReceiveProps(nextProps) {
-    debugger;
+    //debugger;
     if (this.props.authState.message.msg == "ok") {
       debugger;
       //this.context.router.history.push('/grid', ...this.state);
@@ -122,10 +122,12 @@ class Login extends Component {
       this.props.history.push("/tabs", ...this.state);
       //this.props.history.push('/test', ...this.state);
     } else {
+      
       if (
         _.trim(this.props.authState.message.msg) != "" &&
         this.props.authState.message.msg != "ok"
       ) {
+        //alert("msg")
         this.setState({ isLoading: false });
         alert(this.props.authState.message.msg);
 
