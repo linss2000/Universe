@@ -60,7 +60,7 @@ export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      timeout:900000,
+      timeout: 900000,
       remaining: null,
       isIdle: false,
       lastActive: null,
@@ -91,9 +91,18 @@ export class App extends Component {
       if (!this.refs.idleTimer.getRemainingTime() > 0) {
         //alert("Timed Out");        
         //this.refs.idleTimer.pause();
-        clearInterval(intervalHandle);
-        this.setState({modal : true,
-        message : `Your Session has timed out.\nPlease Login to continue.`});
+        //console.log(this.props.location)
+        //console.log(window.location.pathname)
+        if (window.location.pathname == "/login") {
+          //console.log("in Reset")
+          this.refs.idleTimer.reset();
+        } else {
+          clearInterval(intervalHandle);
+          this.setState({
+            modal: true,
+            message: `Your Session has timed out.\nPlease Login to continue.`
+          });
+        }
         //return false;
       }
 
@@ -107,18 +116,18 @@ export class App extends Component {
   }
 
   showTO = () => {
-    this.setState({modal : true});
+    this.setState({ modal: true });
   };
 
-  closeTimeOut = () =>{    
-    this.setState({modal : false});
+  closeTimeOut = () => {
+    this.setState({ modal: false });
 
     let intervalHandle = setInterval(() => {
       if (!this.refs.idleTimer.getRemainingTime() > 0) {
         //alert("Timed Out");        
         //this.refs.idleTimer.pause();
         clearInterval(intervalHandle);
-        this.setState({modal : true});
+        this.setState({ modal: true });
         //return false;
       }
 
@@ -127,7 +136,7 @@ export class App extends Component {
         lastActive: this.refs.idleTimer.getLastActiveTime(),
         elapsed: this.refs.idleTimer.getElapsedTime()
       });
-      
+
     }, 1000);
     //this.refs.idleTimer.resume();
     //this.refs.idleTimer.reset();
@@ -181,7 +190,7 @@ export class App extends Component {
         timeout={this.state.timeout}
         format="MM-DD-YYYY HH:MM:ss.SSS">
         <MainDiv>
-          <Container fluid>            
+          <Container fluid>
             <Row>
               <Col>
                 <ConnectedRouter history={this.props.history}>
@@ -220,11 +229,11 @@ export class App extends Component {
                       path="/userslist"
                       render={props => <UsersList {...this.props} />}
                     />
-                        <Route
+                    <Route
                       path="/Roles"
                       render={props => <UsersList {...this.props} />}
                     />
-                    
+
                     <Route path="/" component={Main} />
                   </Switch>
                 </ConnectedRouter>
@@ -233,10 +242,10 @@ export class App extends Component {
           </Container>
         </MainDiv>
         <Modal size="md"
-          isOpen={this.state.modal}         
-        >                     
+          isOpen={this.state.modal}
+        >
           <ModalBody>
-            <TimeOut {...this.props} closeTimeOut={this.closeTimeOut} message={this.state.message}/>
+            <TimeOut {...this.props} closeTimeOut={this.closeTimeOut} message={this.state.message} />
           </ModalBody>
         </Modal>
       </IdleTimer>
