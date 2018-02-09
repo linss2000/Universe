@@ -14,17 +14,13 @@ import {
     apply
   } from "redux-saga/effects";
   import { delay, buffers, eventChannel, END } from "redux-saga";
-  import { types as UserTypes } from "reducers/Users/manageusersreducer.js";
+  import { types as UserTypes, permissions as Permissions } from "reducers/Users/manageusersreducer.js";
+  import * as utils from "Utils/common"
 
   function insertUser(userData) {
    // debugger;
-    // return "Inserted successfully";
-    var data = JSON.stringify({
-        spName : "spi_UserDetails",
-        parms : userData
-      })
-   //return fetch("http://localhost:3003/ExecSP/", {
-   return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+  //  return fetch("http://localhost:3003/ExecSP/", {
+  return fetch("http://hvs.selfip.net:3003/ExecSP/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,6 +29,7 @@ import {
       body: JSON.stringify({
           spName : 'spi_UserDetails',
           token: sessionStorage.getItem("token"),
+          funcId : '1',
           parms : userData
       })
     })
@@ -43,9 +40,9 @@ import {
 
 
   function updateUser(userData) {
-    //debugger;
-//    return fetch("http://localhost:3003/ExecSP/", {
- return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    debugger;
+//  return fetch("http://localhost:3003/ExecSP/", {
+return fetch("http://hvs.selfip.net:3003/ExecSP/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -54,6 +51,7 @@ import {
       body: JSON.stringify({
           spName : 'spu_UserDetails',
           token: sessionStorage.getItem("token"),
+          funcId : '1',
           parms : userData
       })
     })
@@ -69,8 +67,8 @@ import {
         parms : user
       })
       // http://hvs.selfip.net:3003/ExecSP/
-    return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
-    //return fetch("http://localhost:3003/ExecSPM/", {
+   return fetch("http://hvs.selfip.net:3003/ExecSPM/", {
+    // return fetch("http://localhost:3003/ExecSPM/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -79,6 +77,7 @@ import {
       body: JSON.stringify({
           spName : 'sps_GetUserDetailsById',
           token: sessionStorage.getItem("token"),
+          funcId : '3',
           parms : user
       })
     })
@@ -109,11 +108,15 @@ import {
           //debugger;
           yield put({
             type: UserTypes.MESSAGE,
-            message: { val: -1, statusMsg: resultObj.result }
+            message: { val: resultObj.val , statusMsg: resultObj.result }
           });
         }
       else {
-       // debugger;
+   debugger;
+       sessionStorage.setItem("token", resultObj.token);
+       if(resultObj.roles.length != undefined) {
+         sessionStorage.setItem("roles", JSON.stringify(resultObj.roles));
+       } 
         yield put({
             type: UserTypes.MESSAGE,
             message: {val :2, statusMsg :resultObj.result}
@@ -144,7 +147,7 @@ import {
           //debugger;
           yield put({
             type: UserTypes.MESSAGE,
-            message: { val: -1, statusMsg: resultObj.result }
+            message: { val: resultObj.val, statusMsg: resultObj.result }
           });
         }
       
@@ -156,6 +159,10 @@ import {
       //   });
       // } else {
       else {
+        sessionStorage.setItem("token", resultObj.token);
+        if(resultObj.roles.length != undefined) {
+          sessionStorage.setItem("roles", JSON.stringify(resultObj.roles));
+        } 
         yield put({
             type: UserTypes.MESSAGE,
             message: {val :2, statusMsg :resultObj.result}
@@ -181,13 +188,17 @@ import {
           debugger;
           yield put({
             type: UserTypes.MESSAGE,
-            message: { val: -1, statusMsg: resultObj.result }
+            message: { val: resultObj.val, statusMsg: resultObj.result }
           });
         } else {
-      
-        yield put({
-          type: UserTypes.ITEMS,
-          items: resultObj.result
+          debugger
+          sessionStorage.setItem("token", resultObj.token);
+          if(resultObj.roles.length != undefined) {
+            sessionStorage.setItem("roles", JSON.stringify(resultObj.roles));
+          }       
+           yield put({
+              type: UserTypes.ITEMS,
+              items: resultObj.result
         });
       }
     }
