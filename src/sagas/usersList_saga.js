@@ -17,9 +17,9 @@ import {
 
 
 
-   function getUserListFunction()
+   function getUserListFunction(selectedUserData)
   { 
-    //debugger;
+        //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
@@ -35,20 +35,23 @@ import {
       body: JSON.stringify({
         spName: "sps_getUsers",
         token: sessionStorage.getItem("token"),
+        funcId:selectedUserData.function_id,        
         parms: {
             "cname" : ""
         }
       })
     })
-     // .then(statusHelper)
+    // .then(statusHelper)
       .then(response => response.json())
       .catch(error => error);
+    
   }
 
 
   //.then(data => data)
   function statusHelper(response) {
     debugger;
+      
    
     return response;
   }
@@ -57,24 +60,24 @@ import {
 
 
 
-  function* getUsersList() {
+  function* getUsersList(selectedUserData) {
     //debugger;
     try {
-      //debugger
-      let resultObj = yield call(getUserListFunction);
-debugger;
+      let resultObj = yield call(getUserListFunction,selectedUserData.payload);
     if (isJSON(resultObj)) {
       resultObj = JSON.parse(resultObj);
       //debugger;
       if (resultObj.message != "ok") {
-      debugger;
+     // debugger;
         yield put({
           type: usersListTypes.MESSAGE,
           message: {val: resultObj.val,msg:resultObj.result}
         });
       } else {
-      debugger;
+      
        sessionStorage.setItem("token", resultObj.token);
+      if(resultObj.roles.length != undefined) 
+      sessionStorage.setItem("roles", JSON.stringify(JSON.parse(resultObj).roles));
         yield put({
           type: usersListTypes.ITEMS,
           items:resultObj.result
@@ -92,17 +95,7 @@ debugger;
   }
   function deleteUserFunction(selectedUserData)
  {
-  // debugger;
-   //alert("getApprovalTables")
-   //alert(cname)
-   //console.log(userData.user);
-   //console.log(userData.password);
- //alert("in Cadets")
-   //new Promise((resolve, reject) => {
-   return fetch("http://hvs.selfip.net:3003/execMP/", {
-     //return fetch("http://hvs.selfip.net:3003/getCadets/", {
-     //return fetch("http://localhost:3003/getCadets/", {
-
+   return fetch("http://hvs.selfip.net:3003/execSP/", {
      method: "POST",
      headers: {
        Accept: "application/json",
@@ -110,12 +103,12 @@ debugger;
      },
      body: JSON.stringify({
          spName: 'spd_deleteUser',
-          token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem("token"),
+        funcId:selectedUserData.function_id,                  
          parms:{"hv_user_id":selectedUserData.hv_user_id}
-
      })
    })
-     .then(statusHelper)
+     //.then(statusHelper)
      .then(response => response.json())
      .catch(error => error);
  }
@@ -123,35 +116,45 @@ debugger;
  function* deleteUser(selectedUserData) {
    try {
 
-     const resultObj = yield call(deleteUserFunction,selectedUserData.payload);
-     if (resultObj.response && !resultObj.response.ok) {
-       //debugger;
-       yield put({
-         type: usersListTypes.MESSAGE,
-         message: {val:-1,msg:resultObj.response.statusText}
-       });
-     } else {
-       const state=yield select()
-       let items=state.usersListState.items.filter(del=>del.hv_user_id!==selectedUserData.payload.hv_user_id)
+     let resultObj = yield call(deleteUserFunction,selectedUserData.payload);
+     if (isJSON(resultObj)) {
+      resultObj = JSON.parse(resultObj);
+      //debugger;
+      if (resultObj.message != "ok") {
+     // debugger;
+        yield put({
+          type: usersListTypes.MESSAGE,
+          message: {val: resultObj.val,msg:resultObj.result}
+        });
+      } else {
+       sessionStorage.setItem("token", resultObj.token);
+      if(resultObj.roles.length != undefined) 
+       sessionStorage.setItem("roles", JSON.stringify(JSON.parse(resultObj).roles));
+       let state=yield select()
+       debugger
+       let items=[];
+       items[0]=state.usersListState.items[0].filter(del=>del.hv_user_id!==selectedUserData.payload.hv_user_id)
+       items[1]=state.usersListState.items[1]
        yield put({
          type: usersListTypes.ITEMS,
          items:items
        });
-       debugger
+       //debugger
        yield put({
          type: usersListTypes.MESSAGE,
-         message: {val: 1, msg: JSON.parse(resultObj).result[0].RESULT_MESSAGE}
+         message: {val: 1, msg: resultObj.result[0].RESULT_MESSAGE}
        });
-     }
-   } catch (e) {
-     debugger;
-     yield put({ type: usersListTypes.MESSAGE,
-       message: {val:-1,msg:e}
-
-      });
-   } finally {
-
-   }
+      }
+    }
+    } catch (e) {
+      //debugger;
+      yield put({ type: usersListTypes.MESSAGE, message: e });
+    } finally {
+      //debugger;
+      if (yield cancelled())
+        yield put({ type: usersListTypes.MESSAGE, message: "Task Cancelled" });
+    }
+     
  }
 
   export function* handleRequest(action) {
