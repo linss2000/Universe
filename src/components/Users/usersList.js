@@ -107,23 +107,23 @@ export class UsersList extends Component {
 
  
   renderUsersList() {
-    let unqFunction=this.evaluatePermissions();    
-    if(unqFunction!==undefined)
+    let unqFunction=this.evaluatePermissions(); 
+    let key= _.findKey(unqFunction, function(o){ return o.function_id == 3});
+    this.setState({ hasAccessToView: <Alert color="danger">User does not have permission !</Alert>});
+    this.setState({ hasAccessToDataGrid: 'none'});  
+    if(key!==undefined)
     {
-    unqFunction.map((el) => {
-      if (el.function_name.indexOf('VIEW') !== -1) {
+
+    this.setState({ hasAccessToView: '' });
+    this.setState({ hasAccessToDataGrid: 'block'});  
       this.props.getUsersList({
           type: UsersListTypes.FETCH_REQUEST,
-          payload: { function_id:el.function_id}
+          payload: { function_id:unqFunction[key].function_id}
         });
       }
-      else{
-        this.setState({ hasAccessToView: <Alert color="danger">User does not have permission !</Alert> });
-        this.setState({ hasAccessToDataGrid: 'none'});
-      }
-    })
+    
     }
-  }
+  
 
   componentDidMount() {
     // debugger
@@ -468,7 +468,7 @@ export class UsersList extends Component {
     if (this.state.displayDialog) {
       maintainUser = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} appendTo={document.body}
         onHide={this.onHideDialog} width='1200px' height='700px' positionTop="40" style={{ overflow: 'auto' }} overflow='auto' >
-        <MaintainUser userObject={this.state} onDialogClose={this.onHideDialog} /></Dialog>
+        <MaintainUser  {...this.props} userObject={this.state} onDialogClose={this.onHideDialog}/></Dialog>
     }
     else {
       {
