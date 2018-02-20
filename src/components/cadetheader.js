@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import cadetlogo from "images/cadetLogoCir.gif";
-import cadettitle from "images/cadetheaderlabel.png";
+import cadetlogo from "images/Universe.png";
+import cadettitle from "images/UTitle.png";
 import "App.css";
 import { actions as headerActions } from "reducers/cdheaderreducer";
 import { types as headertypes } from "reducers/cdheaderreducer";
@@ -64,7 +64,7 @@ class CadetHeader extends React.Component {
                 src={cadettitle}
                 height="60"
                 alt="logoTitle"
-                className="px-3"
+                className="px-0"
               />
               {/*<h3 className="d-inline align-middle">Welcome to React</h3>*/}
             </div>

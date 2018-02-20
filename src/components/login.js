@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import logo from "logo.svg";
-import clientlogo from "images/cadetlogo.png";
-import bgImg from "images/cgyca_background.png";
+import clientlogo from "images/Universe.png";
+import bgImg from "images/Universe.jpg";
 import "App.css";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
@@ -242,7 +242,7 @@ class Login extends Component {
           <div className="App">
             <div>
               <img src={clientlogo} className="mx-auto my-2" />
-              <h2 className="text-danger">Welcome to Cadet Systems</h2>
+              <h2 className="text-danger">Welcome to Universe</h2>
             </div>
             <div className="d-flex justify-content-center">
               <Paper style={paperStyle} zDepth={5}>

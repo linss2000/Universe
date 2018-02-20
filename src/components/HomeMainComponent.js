@@ -120,10 +120,10 @@ class HomeComponent extends Component {
               <Col sm="12">
                 {/*<h4 className="text-default">Home  <i className="fa fa-arrow-circle-o-down" /></h4><br />*/}
                 <h5 className="text-primary">
-                  Welcome to the CGYCA Solution.{" "}
+                  Welcome to the Universe Solution.{" "}
                 </h5>
                 <span className="text-default">
-                  The CGYCA Solution is an all-in-one system that tracks cadets,
+                  The Universe Solution is an all-in-one system that tracks cadets,
                   courses and budget information.<br />
                   This home page gives you quick access notifications and key
                   metrics, and provides you with the quick links to core
