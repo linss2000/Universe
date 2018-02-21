@@ -462,8 +462,8 @@ componentWillUnmount(){
                         <span className="labelfont">Last Name</span>
                       </div>
                       <div className="col-sm-4 alignCenter">
-                        <TextField id="txtLastName" name="txtLastName" style={{ width: '80%' }}
-                          className="font11"  maxLength="10"
+                        <TextField id="txtLastName" name="txtLastName" style={{ width: '90%' }}
+                          className="font11"  maxLength="50" multiLine={true} rows={2} 
                           ref={element => (this.lastName = element)}
                           value={this.state.lastName} required
                           onChange={(e) => {
