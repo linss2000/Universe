@@ -26,7 +26,7 @@ export const types = {
   
   //export function authState (state = initialState, action) {
   export default (state = initialState, action) => {
-    debugger;
+    //debugger;
 
     switch (action.type) {
         case types.ITEMS:

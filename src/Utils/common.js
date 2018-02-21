@@ -34,7 +34,7 @@ function isJSON(retVal) {
   */
   function getPermissions(permissions) {
     let functions = JSON.parse(sessionStorage.getItem("roles"));
-    debugger
+    //debugger
    let flist = _.uniqBy(_.filter(functions, function(o)
    {return (_.find(permissions, {'function_id' : o.function_id} )) }
   ),'function_id');

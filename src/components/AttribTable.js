@@ -457,7 +457,7 @@ class AttribTable extends Component {
   };
   
   RenderHeaderColumn = columnName => {
-    debugger;
+   // debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {
@@ -818,7 +818,7 @@ AttribTable.propTypes = {
 */
 
 const mapStateToProps = state => {
-  debugger;
+ // debugger;
   return {
     attribTableState: state.attribTableState
   };

@@ -22,7 +22,7 @@ export default class MainNavList extends React.Component {
 //}*/}
 
 itemClick = row => {
-  debugger;
+  //debugger;
   console.log(row);
   this.props.history.push('/attribtable', { params : row });
 };
@@ -30,7 +30,7 @@ itemClick = row => {
 
 
   createItem = item => {
-debugger;
+//debugger;
     var largeList = false;
     var isEven = false;
     if (item.table_group_count>9)
@@ -70,7 +70,7 @@ debugger;
 
   createItemList = items =>
   {
-    debugger;
+    //debugger;
     return items.map(this.createItem);
   };
 
@@ -90,7 +90,7 @@ debugger;
   createSubGroup(sectionitem)
   {
      {
-       debugger;
+       //debugger;
       return (<div>
               <Card  style={{ border: '0' }}>
                 <CardHeader key={sectionitem.table_group_i} style={{ padding: '1px' }}>{sectionitem.table_group_name}</CardHeader>

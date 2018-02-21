@@ -869,7 +869,7 @@ export class Roles extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     roleState: state.roleState
   };

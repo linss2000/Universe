@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       return { ...state, items: action.items };
     case types.FETCH_REQUEST:
     {
-      debugger
+     // debugger
       return { ...state,  error: null };
       
     }

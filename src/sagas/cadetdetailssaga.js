@@ -23,13 +23,13 @@ import {
   const cadetDetailsApi = {
     
     getcadetDetailsTables(name) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-        return fetch("http://hvs.selfip.net:3003/getCadets/", {
-        //return fetch("http://localhost:3003/getCadets/", {
+        return fetch("http://hvs.selfip.net:4003/getCadets/", {
+        //return fetch("http://localhost:4003/getCadets/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -48,7 +48,7 @@ import {
   };
   
   function statusHelper(response) {
-    debugger;
+    //debugger;
     if (!response.ok) {
       const error = new Error(response.statusText);
       error.response = response;
@@ -59,21 +59,21 @@ import {
   }
   
   function* getcadetDetailsTables(userData) {
-    debugger;
+    //debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: cadetDetailsTypes.LOGIN_REQUEST, isLoading: false })
       const resultObj = yield call(cadetDetailsApi.getcadetDetailsTables, userData.payload);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: cadetDetailsTypes.MESSAGE,
           message: {val: -1, msg: resultObj.response.statusText}
         });
       } else {
-        debugger;
+        //debugger;
         //sessionStorage.setItem("token", JSON.parse(resultObj).token);
         yield put({
           type: cadetDetailsTypes.ITEMS,
@@ -83,10 +83,10 @@ import {
       //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
     } catch (e) {
      
-      debugger;
+      //debugger;
       yield put({ type: cadetDetailsTypes.MESSAGE, message: {val:-1, msg:e} });
     } finally {
-      debugger;
+      //debugger;
       if (yield cancelled())
         yield put({ type: cadetDetailsTypes.MESSAGE, message: {val: -1, msg:"Task Cancelled" }});
     }
@@ -94,7 +94,7 @@ import {
   
  
   export function* handleRequest(action) {
-    debugger;
+    //debugger;
     //console.log("authSaga request", action);
     //console.log(action.payload);
     //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -104,9 +104,9 @@ import {
       
         case cadetDetailsTypes.FETCH_TABLES_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-          debugger;
+          //debugger;
           const fetchTask = yield fork(getcadetDetailsTables, action.name);
-          debugger;
+          //debugger;
           break;
         }
   

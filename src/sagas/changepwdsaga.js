@@ -22,13 +22,13 @@ import { types as changePWDTypes } from "reducers/changepwdreducer";
 
 const attribApi = {
   changePWD(userID, currPWD, newPWD, emailReset) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    //return fetch("http://localhost:3003/changePWD/", {
-    return fetch("http://hvs.selfip.net:3003/changePWD/", {
+    //return fetch("http://localhost:4003/changePWD/", {
+    return fetch("http://hvs.selfip.net:4003/changePWD/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -47,13 +47,13 @@ const attribApi = {
   },
 
   checkToken(secToken) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    //return fetch("http://localhost:3003/checkToken/", {
-       return fetch("http://hvs.selfip.net:3003/checkToken/", {
+    //return fetch("http://localhost:4003/checkToken/", {
+       return fetch("http://hvs.selfip.net:4003/checkToken/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -71,7 +71,7 @@ const attribApi = {
 };
 
 function statusHelper(response) {
-  debugger;
+  //debugger;
   if (!response.ok) {
     const error = new Error(response.statusText);
     error.response = response;
@@ -82,21 +82,21 @@ function statusHelper(response) {
 }
 
 function* checkToken(secToken) {
-  debugger;
+  //debugger;
   try {
     //yield call(delay, 5000)
     //yield put({ type: changePWDTypes.LOGIN_REQUEST, isLoading: false })
     const resultObj = yield call(attribApi.checkToken, secToken);
 
-    debugger;
+    //debugger;
     if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+      //debugger;
       yield put({
         type: changePWDTypes.MESSAGE,
         message: { val: -1, msg: resultObj.response.statusText }
       });
     } else {
-      debugger;
+      //debugger;
       //alert(JSON.parse(resultObj).result.hv_user_id)
       //sessionStorage.setItem("token", JSON.parse(resultObj).token);
       if (JSON.parse(resultObj).result.val == 1) {
@@ -113,31 +113,31 @@ function* checkToken(secToken) {
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
-    debugger;
+    //debugger;
     yield put({ type: changePWDTypes.MESSAGE, message: e });
   } finally {
-    debugger;
+    //debugger;
     if (yield cancelled())
       yield put({ type: changePWDTypes.MESSAGE, message: "Task Cancelled" });
   }
 }
 
 function* changePWD(userID, currPWD, newPWD, emailReset) {
-  debugger;
+  //debugger;
   try {
     //yield call(delay, 5000)
     //yield put({ type: changePWDTypes.LOGIN_REQUEST, isLoading: false })
     const resultObj = yield call(attribApi.changePWD, userID, currPWD, newPWD, emailReset);
 
-    debugger;
+    //debugger;
     if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+      //debugger;
       yield put({
         type: changePWDTypes.MESSAGE,
         message: { val: -1, msg: resultObj.response.statusText }
       });
     } else {
-      debugger;
+      //debugger;
       //sessionStorage.setItem("token", JSON.parse(resultObj).token);
       yield put({
         type: changePWDTypes.MESSAGE,
@@ -147,7 +147,7 @@ function* changePWD(userID, currPWD, newPWD, emailReset) {
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
     /*
-      debugger;
+      //debugger;
       let message;
       switch (error.status) {
         case 500:
@@ -160,17 +160,17 @@ function* changePWD(userID, currPWD, newPWD, emailReset) {
           message = "Something went wrong! " + error.statusText;
       }
       */
-    debugger;
+    //debugger;
     yield put({ type: changePWDTypes.MESSAGE, message: e });
   } finally {
-    debugger;
+    //debugger;
     if (yield cancelled())
       yield put({ type: changePWDTypes.MESSAGE, message: "Task Cancelled" });
   }
 }
 
 export function* handleRequest(action) {
-  debugger;
+  //debugger;
   console.log("changePwdSaga request", action);
   //console.log(action.payload);
   //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -179,7 +179,7 @@ export function* handleRequest(action) {
     switch (action.type) {
       case changePWDTypes.UPD_PWD_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(
           changePWD,
           action.userID,
@@ -187,15 +187,15 @@ export function* handleRequest(action) {
           action.newPWD,
           action.emailReset
         );
-        debugger;
+        //debugger;
         break;
       }
 
       case changePWDTypes.CHK_TOKEN_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(checkToken, action.token);
-        debugger;
+        //debugger;
         break;
       }
 

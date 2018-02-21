@@ -21,6 +21,8 @@ import ListItem from "material-ui/List/ListItem";
 import { Tabs, Tab } from "material-ui/Tabs";
 import Drawer from 'material-ui/Drawer';
 
+import StaffList from "./Staff/StaffList";
+    
 import {
   blue300,
   indigo900,
@@ -172,7 +174,7 @@ export class ReactStrapComp extends Component {
   };
 
   render() {
-
+let showlist=false
     return (
 
       <div style={styles.container}>
@@ -206,14 +208,27 @@ export class ReactStrapComp extends Component {
               style={tabStyles.default_tab}
               label="Staff"
               value="1"
-              icon={<FontIcon className="fa fa-home" style={{ color: "darkgrey" }} />}
-            >
-              <div style={{ height: "100%", width: "100%" }}>
-                <CadetsSearch cadetName={this.state.cadetName} />
-              </div>
+              data-route="/StaffList"
+              icon={<FontIcon className="fa fa-home" style={{ color: "darkgrey" }}/>}   onActive= {() => {
+                    
+                   }}>
+                      <StaffList
+                           {...this.props}
+                        />
+              
+             
+            
             </Tab>
-            {/*
-            <Tab
+            {/*           {(() =>{
+                           alert(showlist)
+                          if(showlist)
+                           <StaffList
+                          {...this.props}
+                        />
+    })}
+            <Tab  <StaffList
+                          {...this.props}
+                        />
               style={tabStyles.default_tab}
               label="Staff and Budget"
               value="2"

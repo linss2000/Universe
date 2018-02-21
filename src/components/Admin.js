@@ -77,6 +77,8 @@ import {
 
 
 import UsersList from "./Users/usersList";
+import StaffList from "./Staff/StaffList";
+
 
 
 const styles = {
@@ -419,6 +421,7 @@ debugger
 
                   }}
                 />
+                
               </Collapse>
             </List>
             {/* </Paper>    */}
@@ -478,6 +481,12 @@ debugger
                       case "U":
                       return (
                         <UsersList
+                          {...this.props}
+                        />
+                      );
+                       case "S":
+                      return (
+                        <StaffList
                           {...this.props}
                         />
                       );

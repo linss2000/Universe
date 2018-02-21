@@ -23,16 +23,16 @@ import {
   const mentorApi = {
     
     getMentorTables(cname) {
-      debugger;
+      //debugger;
       //alert("getMentorTables")
       //alert(cname)
       //console.log(userData.user);
       //console.log(userData.password);
     //alert("in Cadets")
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/getMentors/", {
-        //return fetch("http://hvs.selfip.net:3003/getCadets/", {
-        //return fetch("http://localhost:3003/getCadets/", {
+      return fetch("http://hvs.selfip.net:4003/getMentors/", {
+        //return fetch("http://hvs.selfip.net:4003/getCadets/", {
+        //return fetch("http://localhost:4003/getCadets/", {
         
         method: "POST",
         headers: {
@@ -51,7 +51,7 @@ import {
   };
   
   function statusHelper(response) {
-    debugger;
+    //debugger;
     if (!response.ok) {
       const error = new Error(response.statusText);
       error.response = response;
@@ -62,21 +62,21 @@ import {
   }
   
   function* getMentorTables(cname) {
-    debugger;
+    //debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: mentorTypes.LOGIN_REQUEST, isLoading: false })
       const resultObj = yield call(mentorApi.getMentorTables, cname);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: mentorTypes.MESSAGE,
           message: {val: -1, msg: resultObj.response.statusText}
         });
       } else {
-        debugger;
+        //debugger;
         //sessionStorage.setItem("token", JSON.parse(resultObj).token);
         yield put({
           type: mentorTypes.ITEMS,
@@ -86,10 +86,10 @@ import {
       //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
     } catch (e) {
      
-      debugger;
+      //debugger;
       yield put({ type: mentorTypes.MESSAGE, message: {val:-1, msg:e} });
     } finally {
-      debugger;
+      //debugger;
       if (yield cancelled())
         yield put({ type: mentorTypes.MESSAGE, message: {val: -1, msg:"Task Cancelled" }});
     }
@@ -97,7 +97,7 @@ import {
   
  
   export function* handleRequest(action) {
-    debugger;
+    //debugger;
     //console.log("authSaga request", action);
     //console.log(action.payload);
     //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -107,9 +107,9 @@ import {
       
         case mentorTypes.FETCH_TABLES_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-          debugger;
+          //debugger;
           const fetchTask = yield fork(getMentorTables, action.cname);
-          debugger;
+          //debugger;
           break;
         }
   

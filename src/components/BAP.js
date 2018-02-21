@@ -297,7 +297,7 @@ export class BAP extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
+//    debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {

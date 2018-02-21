@@ -327,7 +327,7 @@ export class CadetDetails extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
+   // debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {
@@ -544,7 +544,7 @@ export class CadetDetails extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     cadetDetailsState: state.cadetDetailsState
   };

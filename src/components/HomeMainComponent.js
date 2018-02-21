@@ -60,7 +60,7 @@ class HomeComponent extends Component {
     //alert(cadet.hv_cadet_name);
   }
   onClickLink(index) {
-    debugger;
+    //debugger;
     if (index == 1) {
       /*
       this.setState({
@@ -242,7 +242,7 @@ class HomeComponent extends Component {
                                 <br />
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/statusexcel"}
+                                  href={"http://hvs.selfip.net:4003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img
@@ -302,7 +302,7 @@ class HomeComponent extends Component {
                                 <br />
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/statusexcel"}
+                                  href={"http://hvs.selfip.net:4003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img
@@ -357,7 +357,7 @@ class HomeComponent extends Component {
                                 {" "}
                                 <br />
                                 <a
-                                  href={"http://hvs.selfip.net:3003/statusexcel"}
+                                  href={"http://hvs.selfip.net:4003/statusexcel"}
                                   download={"test.xlsx"}
                                 >
                                   <img

@@ -97,7 +97,7 @@ export class ChangePassword extends Component {
   }
 
   componentDidMount = () => {
-    debugger;
+    //debugger;
     if (this.props.match.params.secToken) {
       this.setState({ showCurrPwd: false, userReadOnly: true });
       this.props.checkToken({
@@ -115,7 +115,7 @@ export class ChangePassword extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    debugger;
+    //debugger;
     if (this.props.changePWDState.message.val != "0") {
       alert(this.props.changePWDState.message.msg);
       this.setState({ isLoading: false });
@@ -144,7 +144,7 @@ export class ChangePassword extends Component {
   };
 
   changePWD = () => {
-    debugger;
+    //debugger;
     if (this.userID.value.trim() == "") {
       alert("Please enter the user ID");
       this.userID.focus();
@@ -176,7 +176,7 @@ export class ChangePassword extends Component {
     });
 
     if (!invalidPWD) {
-      debugger;
+      //debugger;
 
       if (this.newPWD.value.trim() != this.newPWD1.value.trim()) {
         alert(
@@ -201,7 +201,7 @@ export class ChangePassword extends Component {
       //console.log(invalidPWD);
 
       msg = invalidPWD.issues.reduce((prev, current) => {
-        debugger;
+        //debugger;
         return prev + current.message + "\n";
       }, "");
       alert(msg);
@@ -359,7 +359,7 @@ export class ChangePassword extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     changePWDState: state.changePWDState
   };

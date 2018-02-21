@@ -23,13 +23,13 @@ import * as utils from "Utils/common"
 
 const attribApi = {
   exportToExcel(payload) {
-    debugger;
+    //debugger;
     console.log(payload);
     //console.log(userData.password);
     //alert(payload.spName)
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExportToExcel/", {
-      //return fetch("http://localhost:3003/ExportToExcel/", {
+    return fetch("http://hvs.selfip.net:4003/ExportToExcel/", {
+      //return fetch("http://localhost:4003/ExportToExcel/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -74,14 +74,14 @@ const attribApi = {
   },
 
   getRoleTable(cname) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
     //alert( sessionStorage.getItem("token"))
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
-    //return fetch("http://localhost:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
+    //return fetch("http://localhost:4003/ExecSP/", {
 
       method: "POST",
       headers: {
@@ -105,12 +105,12 @@ const attribApi = {
   },
 
   insRoleTable(userData) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/insRoleTable/", {
+    return fetch("http://hvs.selfip.net:4003/insRoleTable/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -128,12 +128,12 @@ const attribApi = {
   },
 
   chkRoleTable(role_id) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -153,12 +153,12 @@ const attribApi = {
   },
 
   delRoleTable(roleID) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -179,12 +179,12 @@ const attribApi = {
   },
 
   updRoleTable(userData) {
-    debugger;
+    //debugger;
     //console.log(userData.user);
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/updRoleTable/", {
+    return fetch("http://hvs.selfip.net:4003/updRoleTable/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -205,7 +205,7 @@ const attribApi = {
 };
 
 function statusHelper(response) {
-  debugger;
+  //debugger;
   console.log("1111111")
   //let clone = response.clone();
   //console.log(response);
@@ -251,13 +251,13 @@ function* insertRoleTable(userData) {
     resultObj = JSON.parse(resultObj);
 
     if (resultObj.message != "ok") {
-      //debugger;
+      ////debugger;
       yield put({
         type: roleTypes.MESSAGE,
         message: { val: -1, msg: resultObj.result }
       });
     } else {
-      //debugger;
+      ////debugger;
       //console.log(JSON.parse(resultObj).result);
       sessionStorage.setItem("token", resultObj.token);
     }
@@ -285,13 +285,13 @@ function* updateRoleTable(userData) {
     resultObj = JSON.parse(resultObj);
 
     if (resultObj.message != "ok") {
-      //debugger;
+      ////debugger;
       yield put({
         type: roleTypes.MESSAGE,
         message: { val: resultObj.val, msg: resultObj.result }
       });
     } else {
-      //debugger;
+      ////debugger;
       //console.log(JSON.parse(resultObj).result);
       sessionStorage.setItem("token", resultObj.token);
     }
@@ -309,13 +309,13 @@ function* deleteRoleTable(roleID) {
 
     if (utils.isJSON(resultObj)) {
       if (resultObj.message != "ok") {
-        //debugger;
+        ////debugger;
         yield put({
           type: roleTypes.MESSAGE,
           message: { val: resultObj.val, msg: resultObj.result }
         });
       } else {
-        //debugger;
+        ////debugger;
         //console.log(JSON.parse(resultObj).result);
         sessionStorage.setItem("token", resultObj.token);      
 
@@ -323,14 +323,14 @@ function* deleteRoleTable(roleID) {
         resultObj = JSON.parse(resultObj);
 
         if (resultObj.message != "ok") {
-          //debugger;
+          ////debugger;
           yield put({
             type: roleTypes.MESSAGE,
             message: { val: resultObj.val, msg: resultObj.result }
           });
         }
         else {
-          debugger;
+          //debugger;
           sessionStorage.setItem("token", resultObj.token);
           yield put({
             type: roleTypes.ITEMS,
@@ -350,22 +350,22 @@ function* deleteRoleTable(roleID) {
 }
 
 function* exportToExcel(payload) {
-  debugger;
+  //debugger;
   try {
     //yield call(delay, 5000)
     //yield put({ type: roleTypes.LOGIN_REQUEST, isLoading: false })
 
     const resultObj = yield call(attribApi.exportToExcel, payload);
 
-    debugger;
+    //debugger;
     if (resultObj.response && !resultObj.response.ok) {
-      debugger;
+      //debugger;
       yield put({
         type: roleTypes.MESSAGE,
         message: resultObj.response.statusText
       });
     } else {
-      debugger;
+      //debugger;
       //console.log(resultObj);
       download(resultObj, "Role.xlsx");
       /*
@@ -380,7 +380,7 @@ function* exportToExcel(payload) {
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
     /*
-      debugger;
+      //debugger;
       let message;
       switch (error.status) {
         case 500:
@@ -393,17 +393,17 @@ function* exportToExcel(payload) {
           message = "Something went wrong! " + error.statusText;
       }
       */
-    debugger;
+    //debugger;
     yield put({ type: roleTypes.MESSAGE, message: e });
   } finally {
-    debugger;
+    //debugger;
     if (yield cancelled())
       yield put({ type: roleTypes.MESSAGE, message: "Task Cancelled" });
   }
 }
 
 function* getRoleTable(userData) {
-  debugger;
+  //debugger;
   try {
     //yield call(delay, 5000)
     //yield put({ type: roleTypes.LOGIN_REQUEST, isLoading: false })
@@ -423,15 +423,15 @@ function* getRoleTable(userData) {
 
     if (utils.isJSON(resultObj)) {
       resultObj = JSON.parse(resultObj);
-      //debugger;
+      ////debugger;
       if (resultObj.message != "ok") {
-        //debugger;
+        ////debugger;
         yield put({
           type: roleTypes.MESSAGE,
           message: { val: resultObj.val, msg: resultObj.result }
         });
       } else {
-        //debugger;
+        ////debugger;
         //console.log(JSON.parse(resultObj).result);
         //sessionStorage.setItem("token", resultObj.token);
         yield put({
@@ -447,10 +447,10 @@ function* getRoleTable(userData) {
     }
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
-    debugger;
+    //debugger;
     yield put({ type: roleTypes.MESSAGE, message: { val: -1, msg: e } });
   } finally {
-    debugger;
+    //debugger;
     if (yield cancelled())
       yield put({ type: roleTypes.MESSAGE, message: { val: -1, msg: "Task Cancelled" } });
   }
@@ -458,7 +458,7 @@ function* getRoleTable(userData) {
 
 
 export function* handleRequest(action) {
-  debugger;
+  //debugger;
 
   console.log("RoleSaga request", action);
   //console.log(action.payload);
@@ -468,39 +468,39 @@ export function* handleRequest(action) {
     switch (action.type) {
       case roleTypes.FETCH_TABLE_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(getRoleTable, action.cname);
-        debugger;
+        //debugger;
         break;
       }
 
       case roleTypes.EXCEL_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(exportToExcel, action.payload);
-        debugger;
+        //debugger;
         break;
       }
 
       case roleTypes.INSERT_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(insertRoleTable, action.payload);
-        debugger;
+        //debugger;
         break;
       }
 
       case roleTypes.UPDATE_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(updateRoleTable, action.payload);
-        debugger;
+        //debugger;
         break;
       }
 
       case roleTypes.MAKE_ROW_EDITABLE: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         yield put({
           type: roleTypes.SELECTED_ROWID,
           rowID: action.payload.payload.rowID
@@ -510,19 +510,19 @@ export function* handleRequest(action) {
 
       case roleTypes.DELETE_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(deleteRoleTable, action.roleID);
-        debugger;
+        //debugger;
         break;
       }
 
       case roleTypes.CANCEL_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
 
         //const { items } = yield select();
         const state = yield select();
-        debugger;
+        //debugger;
 
         const newitems = state.roleleState.items.map((itm, index) => {
           if (
@@ -530,7 +530,7 @@ export function* handleRequest(action) {
           ) {
             return itm;
           } else {
-            debugger;
+            //debugger;
             var newItem = {
               ...itm,
               hv_universal_name: action.payload.payload.value
@@ -540,7 +540,7 @@ export function* handleRequest(action) {
           }
         });
 
-        debugger;
+        //debugger;
         yield put({
           type: roleTypes.SELECTED_ROWID,
           rowID: -1

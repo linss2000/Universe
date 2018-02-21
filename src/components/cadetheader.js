@@ -28,7 +28,7 @@ class CadetHeader extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
+    //debugger;
     //alert(this.props.location.state.params.hv_table_i)
     //alert(this.props.name)
     this.props.renderHeader({
@@ -39,21 +39,21 @@ class CadetHeader extends React.Component {
     });
   }
   componentDidUpdate(prevProps, prevState) {
-    debugger;
+    //debugger;
     console.log("componentDidUpdate");
     console.log(this.state.items[0].user);
   }
   componentWillReceiveProps(nextProps) {
-    debugger;
+    //debugger;
     this.state.items = nextProps.headerState.items;
   }
 
   componentWillMount = () => {
-    debugger;
+    //debugger;
   };
 
   render() {
-    debugger;
+    //debugger;
     return (
       <div>
         <Row>

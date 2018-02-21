@@ -414,7 +414,7 @@ showDatale.propTypes = {
 */
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     showDataState: state.showDataState
   };

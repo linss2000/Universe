@@ -518,7 +518,7 @@ export class AddEditRole extends Component {
   }
 
   RenderHeaderColumn = columnName => {
-    debugger;
+    //debugger;
 
     let className;
     if (this.state.sortedCol == columnName) {
@@ -756,7 +756,7 @@ export class AddEditRole extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     aeroleState: state.aeroleState
   };

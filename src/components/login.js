@@ -106,9 +106,9 @@ class Login extends Component {
 
   componentDidUpdate(prevProps, prevState) {
   //componentWillReceiveProps(nextProps) {
-    //debugger;
+    ////debugger;
     if (this.props.authState.message.msg == "ok") {
-      debugger;
+      ////debugger;
       //this.context.router.history.push('/grid', ...this.state);
       //alert("token: " + sessionStorage.getItem("token"));
       //this.props.history.push
@@ -186,7 +186,7 @@ class Login extends Component {
     });
 
     if (!invalidPWD || 1 === 1) {
-      debugger;
+      ////debugger;
       this.setState({ isLoading: true });
 
       this.props.login({
@@ -201,7 +201,7 @@ class Login extends Component {
       console.log(invalidPWD);
 
       msg = invalidPWD.issues.reduce((prev, current) => {
-        debugger;
+        ////debugger;
         return prev + current.message + "\n";
       }, "");
       alert(msg);
@@ -210,7 +210,7 @@ class Login extends Component {
   };
 
   handleKeyPress = event => {
-    debugger;
+    ////debugger;
     if (event.target.charCode == 13) {
       alert("Enter clicked!!!");
     }

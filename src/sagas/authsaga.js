@@ -23,13 +23,13 @@ import * as utils from "Utils/common"
 
 const authApi = {
   login(userData) {
-    debugger;
+    ////debugger;
     console.log(userData.user);
     console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    //return fetch("http://localhost:3003/loginsvc/", {
-      return fetch("http://hvs.selfip.net:3003/loginsvc/", {
+    //return fetch("http://localhost:4003/loginsvc/", {
+      return fetch("http://hvs.selfip.net:4003/loginsvc/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -49,7 +49,7 @@ const authApi = {
 };
 
 function statusHelper(response) {
-  debugger;
+  ////debugger;
   if (!response.ok) {
     const error = new Error(response.statusText);
     error.response = response;
@@ -60,7 +60,7 @@ function statusHelper(response) {
 }
 
 function* login(userData) {
-  debugger;
+  ////debugger;
   try {
     //yield call(delay, 5000)
     console.log(userData.payload.user);
@@ -99,7 +99,7 @@ function* login(userData) {
     //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
   } catch (e) {
     /*
-    debugger;
+    //debugger;
     let message;
     switch (error.status) {
       case 500:
@@ -112,10 +112,10 @@ function* login(userData) {
         message = "Something went wrong! " + error.statusText;
     }
     */
-    debugger;
+    //debugger;
     yield put({ type: authTypes.MESSAGE, message: { val: -1, msg: e } });
   } finally {
-    debugger;
+    //debugger;
     if (yield cancelled())
       yield put({
         type: authTypes.MESSAGE,
@@ -125,7 +125,7 @@ function* login(userData) {
 }
 
 export function* handleRequest(action) {
-  debugger;
+  //debugger;
   console.log("authSaga request", action);
   console.log(action.payload);
   //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -135,9 +135,9 @@ export function* handleRequest(action) {
       
       case authTypes.LOGIN_REQUEST: {
         //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-        debugger;
+        //debugger;
         const fetchTask = yield fork(login, action.payload);
-        debugger;
+        //debugger;
         break;
       }
 

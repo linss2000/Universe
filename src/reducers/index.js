@@ -22,6 +22,8 @@ import ManageUserState from './Users/manageusersreducer';
 import usersListState from './usersList_reducer';
 import aeroleState from './aerolereducer';
 import timeoutState from './timeoutreducer';
+import ManageStaffState from './Staff/managestaffreducer';
+import StaffListState from './Staff/stafflistreducer';
 
 export default combineReducers({
    authState,
@@ -46,5 +48,7 @@ export default combineReducers({
    ManageUserState,
    usersListState,
    aeroleState,
-   timeoutState
+   timeoutState,
+   StaffListState,
+   ManageStaffState,
 });

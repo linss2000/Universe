@@ -285,7 +285,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    debugger;
+    //debugger;
     return {
         //fetchData: (url) => dispatch(itemsFetchData(url)),
         fetchSagaData: (data) => dispatch(data),

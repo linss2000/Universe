@@ -23,12 +23,12 @@ import {
   const attribApi = {
     
     getAttribTable(userData) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-        return fetch("http://hvs.selfip.net:3003/db/", {
+        return fetch("http://hvs.selfip.net:4003/db/", {
             //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
             method: "POST",
             headers: {
@@ -45,12 +45,12 @@ import {
 
 
     insAttribTable(userData) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/insAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/insAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -68,12 +68,12 @@ import {
     },
 
     delAttribTable(userData) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/delAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/delAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -91,12 +91,12 @@ import {
     },
 
     updAttribTable(userData) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/updAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/updAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -117,7 +117,7 @@ import {
   };
   
   function statusHelper(response) {
-    debugger;
+    //debugger;
     if (!response.ok) {
       const error = new Error(response.statusText);
       error.response = response;
@@ -142,22 +142,22 @@ import {
       });
       
       const resultObj = yield call(attribApi.insAttribTable, userData.payload);
-      //debugger;
+      ////debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: showDataTypes.MESSAGE,
           message: resultObj.response.statusText
         });
       } else {
-        //debugger;
+        ////debugger;
         console.log(JSON.parse(resultObj).result)
         const state = yield select();
-        //debugger;
+        ////debugger;
         const fetchTask = yield call(getAttribTable, {payload : {hv_table_i: userData.payload.tableID}});
-        //debugger;
+        ////debugger;
 
-//debugger;
+////debugger;
         /*
         const newitems = state.attribTableState.items;
         newitems.push(
@@ -167,7 +167,7 @@ import {
             hv_universal_i: JSON.parse(resultObj).result[0].hv_universal_i
           }
         )
-debugger;
+//debugger;
       yield put({
         type: showDataTypes.SELECTED_ROWID,            
         rowID: -1
@@ -204,15 +204,15 @@ debugger;
 
       const resultObj = yield call(attribApi.updAttribTable, userData.payload);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: showDataTypes.MESSAGE,
           message: resultObj.response.statusText
         });
       } else {
-        debugger;
+        //debugger;
         console.log(JSON.parse(resultObj).result)
         const state = yield select();
 
@@ -220,7 +220,7 @@ debugger;
           if (_.trim(itm.hv_universal_i) !== _.trim(userData.payload.rowID)) {
               return itm;
           } else {
-            debugger;
+            //debugger;
               var newItem = {
                   ...itm,
                   hv_universal_name: userData.payload.value,
@@ -265,15 +265,15 @@ debugger;
 
       const resultObj = yield call(attribApi.delAttribTable, userData.payload);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: showDataTypes.MESSAGE,
           message: resultObj.response.statusText
         });
       } else {
-        debugger;
+        //debugger;
         console.log(JSON.parse(resultObj).result)
         const state = yield select();
         const newitems = state.attribTableState.items.filter((itm) => _.trim(itm.hv_universal_i) !== _.trim(userData.payload.rowID));
@@ -292,7 +292,7 @@ debugger;
   }
   
   function* getAttribTable(userData) {
-    debugger;
+    //debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: showDataTypes.LOGIN_REQUEST, isLoading: false })
@@ -305,15 +305,15 @@ debugger;
 
       const resultObj = yield call(attribApi.getAttribTable, userData.payload);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: showDataTypes.MESSAGE,
           message: resultObj.response.statusText
         });
       } else {
-        debugger;
+        //debugger;
         console.log(JSON.parse(resultObj).result)
         //sessionStorage.setItem("token", JSON.parse(resultObj).token);
         yield put({
@@ -324,7 +324,7 @@ debugger;
       //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
     } catch (e) {
       /*
-      debugger;
+      //debugger;
       let message;
       switch (error.status) {
         case 500:
@@ -337,10 +337,10 @@ debugger;
           message = "Something went wrong! " + error.statusText;
       }
       */
-      debugger;
+      //debugger;
       yield put({ type: showDataTypes.MESSAGE, message: e });
     } finally {
-      debugger;
+      //debugger;
       if (yield cancelled())
         yield put({ type: showDataTypes.MESSAGE, message: "Task Cancelled" });
     }
@@ -348,7 +348,7 @@ debugger;
   
   
   export function* handleRequest(action) {
-    debugger;
+    //debugger;
     console.log("authSaga request", action);
     console.log(action.payload);
     //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -358,9 +358,9 @@ debugger;
       
         case showDataTypes.FETCH_TABLE_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-          debugger;
+          //debugger;
           const fetchTask = yield fork(getAttribTable, action.payload);
-          debugger;
+          //debugger;
           break;
         }
 

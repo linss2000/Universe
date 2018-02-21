@@ -28,8 +28,8 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/GetAttribTable/", {
-        //return fetch("http://localhost:3003/GetAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/GetAttribTable/", {
+        //return fetch("http://localhost:4003/GetAttribTable/", {
         
         method: "POST",
         headers: {
@@ -52,7 +52,7 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/insAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/insAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -75,7 +75,7 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/delAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/delAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {
@@ -98,7 +98,7 @@ import {
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      return fetch("http://hvs.selfip.net:3003/updAttribTable/", {
+      return fetch("http://hvs.selfip.net:4003/updAttribTable/", {
         //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
         method: "POST",
         headers: {

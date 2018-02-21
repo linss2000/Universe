@@ -21,7 +21,7 @@ export default class ListItems extends React.Component {
        this.setState({ collapse2: !this.state.collapse2 });
      }
    itemClick = row => {
-     debugger;
+     //debugger;
      console.log(row);
      this.props.history.push('/attribtable', { params : {hv_table_i:row} });
 

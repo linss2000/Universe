@@ -88,7 +88,7 @@ export class ForgotPassword extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    debugger;
+    //debugger;
     if (this.props.forgotPWDState.message.val != "0") {
       alert(this.props.forgotPWDState.message.msg);
       this.setState({ isLoading: false });
@@ -107,7 +107,7 @@ export class ForgotPassword extends Component {
   }
 
   reqPassword = () => {
-    debugger;
+    //debugger;
     if (
       this.textInput.value == "" ||
       !this.textInput.value.match(
@@ -180,7 +180,7 @@ export class ForgotPassword extends Component {
               </CardBody>
             </Card>{" "}
             {/*
-            <a href={"http://hvs.selfip.net:3003/excel"} download={"test.xlsx"}>
+            <a href={"http://hvs.selfip.net:4003/excel"} download={"test.xlsx"}>
               {" "}
               Download Excel
             </a> */}
@@ -192,7 +192,7 @@ export class ForgotPassword extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
+  //debugger;
   return {
     forgotPWDState: state.forgotPWDState
   };

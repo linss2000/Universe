@@ -61,7 +61,7 @@ const styles = {
 
 class AttribList extends Component {
   componentWillReceiveProps(nextProps) {
-    debugger;
+    //debugger;
     console.log(nextProps);
     if (
       this.props.tableTag != nextProps.tableTag &&
@@ -77,7 +77,7 @@ class AttribList extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    debugger;
+    //debugger;
 
     return true;
     /*
@@ -92,7 +92,7 @@ class AttribList extends Component {
   }
 
   componentDidMount() {
-    debugger;
+    //debugger;
 
     if (this.props.tableTag) {
       //alert("in Tables")
@@ -132,7 +132,7 @@ class AttribList extends Component {
   }
 
   itemClick = row => {
-    debugger;
+    //debugger;
     console.log(row);
 
     this.setState({

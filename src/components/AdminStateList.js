@@ -11,7 +11,7 @@ export default class AdminStateList extends React.Component {
 
  }
  itemClick = row => {
-     debugger;
+     //debugger;
      console.log(row);
      this.props.history.push('/attribtable', { params : {hv_table_i:row} });
 

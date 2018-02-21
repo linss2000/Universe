@@ -5,7 +5,7 @@ import rootReducer from 'reducers';
 
 //import { composeWithDevTools } from 'redux-devtools-extension';
 export default function configureStore(initialState,sagaMiddleware, routerMiddleware) {
-debugger;
+//debugger;
     return createStore(
         rootReducer,
         initialState,

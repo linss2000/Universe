@@ -28,8 +28,8 @@ const attribApi = {
     //console.log(userData.password);
     //alert(payload.spName)
     //new Promise((resolve, reject) => {
-    //return fetch("http://hvs.selfip.net:3003/ExportToExcel/", {
-    return fetch("http://localhost:3003/ExportToExcel/", {
+    //return fetch("http://hvs.selfip.net:4003/ExportToExcel/", {
+    return fetch("http://localhost:4003/ExportToExcel/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -79,8 +79,8 @@ const attribApi = {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
-      //return fetch("http://localhost:3003/GetRoleTable/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
+      //return fetch("http://localhost:4003/GetRoleTable/", {
 
       method: "POST",
       headers: {
@@ -106,7 +106,7 @@ const attribApi = {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/insRoleTable/", {
+    return fetch("http://hvs.selfip.net:4003/insRoleTable/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -129,7 +129,7 @@ const attribApi = {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -154,7 +154,7 @@ const attribApi = {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {
@@ -179,7 +179,7 @@ const attribApi = {
     //console.log(userData.password);
 
     //new Promise((resolve, reject) => {
-    return fetch("http://hvs.selfip.net:3003/ExecSP/", {
+    return fetch("http://hvs.selfip.net:4003/ExecSP/", {
       //return fetch("http://hvs.selfip.net:4000/reactlogin/", {
       method: "POST",
       headers: {

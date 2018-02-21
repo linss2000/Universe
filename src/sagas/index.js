@@ -24,7 +24,8 @@ import { types as RoleTypes } from "./../reducers/rolereducer";
 import { types as usersListType } from "./../reducers/usersList_reducer";
 import { types as aeroleTypes } from "./../reducers/aerolereducer";
 import { types as timeoutTypes } from "./../reducers/timeoutreducer";
-
+import {types as ManageStaffTypes} from "reducers/Staff/managestaffreducer";
+import {types as StaffListTypes} from "reducers/Staff/stafflistreducer";
 
 import  * as authSagas  from './authsaga'
 import  * as attribSagas  from './attribsaga'
@@ -48,10 +49,11 @@ import  * as usersListSaga  from './usersList_saga';
 import  * as RoleSagas  from './rolesaga';
 import  * as aeroleSagas  from './aerolesaga';
 import  * as timeoutSagas  from './timeoutsaga';
-
+import * as ManageStaffSaga from './Staff/managestaffsaga.js';
+import * as StaffListSaga from './Staff/stafflistsaga.js';
 export default function* rootSaga () {
   try {
-    debugger
+    //debugger
     //yield watchOnPings()
     yield all( [
         takeLatest([authTypes.SIGNUP_REQUEST,authTypes.LOGIN_REQUEST,authTypes.PASSWORD_RESET_REQUEST,authTypes.LOGOUT], authSagas.handleRequest),
@@ -76,6 +78,8 @@ export default function* rootSaga () {
         takeLatest([RoleTypes.FETCH_TABLE_REQUEST,RoleTypes.EXCEL_REQUEST,RoleTypes.CANCEL_REQUEST,RoleTypes.MAKE_ROW_EDITABLE,RoleTypes.INSERT_REQUEST,RoleTypes.DELETE_REQUEST,RoleTypes.UPDATE_REQUEST], RoleSagas.handleRequest),
         takeLatest([aeroleTypes.FETCH_TABLE_REQUEST,aeroleTypes.EXCEL_REQUEST,aeroleTypes.CANCEL_REQUEST,aeroleTypes.MAKE_ROW_EDITABLE,aeroleTypes.INSERT_REQUEST,aeroleTypes.DELETE_REQUEST,aeroleTypes.UPDATE_REQUEST], aeroleSagas.handleRequest),
         takeLatest([timeoutTypes.SIGNUP_REQUEST,timeoutTypes.LOGIN_REQUEST,timeoutTypes.PASSWORD_RESET_REQUEST,timeoutTypes.LOGOUT], timeoutSagas.handleRequest),
+        takeLatest([StaffListTypes.FETCH_REQUEST,StaffListTypes.DELETE_REQUEST], StaffListSaga.handleRequest),
+        takeLatest([ManageStaffTypes.INSERT_REQUEST,ManageStaffTypes.FETCH_STAFF_REQUEST,ManageStaffTypes.FETCH_STAFF_RESOURCE_DETAILS,ManageStaffTypes.UPDATE_STAFF_REQUEST], ManageStaffSaga.handleRequest),
         ]);
 
     //throw e;

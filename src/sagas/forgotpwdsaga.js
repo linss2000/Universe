@@ -23,13 +23,13 @@ import {
   const attribApi = {
     
     checkEmail(email) {
-      debugger;
+      //debugger;
       //console.log(userData.user);
       //console.log(userData.password);
   
       //new Promise((resolve, reject) => {
-      //return fetch("http://localhost:3003/sendEmail/", {
-      return fetch("http://hvs.selfip.net:3003/sendEmail/", {
+      //return fetch("http://localhost:4003/sendEmail/", {
+      return fetch("http://hvs.selfip.net:4003/sendEmail/", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -47,7 +47,7 @@ import {
   };
   
   function statusHelper(response) {
-    debugger;
+    //debugger;
     if (!response.ok) {
       const error = new Error(response.statusText);
       error.response = response;
@@ -58,21 +58,21 @@ import {
   }
   
   function* checkEmail(email) {
-    debugger;
+    //debugger;
     try {
       //yield call(delay, 5000)
       //yield put({ type: forgotPWDTypes.LOGIN_REQUEST, isLoading: false })
       const resultObj = yield call(attribApi.checkEmail, email);
   
-      debugger;
+      //debugger;
       if (resultObj.response && !resultObj.response.ok) {
-        debugger;
+        //debugger;
         yield put({
           type: forgotPWDTypes.MESSAGE,
           message: {val:-1,msg:resultObj.response.statusText}
         });
       } else {
-        debugger;
+        //debugger;
         //sessionStorage.setItem("token", JSON.parse(resultObj).token);
         yield put({
           type: forgotPWDTypes.MESSAGE,
@@ -82,7 +82,7 @@ import {
       //yield put({ type: "LOGIN_STATUS", message: JSON.parse(resultObj).token })
     } catch (e) {
       /*
-      debugger;
+      //debugger;
       let message;
       switch (error.status) {
         case 500:
@@ -95,10 +95,10 @@ import {
           message = "Something went wrong! " + error.statusText;
       }
       */
-      debugger;
+      //debugger;
       yield put({ type: forgotPWDTypes.MESSAGE, message: e });
     } finally {
-      debugger;
+      //debugger;
       if (yield cancelled())
         yield put({ type: forgotPWDTypes.MESSAGE, message: "Task Cancelled" });
     }
@@ -106,7 +106,7 @@ import {
   
   
   export function* handleRequest(action) {
-    debugger;
+    //debugger;
     console.log("forgotPwdSaga request", action);
     //console.log(action.payload);
     //yield put({ type: "ITEMS_IS_LOADING", isLoading: true });
@@ -116,9 +116,9 @@ import {
       
         case forgotPWDTypes.CHECK_EMAIL_REQUEST: {
           //yield all([put({ type: "LOGIN_STATUS", message: '' }), put({ type: "ITEMS_IS_LOADING", isLoading: true })])
-          debugger;
+          //debugger;
           const fetchTask = yield fork(checkEmail, action.email);
-          debugger;
+          //debugger;
           break;
         }
   
