@@ -19,6 +19,7 @@ import FontIcon from "material-ui/FontIcon";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
 import { Tabs, Tab } from "material-ui/Tabs";
+import Drawer from 'material-ui/Drawer';
 
 import {
   blue300,
@@ -66,16 +67,16 @@ import Calendar from "./Calendar"
 import "App.css";
 
 const tabStyles = {
-   // backgroundColor: "#D3D3D3",
- //   color:"black",
- default_tab:{
-      color: "#000000",
-      backgroundColor: "#D3D3D3",
-      fontWeight: 400,
-    },
-    active_tab:{
-      color: "#D3D3D3",
-    }
+  // backgroundColor: "#D3D3D3",
+  //   color:"black",
+  default_tab: {
+    color: "#000000",
+    backgroundColor: "#D3D3D3",
+    fontWeight: 400,
+  },
+  active_tab: {
+    color: "#D3D3D3",
+  }
 };
 
 const styles = {
@@ -103,7 +104,7 @@ const paperStyle = {
   height: "80px",
   width: "99.2%",
   margin: 5,
-  backgroundColor:'#ecf0f6'
+  backgroundColor: '#ecf0f6'
   // textAlign: "left",
   // display: "flex",
   // justifyContent: "left"
@@ -122,15 +123,16 @@ export class ReactStrapComp extends Component {
   }
   constructor(props) {
     super(props);
-console.log("************")
-console.log(props)
+    console.log("************")
+    console.log(props)
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: "1",
       collapse: false,
       status: "Closed",
       cadetName: "",
-      activeTab: "0"
+      activeTab: "0",
+      open: false
     };
 
     this.cadetSearch = this.cadetSearch.bind(this);
@@ -174,35 +176,43 @@ console.log(props)
     return (
 
       <div style={styles.container}>
-        <Card style={{ height: "100%", width: "100%" }}>
-          <Paper style={paperStyle} zDepth={1}>
-            <CadetHeader name={this.props.name} {...this.props}/>
-          </Paper>
 
+        <Card style={{ height: "100%", width: "100%" }}>
+          <span
+            className="float-left px-2"
+            style={{ fontWeight: "bold", color: "#102027" }}
+          >
+            <i className="fa fa-bars fa-lg fa-fw" style={{ cursor: "pointer" }} onClick={() => this.setState({ open: !this.state.open })}></i>
+          
+          <Paper style={paperStyle} zDepth={1}>
+            <CadetHeader name={this.props.name} {...this.props} />
+          </Paper>
+          </span>
           <Tabs
             value={this.state.activeTab}
             onChange={this.handleChange}
-            inkBarStyle={{background: 'blue'}}
+            inkBarStyle={{ background: 'blue' }}
             style={{ height: "100%", width: "100%" }}
           >
-            <Tab 
+            <Tab
               style={tabStyles.default_tab}
               label="Home"
               value="0"
-              icon={<FontIcon className="fa fa-home" style={{color:"darkgrey" }}/>}
+              icon={<FontIcon className="fa fa-home" style={{ color: "darkgrey" }} />}
             >
               <HomeComponent callParentSearch={this.cadetSearch} parentSwitchTab={this.handleChange} />
             </Tab>
             <Tab
               style={tabStyles.default_tab}
-              label="Cadets"
+              label="Staff"
               value="1"
-              icon={<FontIcon className="fa fa-home" style={{color:"darkgrey" }} />}
+              icon={<FontIcon className="fa fa-home" style={{ color: "darkgrey" }} />}
             >
               <div style={{ height: "100%", width: "100%" }}>
                 <CadetsSearch cadetName={this.state.cadetName} />
               </div>
             </Tab>
+            {/*
             <Tab
               style={tabStyles.default_tab}
               label="Staff and Budget"
@@ -219,11 +229,12 @@ console.log(props)
             >
               <Calendar />
             </Tab>
+            */}
             <Tab
               style={tabStyles.default_tab}
               label="Approvals"
               value="4"
-              icon={<FontIcon className="fa fa-check-circle" style={{color:"darkgrey" }}/>}
+              icon={<FontIcon className="fa fa-check-circle" style={{ color: "darkgrey" }} />}
             >
               <BAS />
             </Tab>{" "}
@@ -231,7 +242,7 @@ console.log(props)
               style={tabStyles.default_tab}
               label="Reports"
               value="5"
-              icon={<FontIcon className="fa fa-line-chart" style={{color:"darkgrey" }}/>}
+              icon={<FontIcon className="fa fa-line-chart" style={{ color: "darkgrey" }} />}
             >
               <Reports />
             </Tab>{" "}
@@ -239,7 +250,7 @@ console.log(props)
               style={tabStyles.default_tab}
               label="Admin"
               value="6"
-              icon={<FontIcon className="fa fa-cog" style={{color:"darkgrey" }}/>}
+              icon={<FontIcon className="fa fa-cog" style={{ color: "darkgrey" }} />}
             >
               <Row className="m-0 p-0">
                 <Col sm="12">
@@ -255,7 +266,7 @@ console.log(props)
                     <Row>
                       {" "}
                       <Col sm="12">
-                  <Admin {...this.props} />
+                        <Admin {...this.props} />
                       </Col>
                     </Row>
                   </Container>
@@ -264,6 +275,14 @@ console.log(props)
             </Tab>
           </Tabs>
         </Card>
+        <Drawer open={this.state.open}  docked={false}  onRequestChange={(open) => this.setState({open})} width={250} openSecondary={true}>
+          <AppBar
+            title="Universe"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+          />
+          <MenuItem>Menu Item</MenuItem>
+          <MenuItem>Menu Item 2</MenuItem>
+        </Drawer>
       </div>
 
     );
