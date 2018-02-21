@@ -423,7 +423,7 @@ export class StaffList extends Component {
    
       maintainStaff = <Dialog visible={this.state.displayDialog} header={this.state.dialogTitle} modal={true} appendTo={document.body}
         onHide={this.onHideDialog} width='950px' height='500px' positionTop="40" style={{ overflow: 'auto' }} overflow='auto' >
-        <ManageStaff   staffObject={this.state} onDialogClose={this.onHideDialog}/></Dialog>
+        <ManageStaff {...this.props}  staffObject={this.state} onDialogClose={this.onHideDialog}/></Dialog>
         
     }
     else {
