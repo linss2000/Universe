@@ -300,7 +300,7 @@ class Login extends Component {
                           style={{ cursor: "pointer" }}
                           onClick={this.forgotPWD}
                         >
-                          Forgot password?
+                          Forgot password ?
                         </h6>{" "}
                         {""}{" "}
                         <h6
@@ -377,7 +377,7 @@ class Login extends Component {
               toggle={this.tooltipToggle}
             >
               Password must be at least 8 letters long<br />
-              Password must contain a Capital letter<br />
+              Password must contain a Capital Letter<br />
               Password must contain a number<br />
               Password must contain a special character<br />
             </Tooltip>
