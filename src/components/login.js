@@ -187,7 +187,7 @@ class Login extends Component {
 
     if (!invalidPWD || 1 === 1) {
       ////debugger;
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true});
 
       this.props.login({
         type: authTypes.LOGIN_REQUEST,
