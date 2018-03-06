@@ -16,8 +16,8 @@ import {
 import { delay, buffers, eventChannel, END } from "redux-saga";
 import * as _ from "lodash";
 import * as io from "socket.io-client";
-import { types as authTypes } from "reducers/authreducer";
-import * as utils from "Utils/common"
+import { types as authTypes } from "../reducers/authreducer";
+import * as utils from "../Utils/common"
 
 //import { push } from 'react-router-redux';
 
